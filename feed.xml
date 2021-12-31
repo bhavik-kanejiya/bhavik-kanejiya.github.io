@@ -1,0 +1,70 @@
+
+
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <id>http://localhost:4000/</id>
+  <title>Bhavik Kanejiya</title>
+  <subtitle>CV, Resume, Portfolio, Hack, Bug Bounty, Hunting, Cyber Security, Information Security, Application Security, Penetration Testing, Hacker, Author, Cyber Security Expert, Pentest, Pentester, Freelancer, Bhavik Kanejiya, Bhavik, Home, infosec Blog, infosec</subtitle>
+  <updated>2021-12-31T22:41:46+05:30</updated>
+  <author>
+    <name>Bhavik Kanejiya</name>
+    <uri>http://localhost:4000/</uri>
+  </author>
+  <link rel="self" type="application/atom+xml" href="http://localhost:4000/feed.xml"/>
+  <link rel="alternate" type="text/html" hreflang="en"
+    href="http://localhost:4000/"/>
+  <generator uri="https://jekyllrb.com/" version="4.2.1">Jekyll</generator>
+  <rights> © 2021 Bhavik Kanejiya </rights>
+  <icon>/assets/img/favicons/favicon.ico</icon>
+  <logo>/assets/img/favicons/favicon-96x96.png</logo>
+
+
+  
+  <entry>
+    <title>Let's do peek inside admin's dashboard - Abuse API endpoint</title>
+    <link href="http://localhost:4000/posts/inside-admin-dashboard-abuse-api-endpoint/" rel="alternate" type="text/html" title="Let's do peek inside admin's dashboard - Abuse API endpoint" />
+    <published>2021-12-31T09:30:00+05:30</published>
+  
+    <updated>2021-12-31T09:30:00+05:30</updated>
+  
+    <id>http://localhost:4000/posts/inside-admin-dashboard-abuse-api-endpoint/</id>
+    <content src="http://localhost:4000/posts/inside-admin-dashboard-abuse-api-endpoint/" />
+    <author>
+      <name>{"name"=>"Bhavik Kanejiya", "link"=>"https://linktr.ee/bhavikkanejiya"}</name>
+    </author>
+
+  
+    
+    <category term="Write-up" />
+    
+  
+
+  
+    <summary>
+      
+
+
+
+
+
+      There is broken access control in API which helps employee to become admin of workspace but with limited permissions
+
+
+
+
+Let’s do peek inside admin’s dashboard: Abuse API endpoint Image
+
+Introduction to application:
+
+It’s basically Productivity app which has over 2 million+ users which basically used by businesses to track employee project time and expense.
+
+Key Features:
+
+There are many featur...
+    </summary>
+  
+
+  </entry>
+
+</feed>
+
+

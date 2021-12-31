@@ -1,17 +1,19 @@
----
-layout: compress
----
-
 [
-  {% for post in site.posts %}
+  
   {
-    "title": "{{ post.title | escape }}",
-    "url": "{{ post.url | relative_url }}",
-    "categories": "{{ post.categories | join: ', '}}",
-    "tags": "{{ post.tags | join: ', ' }}",
-    "date": "{{ post.date }}",
-    {% include no-linenos.html content=post.content %}
-    "snippet": "{{ content | strip_html | strip_newlines | remove_chars | escape | replace: '\', '\\\\' }}"
-  }{% unless forloop.last %},{% endunless %}
-  {% endfor %}
+    "title": "Let&#39;s do peek inside admin&#39;s dashboard - Abuse API endpoint",
+    "url": "/posts/inside-admin-dashboard-abuse-api-endpoint/",
+    "categories": "Write-up",
+    "tags": "api",
+    "date": "2021-12-31 09:30:00 +0530",
+    
+
+
+
+
+
+    "snippet": "There is broken access control in API which helps employee to become admin of workspace but with limited permissionsLet’s do peek inside admin’s dashboard: Abuse API endpoint ImageIntroduction to application:It’s basically Productivity app which has over 2 million+ users which basically used by businesses to track employee project time and expense.Key Features:There are many features but this are some important features.      User can join multiple workspaceJoin multiple workspace image        User can create own workspaceCreate own workspace Image        Admin of workspace can invite other users by emailInvite other users by email image  How does Application works?A User can join multiple workspace from one account but User ID will be same across all the work spaces. So, User created his/her personal workspace and joined company’s workspace too.The API pass the Workspace ID to interact with application.This is how request looks like:Request Structure ImageAnd This is how Workspace ID look alike:Workspace ID table image  While test for role based broken access control, Use Multi account containers Where Cookies are separated by container, allowing us to use the web with multiple accounts.There are few sections which are only visible to admin. On User side we have limited functionalities. If We change the workspace ID directly, It will redirect me to it’s homepage. We use Burp’s match and replace feature to replace Workspace ID.This is the final result when User successfully match and replace Personal Workspace ID with company’s Workspace ID.Path ImageStep to Reproduce:Step to reproduce ImageEnd NoteIf you enjoyed this post, I’d be very grateful if you just give a 👏 and share. Thank you!https://linktr.ee/bhavikkanejiyaIf you enjoyed this, you might also enjoy these References too:  https://www.youtube.com/watch?v=Mpw1Lo3GAK0  https://blog.yeswehack.com/yeswerhackers/pimpmyburp-pwnfox-autorize-find-idor  https://www.youtube.com/watch?v=3K1-a7dnA60  https://blog.usamav.dev/two-account-takeover-bugs-worth-4300-dollar-bounty"
+  }
+  
 ]
+
