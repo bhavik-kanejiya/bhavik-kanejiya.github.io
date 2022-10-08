@@ -3,13 +3,7 @@ const resource = [
   /* --- CSS --- */
   '/assets/css/style.css',
 
-  /* --- JavaScripts --- */
-  
-  '/assets/js/dist/home.min.js',
-  '/assets/js/dist/page.min.js',
-  '/assets/js/dist/post.min.js',
-  '/assets/js/dist/categories.min.js',
-  '/assets/js/data/search.json',
+  /* --- PWA --- */
   '/app.js',
   '/sw.js',
 
@@ -26,18 +20,9 @@ const resource = [
     '/about/',
   
 
-  /* --- Favicons --- */
+  /* --- Favicons & compressed JS --- */
   
-
-  '/assets/img/favicons/android-chrome-192x192.png',
-  '/assets/img/favicons/android-chrome-512x512.png',
-  '/assets/img/favicons/apple-touch-icon.png',
-  '/assets/img/favicons/favicon-16x16.png',
-  '/assets/img/favicons/favicon-32x32.png',
-  '/assets/img/favicons/favicon.ico',
-  '/assets/img/favicons/mstile-150x150.png',
-  '/assets/img/favicons/site.webmanifest',
-  '/assets/img/favicons/browserconfig.xml'
+  
 
 ];
 
@@ -48,7 +33,9 @@ const allowedDomains = [
     'www.google-analytics.com',
   
 
-  'localhost:4000',
+  '0.0.0.0:4000',
+
+  
 
   'fonts.gstatic.com',
   'fonts.googleapis.com',

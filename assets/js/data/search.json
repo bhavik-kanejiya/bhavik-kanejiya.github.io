@@ -1,18 +1,18 @@
 [
   
   {
-    "title": "Let’s do a peek inside the admin’s dashboard - Abuse API endpoint",
-    "url": "/posts/inside-admin-dashboard-abuse-api-endpoint/",
+    "title": "Let’s do a peek inside the admin dashboard - Abuse API endpoint",
+    "url": "/posts/peek-inside-the-admin-dashboard/",
     "categories": "Write-up",
-    "tags": "api",
-    "date": "2021-12-31 09:30:00 +0530",
+    "tags": "API",
+    "date": "2022-01-01 10:30:00 +0530",
     
 
 
 
 
 
-    "snippet": "There is broken access control in the API which helps an employee to become the admin of a workspace but with limited permissions.Let’s do peek inside admin’s dashboard: Abuse API endpoint ImageApplication introductionIt’s a productivity app that has over 2 million+ users and is used by businesses to track employee project time and expenses.Key FeaturesThere are many features, but these are some of the most important ones.      Users can join multiple workspaces.Join multiple workspace image        Users can create their own workspace.Create own workspace Image        The admin of a workspace can invite other users by email.Invite other users by email image  How does the application work?A user can join multiple workspaces from one account, but the user ID will be the same across all the workspaces. So, the user-created his or her workspace and joined the company’s workspace too.The API uses the workspace ID to interact with the application.This is what the request looks like:Request Structure ImageAnd this is how Workspace ID looks like:Workspace ID table image  While the test for role-based broken access control, uses multi-account containers where cookies are separated by container, allowing us to use the web with multiple accounts.There are a few sections that are only visible to the admin. On the user side, we have limited functionalities. If we change the workspace ID directly, it will redirect me to its homepage. We use burp’s match and replace feature to replace the Workspace ID.This is the final result when the user successfully matches and replaces the personal workspace ID with the company’s workspace ID.Path ImageStep to Reproduce:Step to reproduce ImageEndNoteIf you enjoyed this post, I’d be very grateful if you just gave it a 👏 and shared it. Thank you!https://linktr.ee/bhavikkanejiyaIf you enjoyed this, you might also enjoy these References too:  https://www.youtube.com/watch?v=Mpw1Lo3GAK0  https://blog.yeswehack.com/yeswerhackers/pimpmyburp-pwnfox-autorize-find-idor  https://www.youtube.com/watch?v=3K1-a7dnA60  https://blog.usamav.dev/two-account-takeover-bugs-worth-4300-dollar-bounty"
+    "snippet": "There is broken access control in the API which helps an employee to become the admin of a workspace but with limited permissions.Let’s do peek inside admin dashboard: Abuse API endpoint HeaderApplication introductionIt is a productivity application with over two million users and is used by companies to track employee time and expenses.Key FeaturesThere are many features, but these are some of the important ones:  User can join multiple workspaces  User can create their own workspace  The admin of a workspace can invite other user by emailHow does application works?A user can join multiple workspaces from one account, but the user ID will be the same across all the workspaces. So, the user creates a personal workspace along with the company’s workspace.The API uses the workspace ID for interaction with the application.This is what the request look a like:Request StructureThis is how Workspace ID look a like:Workspace ID table  While the test for role-based broken access control, Use PwnFox to colorize the tab and burpsuite proxy history.Limited funtions are visible to the user. On the admin side, I have access to all functionalities. I tried to change the workspace ID directly but it redirected me to homepage. All I can do is force browsing to access all the different functionalities.As I went through the various features as an administrator in my personal workspace, I tried to match and replace the Personal Workspace ID with the Enterprise Workspace ID.This is the final result when the we successfully matche and replace the personal workspace ID with the company’s Workspace ID.Path differnceStep to ReproduceStep to reproduceEnd NoteIf you have enjoyed this article, Share this with your friends. Thank you!https://linktr.ee/bhavikkanejiyaReferences  Automating IDORs with Autorize - Common API Bugs Pt. 2 - IDORs &amp; Access Control Issues by @Asseem_shrey  PimpMyBurp #1 – PwnFox + Autorize  Burp Suite tutorial: IDOR vulnerability automation using Autorize and AutoRepeater  Two account takeover bugs worth $$$$"
   }
   
 ]
