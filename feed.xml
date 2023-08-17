@@ -3,17 +3,17 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <id>http://0.0.0.0:4000/</id>
   <title>Bhavik Kanejiya</title>
-  <subtitle>Penetration Tester, VAPT, Cyber Security Analyst, bug hunter, Cloud Security</subtitle>
-  <updated>2022-10-09T13:03:48+05:30</updated>
+  <subtitle>Unlocking Cyber Realms: Journey into the World of Red Teaming, Pentesting, and Capture The Flag Challenges. Explore step-by-step solutions for Hack The Box (HTB) and TryHackMe challenges, gain insights into advanced penetration testing techniques, and follow along as a passionate pentester navigates the digital landscapes.</subtitle>
+  <updated>2023-08-18T01:54:04+08:00</updated>
   <author>
-    <name>Bhavik Kanejiya</name>
+    <name>Bhavik_Kanejiya</name>
     <uri>http://0.0.0.0:4000/</uri>
   </author>
   <link rel="self" type="application/atom+xml" href="http://0.0.0.0:4000/feed.xml"/>
   <link rel="alternate" type="text/html" hreflang="en"
     href="http://0.0.0.0:4000/"/>
-  <generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator>
-  <rights> © 2022 Bhavik Kanejiya </rights>
+  <generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator>
+  <rights> © 2023 Bhavik_Kanejiya </rights>
   <icon>/assets/img/favicons/favicon.ico</icon>
   <logo>/assets/img/favicons/favicon-96x96.png</logo>
 
@@ -22,9 +22,9 @@
   <entry>
     <title>Let’s do a peek inside the admin dashboard - Abuse API endpoint</title>
     <link href="http://0.0.0.0:4000/posts/peek-inside-the-admin-dashboard/" rel="alternate" type="text/html" title="Let’s do a peek inside the admin dashboard - Abuse API endpoint" />
-    <published>2022-01-01T10:30:00+05:30</published>
+    <published>2022-01-01T13:00:00+08:00</published>
   
-    <updated>2022-01-01T10:30:00+05:30</updated>
+    <updated>2022-01-01T13:00:00+08:00</updated>
   
     <id>http://0.0.0.0:4000/posts/peek-inside-the-admin-dashboard/</id>
     <content src="http://0.0.0.0:4000/posts/peek-inside-the-admin-dashboard/" />
@@ -46,18 +46,21 @@
 
 
 
-      There is broken access control in the API which helps an employee to become the admin of a workspace but with limited permissions.
+      Application is vulnerable to broken access control allows employee to become the admin of a workspace.
 
 
 Let’s do peek inside admin dashboard: Abuse API endpoint Header
 
 Application introduction
 
-It is a productivity application with over two million users and is used by companies to track employee time and expenses.
+It is a productivity app used by companies to track employee time and expenses.
 
 Key Features
 
-There are many features, but these ...
+There are many features, but these are some of the important ones:
+
+  User can join many workspaces
+  User...
     </summary>
   
 
