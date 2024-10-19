@@ -1,20 +1,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Posts on From bits to bytes</title>
-        <link>http://localhost:1313/posts/</link>
+        <link>https://bhavik-kanejiya.github.io/posts/</link>
         <description>Recent content in Posts on From bits to bytes</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
         <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
         <lastBuildDate>Sat, 01 Jan 2022 00:00:00 +0000</lastBuildDate>
-        <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="https://bhavik-kanejiya.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
         
         <item>
             <title>Let’s do a peek inside the admin dashboard - Abuse API endpoint</title>
-            <link>http://localhost:1313/posts/2022/01/lets-do-a-peek-inside-the-admin-dashboard-abuse-api-endpoint/</link>
+            <link>https://bhavik-kanejiya.github.io/posts/2022/01/lets-do-a-peek-inside-the-admin-dashboard-abuse-api-endpoint/</link>
             <pubDate>Sat, 01 Jan 2022 00:00:00 +0000</pubDate>
             
-            <guid>http://localhost:1313/posts/2022/01/lets-do-a-peek-inside-the-admin-dashboard-abuse-api-endpoint/</guid>
+            <guid>https://bhavik-kanejiya.github.io/posts/2022/01/lets-do-a-peek-inside-the-admin-dashboard-abuse-api-endpoint/</guid>
             <description>There is broken access control in the API which helps an employee to become the admin of a workspace but with limited permissions.
 Application introduction It’s a productivity app that has over 2 million+ users and is used by business to track employee project time and expenses.
 Key Features There are many features, but these are some of the most important ones:
