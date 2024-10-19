@@ -11,9 +11,9 @@
     <atom:link href="https://bhavik-kanejiya.github.io/categories/write-up/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Let’s do a peek inside the admin dashboard - Abuse API endpoint</title>
-      <link>https://bhavik-kanejiya.github.io/blog/2022-01-01-peek-inside-the-admin-dashboard/</link>
+      <link>https://bhavik-kanejiya.github.io/blog/lets-peek-inside-the-admin-dashboard/</link>
       <pubDate>Sat, 01 Jan 2022 00:00:00 +0000</pubDate>
-      <guid>https://bhavik-kanejiya.github.io/blog/2022-01-01-peek-inside-the-admin-dashboard/</guid>
+      <guid>https://bhavik-kanejiya.github.io/blog/lets-peek-inside-the-admin-dashboard/</guid>
       <description>There is broken access control in the API which helps an employee to become the admin of a workspace but with limited permissions.&#xA;Application introduction It’s a productivity app that has over 2 million+ users and is used by business to track employee project time and expenses.&#xA;Key Features There are many features, but these are some of the most important ones:&#xA;User can join multiple workspaces User can create their own workspace The admin of a workspace can invite other user by email How does the application work?</description>
     </item>
   </channel>
