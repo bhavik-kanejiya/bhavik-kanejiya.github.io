@@ -2,29 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://bhavik-kanejiya.github.io/about/</loc>
+    <loc>https://bhavik-kanejiya.github.io/resume/</loc>
     <lastmod>2024-10-19T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://bhavik-kanejiya.github.io/</loc>
     <lastmod>2024-10-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://bhavik-kanejiya.github.io/resume/</loc>
+    <loc>https://bhavik-kanejiya.github.io/about/</loc>
     <lastmod>2024-10-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://bhavik-kanejiya.github.io/blog/</loc>
+    <lastmod>2022-01-01T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://bhavik-kanejiya.github.io/categories/</loc>
     <lastmod>2022-01-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://bhavik-kanejiya.github.io/posts/2022/01/lets-do-a-peek-inside-the-admin-dashboard-abuse-api-endpoint/</loc>
-    <lastmod>2022-01-01T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://bhavik-kanejiya.github.io/posts/</loc>
+    <loc>https://bhavik-kanejiya.github.io/blog/2022-01-01-peek-inside-the-admin-dashboard/</loc>
     <lastmod>2022-01-01T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://bhavik-kanejiya.github.io/categories/write-up/</loc>
     <lastmod>2022-01-01T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://bhavik-kanejiya.github.io/series/</loc>
-  </url><url>
-    <loc>https://bhavik-kanejiya.github.io/tags/</loc>
   </url>
 </urlset>

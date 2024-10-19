@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Write-Up on From bits to bytes</title>
-    <link>https://bhavik-kanejiya.github.io/categories/write-up/</link>
-    <description>Recent content in Write-Up on From bits to bytes</description>
+    <title>Blogs on From bits to bytes</title>
+    <link>https://bhavik-kanejiya.github.io/blog/</link>
+    <description>Recent content in Blogs on From bits to bytes</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
     <lastBuildDate>Sat, 01 Jan 2022 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://bhavik-kanejiya.github.io/categories/write-up/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://bhavik-kanejiya.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Let’s do a peek inside the admin dashboard - Abuse API endpoint</title>
       <link>https://bhavik-kanejiya.github.io/blog/2022-01-01-peek-inside-the-admin-dashboard/</link>
