@@ -1,27 +1,20 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Blogs on From bits to bytes</title>
-    <link>https://bhavik-kanejiya.github.io/blog/</link>
-    <description>Recent content in Blogs on From bits to bytes</description>
+    <title>HTB on From bits to bytes</title>
+    <link>https://bhavik-kanejiya.github.io/categories/htb/</link>
+    <description>Recent content in HTB on From bits to bytes</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
     <lastBuildDate>Tue, 05 Nov 2024 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://bhavik-kanejiya.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://bhavik-kanejiya.github.io/categories/htb/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>HTB Cap Walkthrough</title>
       <link>https://bhavik-kanejiya.github.io/blog/htb-cap-walkthrough/</link>
       <pubDate>Tue, 05 Nov 2024 00:00:00 +0000</pubDate>
       <guid>https://bhavik-kanejiya.github.io/blog/htb-cap-walkthrough/</guid>
       <description>Box Info Attribute Details Level Easy OS Linux Box URL https://app.hackthebox.com/machines/Cap Box Status Retired About Box Cap is an easy difficulty Linux machine running an HTTP server that performs administrative functions, including performing network captures. Improper controls result in Insecure Direct Object Reference (IDOR), giving access to another user&amp;rsquo;s capture. The capture contains plaintext credentials and can be used to gain foothold. A Linux capability is then leveraged to escalate to root.</description>
-    </item>
-    <item>
-      <title>Let’s do a peek inside the admin dashboard - Abuse API endpoint</title>
-      <link>https://bhavik-kanejiya.github.io/blog/lets-peek-inside-the-admin-dashboard/</link>
-      <pubDate>Sat, 01 Jan 2022 00:00:00 +0000</pubDate>
-      <guid>https://bhavik-kanejiya.github.io/blog/lets-peek-inside-the-admin-dashboard/</guid>
-      <description>There is broken access control in the API which helps an employee to become the admin of a workspace but with limited permissions.&#xA;Application introduction It’s a productivity app that has over 2 million+ users and is used by business to track employee project time and expenses.&#xA;Key Features There are many features, but these are some of the most important ones:&#xA;User can join multiple workspaces User can create their own workspace The admin of a workspace can invite other user by email How does the application work?</description>
     </item>
   </channel>
 </rss>
