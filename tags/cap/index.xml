@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Cap on From Bits to Bytes</title>
+    <title>CAP on From Bits to Bytes</title>
     <link>https://bhavik-kanejiya.github.io/tags/cap/</link>
-    <description>Recent content in Cap on From Bits to Bytes</description>
+    <description>Recent content in CAP on From Bits to Bytes</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
     <lastBuildDate>Tue, 05 Nov 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://bhavik-kanejiya.github.io/tags/cap/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>HTB Cap Walkthrough</title>
+      <title>HTB Cap Walkthrough]</title>
       <link>https://bhavik-kanejiya.github.io/blog/htb-cap-walkthrough/</link>
       <pubDate>Tue, 05 Nov 2024 00:00:00 +0000</pubDate>
       <guid>https://bhavik-kanejiya.github.io/blog/htb-cap-walkthrough/</guid>

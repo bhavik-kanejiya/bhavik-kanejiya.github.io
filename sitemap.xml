@@ -3,33 +3,39 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://bhavik-kanejiya.github.io/blog/</loc>
-    <lastmod>2024-11-05T00:00:00+00:00</lastmod>
+    <lastmod>2025-01-18T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://bhavik-kanejiya.github.io/tags/cve-exploitation/</loc>
+    <lastmod>2025-01-18T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://bhavik-kanejiya.github.io/tags/cve-2023-0386/</loc>
+    <lastmod>2025-01-18T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://bhavik-kanejiya.github.io/</loc>
+    <lastmod>2025-01-18T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://bhavik-kanejiya.github.io/tags/htb/</loc>
+    <lastmod>2025-01-18T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://bhavik-kanejiya.github.io/blog/htb-twomillion-walkthrough/</loc>
+    <lastmod>2025-01-18T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://bhavik-kanejiya.github.io/tags/linux-exploitation/</loc>
+    <lastmod>2025-01-18T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://bhavik-kanejiya.github.io/tags/overlayfs-exploit/</loc>
+    <lastmod>2025-01-18T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://bhavik-kanejiya.github.io/tags/</loc>
+    <lastmod>2025-01-18T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://bhavik-kanejiya.github.io/tags/walkthrough/</loc>
+    <lastmod>2025-01-18T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://bhavik-kanejiya.github.io/tags/cap/</loc>
     <lastmod>2024-11-05T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://bhavik-kanejiya.github.io/categories/</loc>
-    <lastmod>2024-11-05T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://bhavik-kanejiya.github.io/tags/cybersecurity/</loc>
-    <lastmod>2024-11-05T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://bhavik-kanejiya.github.io/</loc>
-    <lastmod>2024-11-05T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://bhavik-kanejiya.github.io/tags/hack-the-box/</loc>
-    <lastmod>2024-11-05T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://bhavik-kanejiya.github.io/categories/htb/</loc>
-    <lastmod>2024-11-05T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://bhavik-kanejiya.github.io/blog/htb-cap-walkthrough/</loc>
-    <lastmod>2024-11-05T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://bhavik-kanejiya.github.io/tags/</loc>
-    <lastmod>2024-11-05T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://bhavik-kanejiya.github.io/tags/walkthrough/</loc>
     <lastmod>2024-11-05T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://bhavik-kanejiya.github.io/resume/</loc>
@@ -41,9 +47,8 @@
     <loc>https://bhavik-kanejiya.github.io/blog/lets-peek-inside-the-admin-dashboard/</loc>
     <lastmod>2022-01-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://bhavik-kanejiya.github.io/categories/write-up/</loc>
-    <lastmod>2022-01-01T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://bhavik-kanejiya.github.io/series/</loc>
+  </url><url>
+    <loc>https://bhavik-kanejiya.github.io/topics/</loc>
   </url>
 </urlset>

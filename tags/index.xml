@@ -7,34 +7,55 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Tue, 05 Nov 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 18 Jan 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://bhavik-kanejiya.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Cap</title>
-      <link>https://bhavik-kanejiya.github.io/tags/cap/</link>
-      <pubDate>Tue, 05 Nov 2024 00:00:00 +0000</pubDate>
-      <guid>https://bhavik-kanejiya.github.io/tags/cap/</guid>
+      <title>CVE Exploitation</title>
+      <link>https://bhavik-kanejiya.github.io/tags/cve-exploitation/</link>
+      <pubDate>Sat, 18 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>https://bhavik-kanejiya.github.io/tags/cve-exploitation/</guid>
       <description></description>
     </item>
     <item>
-      <title>Cybersecurity</title>
-      <link>https://bhavik-kanejiya.github.io/tags/cybersecurity/</link>
-      <pubDate>Tue, 05 Nov 2024 00:00:00 +0000</pubDate>
-      <guid>https://bhavik-kanejiya.github.io/tags/cybersecurity/</guid>
+      <title>CVE-2023-0386</title>
+      <link>https://bhavik-kanejiya.github.io/tags/cve-2023-0386/</link>
+      <pubDate>Sat, 18 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>https://bhavik-kanejiya.github.io/tags/cve-2023-0386/</guid>
       <description></description>
     </item>
     <item>
-      <title>Hack the Box</title>
-      <link>https://bhavik-kanejiya.github.io/tags/hack-the-box/</link>
-      <pubDate>Tue, 05 Nov 2024 00:00:00 +0000</pubDate>
-      <guid>https://bhavik-kanejiya.github.io/tags/hack-the-box/</guid>
+      <title>HTB</title>
+      <link>https://bhavik-kanejiya.github.io/tags/htb/</link>
+      <pubDate>Sat, 18 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>https://bhavik-kanejiya.github.io/tags/htb/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Linux Exploitation</title>
+      <link>https://bhavik-kanejiya.github.io/tags/linux-exploitation/</link>
+      <pubDate>Sat, 18 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>https://bhavik-kanejiya.github.io/tags/linux-exploitation/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>OverlayFS Exploit</title>
+      <link>https://bhavik-kanejiya.github.io/tags/overlayfs-exploit/</link>
+      <pubDate>Sat, 18 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>https://bhavik-kanejiya.github.io/tags/overlayfs-exploit/</guid>
       <description></description>
     </item>
     <item>
       <title>Walkthrough</title>
       <link>https://bhavik-kanejiya.github.io/tags/walkthrough/</link>
-      <pubDate>Tue, 05 Nov 2024 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 18 Jan 2025 00:00:00 +0000</pubDate>
       <guid>https://bhavik-kanejiya.github.io/tags/walkthrough/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>CAP</title>
+      <link>https://bhavik-kanejiya.github.io/tags/cap/</link>
+      <pubDate>Tue, 05 Nov 2024 00:00:00 +0000</pubDate>
+      <guid>https://bhavik-kanejiya.github.io/tags/cap/</guid>
       <description></description>
     </item>
   </channel>

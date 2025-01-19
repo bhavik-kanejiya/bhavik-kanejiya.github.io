@@ -7,10 +7,17 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Tue, 05 Nov 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 18 Jan 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://bhavik-kanejiya.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>HTB Cap Walkthrough</title>
+      <title>HTB TwoMillion Walkthrough</title>
+      <link>https://bhavik-kanejiya.github.io/blog/htb-twomillion-walkthrough/</link>
+      <pubDate>Sat, 18 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>https://bhavik-kanejiya.github.io/blog/htb-twomillion-walkthrough/</guid>
+      <description>Box Info Attribute Details Level Easy OS Linux Box URL HTB-TwoMillion Box Status Retired About Box TwoMillion is an Easy difficulty Linux box that was released to celebrate reaching 2 million users on HackTheBox. The box features an old version of the HackTheBox platform that includes the old hackable invite code. After hacking the invite code an account can be created on the platform. The account can be used to enumerate various API endpoints, one of which can be used to elevate the user to an Administrator.</description>
+    </item>
+    <item>
+      <title>HTB Cap Walkthrough]</title>
       <link>https://bhavik-kanejiya.github.io/blog/htb-cap-walkthrough/</link>
       <pubDate>Tue, 05 Nov 2024 00:00:00 +0000</pubDate>
       <guid>https://bhavik-kanejiya.github.io/blog/htb-cap-walkthrough/</guid>
@@ -21,7 +28,7 @@
       <link>https://bhavik-kanejiya.github.io/resume/</link>
       <pubDate>Sat, 19 Oct 2024 00:00:00 +0000</pubDate>
       <guid>https://bhavik-kanejiya.github.io/resume/</guid>
-      <description>✉️ Email: bhavikkanejiya@gmail.com | 🔗 LinkedIn&#xA;🔐 PENETRATION TESTER 🛠️ Penetration Testing | 🔍 Vulnerability Assessment | 🛡️ Network Security&#xA;Highly motivated and skilled penetration tester with 1.5 years of experience in identifying and exploiting vulnerabilities across Web applications, APIs, Android, iOS, Kubernetes, and Cloud environments. Proven ability to work independently and collaboratively to deliver comprehensive security assessments, contributing to improved security posture and reduced risk of cyberattacks.&#xA;💼 WORK EXPERIENCE 🏢 KPMG Assurance and Consulting Services LLP - Bangalore, Karnataka 🔒 Security Analyst</description>
+      <description>✉️ Email: bhavikkanejiya@gmail.com | 🔗 LinkedIn&#xA;🔐 PENETRATION TESTER 🛠️ Penetration Testing | 🔍 Vulnerability Assessment | 🛡️ Network Security&#xA;Highly motivated and skilled penetration tester with 2 years of experience in identifying and exploiting vulnerabilities across Web applications, APIs, Android, iOS, Kubernetes, and Cloud environments. Proven ability to work independently and collaboratively to deliver comprehensive security assessments, contributing to improved security posture and reduced risk of cyberattacks.&#xA;💼 WORK EXPERIENCE 🏢 KPMG Assurance and Consulting Services LLP - Bangalore, Karnataka 🔒 Security Analyst</description>
     </item>
     <item>
       <title>whoami 🧑🏻‍💻</title>

