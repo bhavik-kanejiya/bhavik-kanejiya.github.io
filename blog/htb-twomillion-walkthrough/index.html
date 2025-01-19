@@ -41,7 +41,7 @@
 <meta itemprop="name" content="HTB TwoMillion Walkthrough">
 <meta itemprop="description" content="Dive into this detailed walkthrough of the Hack The Box machine, covering enumeration, exploitation, and privilege escalation techniques to achieve root."><meta itemprop="datePublished" content="2025-01-18T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2025-01-18T00:00:00+00:00" />
-<meta itemprop="wordCount" content="2526"><meta itemprop="image" content="https://bhavik-kanejiya.github.io/images/social-image.png" />
+<meta itemprop="wordCount" content="2528"><meta itemprop="image" content="https://bhavik-kanejiya.github.io/images/social-image.png" />
 <meta itemprop="keywords" content="Walkthrough,HTB,CVE-2023-0386,OverlayFS Exploit,Linux Exploitation,CVE Exploitation," />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://bhavik-kanejiya.github.io/images/social-image.png" /><meta name="twitter:title" content="HTB TwoMillion Walkthrough"/>
@@ -325,7 +325,7 @@ We used <a href="https://de4js.kshift.me/">de4js JavaScript Deobfuscator and Unp
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">{</span><span style="color:#e6db74">&#34;0&#34;</span>:200,<span style="color:#e6db74">&#34;success&#34;</span>:1,<span style="color:#e6db74">&#34;data&#34;</span>:<span style="color:#f92672">{</span><span style="color:#e6db74">&#34;data&#34;</span>:<span style="color:#e6db74">&#34;Va beqre gb trarengr gur vaivgr pbqr, znxr n CBFG erdhrfg gb /ncv/i1/vaivgr/trarengr&#34;</span>,<span style="color:#e6db74">&#34;enctype&#34;</span>:<span style="color:#e6db74">&#34;ROT13&#34;</span><span style="color:#f92672">}</span>,<span style="color:#e6db74">&#34;hint&#34;</span>:<span style="color:#e6db74">&#34;Data is encrypted ... We should probbably check the encryption type in order to decrypt it...&#34;</span><span style="color:#f92672">}</span>
 </span></span></code></pre></div><p>We have converted the ROT13 string to cleartext format and it gave a hint for another endpoint.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>In order to generate the invite code, make a POST request to /api/v1/invite/generate
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>In order to generate the invite code, make a POST request to /api/v1/invite/generate
 </span></span></code></pre></div><p>Upon sending a POST request for <a href="http://2million.htb/api/v1/invite/generate">Generate-invite</a> application returns a base64 encoded string.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>&gt; curl -X POST http://2million.htb/api/v1/invite/generate
 </span></span><span style="display:flex;"><span>
@@ -377,13 +377,13 @@ Volia 🥳 We got the connection back to our terminal.</p>
 <p>Let&rsquo;s Upgrade the shell:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>python3 -c <span style="color:#e6db74">&#39;import pty;pty.spawn(&#34;/bin/bash&#34;)&#39;</span>
 </span></span><span style="display:flex;"><span>export TERM<span style="color:#f92672">=</span>xterm
-</span></span></code></pre></div><pre tabindex="0"><code>ctrl + z
-</code></pre><pre tabindex="0"><code>stty raw -echo; fg
-</code></pre><h3 id="get-the-user-flag">Get the User Flag</h3>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ctrl + z
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>stty raw -echo; fg
+</span></span></code></pre></div><h3 id="get-the-user-flag">Get the User Flag</h3>
 <p>Let&rsquo;s cat the user flag…! Look like www-data user doesn&rsquo;t have permission to view the file.</p>
-<pre tabindex="0"><code>www-data@2million:/home/admin$ cat user.txt
-cat: user.txt: Permission denied
-</code></pre><p><strong>List the Files, Directories and it&rsquo;s permission:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>www-data@2million:/home/admin$ cat user.txt
+</span></span><span style="display:flex;"><span>cat: user.txt: Permission denied
+</span></span></code></pre></div><p><strong>List the Files, Directories and it&rsquo;s permission:</strong></p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>www-data@2million:/home/admin$ ls -al
 </span></span><span style="display:flex;"><span>total <span style="color:#ae81ff">32</span>
 </span></span><span style="display:flex;"><span>drwxr-xr-x <span style="color:#ae81ff">4</span> admin admin <span style="color:#ae81ff">4096</span> Jun  <span style="color:#ae81ff">6</span>  <span style="color:#ae81ff">2023</span> .
@@ -446,13 +446,14 @@ cat: user.txt: Permission denied
 <p>We got the access as the root user but still, it&rsquo;s not a complete root permission.</p>
 <h3 id="cve-2023-0386-analysis">CVE-2023-0386 Analysis</h3>
 <p>I started searching again and it&rsquo;s observed that the machine is vulnerable to CVE-2023-0386.</p>
-<pre tabindex="0"><code class="language-ad-summary" data-lang="ad-summary">CVE-2023-0386 is a high-severity vulnerability in the Linux kernel&#39;s overlayfs filesystem. Improper permission handling allows local attackers to easily escalate privileges to root, compromising the entire system.
-</code></pre><h4 id="how-to-detect">How to Detect?</h4>
+<p><strong>From Google:</strong>
+CVE-2023-0386 is a high-severity vulnerability in the Linux kernel&rsquo;s overlayfs filesystem. Improper permission handling allows local attackers to easily escalate privileges to root, compromising the entire system.</p>
+<h4 id="how-to-detect">How to Detect?</h4>
 <p>The easiest way to check whether your system is vulnerable is to see which version of the Linux kernel it uses by running the command <code>uname -r</code></p>
 <p>A system is likely to be vulnerable if it has a kernel version lower than 6.2. We found that our Linux machine is running on 5.15</p>
-<pre tabindex="0"><code>admin@2million:~$ uname -r
-5.15.70-051570-generic
-</code></pre><p>Let&rsquo;s understand what is SUID, OverlayFS…</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>admin@2million:~$ uname -r
+</span></span><span style="display:flex;"><span>5.15.70-051570-generic
+</span></span></code></pre></div><p>Let&rsquo;s understand what is SUID, OverlayFS…</p>
 <h4 id="what-is-suid-bit">What is SUID bit?</h4>
 <p>SUID, short for Set User ID, is <strong>a special permission that can be assigned to executable files</strong>. When an executable file has the SUID permission enabled, it allows users who execute the file to temporarily assume the privileges of the file&rsquo;s owner.</p>
 <h4 id="what-is-overlayfs">What is OverlayFS?</h4>
@@ -491,8 +492,8 @@ cat: user.txt: Permission denied
 <li>Mount point: <code>/merged</code></li>
 </ul>
 <p>Command to create an overlay:</p>
-<pre tabindex="0"><code>mount -t overlay overlay -o lowerdir=/lower,upperdir=/upper,workdir=/work /merged
-</code></pre><h4 id="how-does-the-cve-2023-0386-works">How does the CVE-2023-0386 Works?</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mount -t overlay overlay -o lowerdir<span style="color:#f92672">=</span>/lower,upperdir<span style="color:#f92672">=</span>/upper,workdir<span style="color:#f92672">=</span>/work /merged
+</span></span></code></pre></div><h4 id="how-does-the-cve-2023-0386-works">How does the CVE-2023-0386 Works?</h4>
 <ol>
 <li>
 <p><strong>Pretending to Have a Root-Owned File</strong>:</p>
@@ -600,25 +601,25 @@ cat: user.txt: Permission denied
 <p><img src="https://bhavik-kanejiya.github.io/images/HTB/TwoMillion/Pasted%20image%2020250119204826.png" alt=""></p>
 <p><img src="https://bhavik-kanejiya.github.io/images/HTB/TwoMillion/Pasted%20image%2020250119205017.png" alt=""></p>
 <h4 id="final-thank-you-message">Final Thank You Message</h4>
-<pre tabindex="0"><code>Dear HackTheBox Community,
-
-We are thrilled to announce a momentous milestone in our journey together. With immense joy and gratitude, we celebrate the achievement of reaching 2 million remarkable users! This incredible feat would not have been possible without each and every one of you.
-
-From the very beginning, HackTheBox has been built upon the belief that knowledge sharing, collaboration, and hands-on experience are fundamental to personal and professional growth. Together, we have fostered an environment where innovation thrives and skills are honed. Each challenge completed, each machine conquered, and every skill learned has contributed to the collective intelligence that fuels this vibrant community.
-
-To each and every member of the HackTheBox community, thank you for being a part of this incredible journey. Your contributions have shaped the very fabric of our platform and inspired us to continually innovate and evolve. We are immensely proud of what we have accomplished together, and we eagerly anticipate the countless milestones yet to come.
-
-Here&#39;s to the next chapter, where we will continue to push the boundaries of cybersecurity, inspire the next generation of ethical hackers, and create a world where knowledge is accessible to all.
-
-With deepest gratitude,
-
-The HackTheBox Team
-</code></pre><h2 id="references">References</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>Dear HackTheBox Community,
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>We are thrilled to announce a momentous milestone in our journey together. With immense joy and gratitude, we celebrate the achievement of reaching <span style="color:#ae81ff">2</span> million remarkable users! This incredible feat would not have been possible without each and every one of you.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>From the very beginning, HackTheBox has been built upon the belief that knowledge sharing, collaboration, and hands-on experience are fundamental to personal and professional growth. Together, we have fostered an environment where innovation thrives and skills are honed. Each challenge completed, each machine conquered, and every skill learned has contributed to the collective intelligence that fuels this vibrant community.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>To each and every member of the HackTheBox community, thank you <span style="color:#66d9ef">for</span> being a part of this incredible journey. Your contributions have shaped the very fabric of our platform and inspired us to continually innovate and evolve. We are immensely proud of what we have accomplished together, and we eagerly anticipate the countless milestones yet to come.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Here<span style="color:#960050;background-color:#1e0010">&#39;</span>s to the next chapter, where we will <span style="color:#66d9ef">continue</span> to push the boundaries of cybersecurity, inspire the next generation of ethical hackers, and create a world where knowledge is accessible to all.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>With deepest gratitude,
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>The HackTheBox Team
+</span></span></code></pre></div><h2 id="references">References</h2>
 <ul>
 <li><a href="https://securitylabs.datadoghq.com/articles/overlayfs-cve-2023-0386/">https://securitylabs.datadoghq.com/articles/overlayfs-cve-2023-0386/</a></li>
 <li><a href="https://github.com/xkaneiki/CVE-2023-0386">https://github.com/xkaneiki/CVE-2023-0386</a></li>
 <li><a href="https://0xdf.gitlab.io/2023/06/07/htb-twomillion.html#br">https://0xdf.gitlab.io/2023/06/07/htb-twomillion.html#br</a></li>
-<li><a href="https://jvns.ca/blog/2019/11/18/how-containers-work--overlayfs/+">https://jvns.ca/blog/2019/11/18/how-containers-work--overlayfs/+</a></li>
+<li><a href="https://jvns.ca/blog/2019/11/18/how-containers-work--overlayfs/">https://jvns.ca/blog/2019/11/18/how-containers-work--overlayfs/</a></li>
 </ul>
 
             </div>
