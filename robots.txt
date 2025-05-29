@@ -1,3 +1,1 @@
 User-agent: *
-
-Sitemap: https://bhavik-kanejiya.github.io/sitemap.xml

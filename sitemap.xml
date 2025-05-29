@@ -3,15 +3,27 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://bhavik-kanejiya.github.io/blog/</loc>
-    <lastmod>2025-01-18T00:00:00+00:00</lastmod>
+    <lastmod>2025-05-29T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://bhavik-kanejiya.github.io/</loc>
+    <lastmod>2025-05-29T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://bhavik-kanejiya.github.io/tags/kubernetes-security/</loc>
+    <lastmod>2025-05-29T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://bhavik-kanejiya.github.io/blog/kubernetes-security-basics-from-a-pentesters-point-of-view/</loc>
+    <lastmod>2025-05-29T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://bhavik-kanejiya.github.io/tags/kubernetes-series/</loc>
+    <lastmod>2025-05-29T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://bhavik-kanejiya.github.io/tags/</loc>
+    <lastmod>2025-05-29T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://bhavik-kanejiya.github.io/tags/cve-exploitation/</loc>
     <lastmod>2025-01-18T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://bhavik-kanejiya.github.io/tags/cve-2023-0386/</loc>
-    <lastmod>2025-01-18T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://bhavik-kanejiya.github.io/</loc>
     <lastmod>2025-01-18T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://bhavik-kanejiya.github.io/tags/htb/</loc>
@@ -24,9 +36,6 @@
     <lastmod>2025-01-18T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://bhavik-kanejiya.github.io/tags/overlayfs-exploit/</loc>
-    <lastmod>2025-01-18T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://bhavik-kanejiya.github.io/tags/</loc>
     <lastmod>2025-01-18T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://bhavik-kanejiya.github.io/tags/walkthrough/</loc>

@@ -1,7 +1,7 @@
 {
 	"version": 3,
 	"file": "main.css",
-	"sourceRoot": "/Users/bhavikkanejiya/Documents/blog-update/bhavik-kanejiya.github.io",
+	"sourceRoot": "/Users/bhavikkanejiya/Documents/Blog-update/bhavik-kanejiya.github.io",
 	"sources": [
 		"themes/hello-friend-ng/assets/scss/main.scss",
 		"themes/hello-friend-ng/assets/scss/_normalize.scss",

@@ -7,8 +7,15 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Sat, 18 Jan 2025 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 29 May 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://bhavik-kanejiya.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Kubernetes Security Basics: From a Pentester’s Point of View</title>
+      <link>https://bhavik-kanejiya.github.io/blog/kubernetes-security-basics-from-a-pentesters-point-of-view/</link>
+      <pubDate>Thu, 29 May 2025 00:00:00 +0000</pubDate>
+      <guid>https://bhavik-kanejiya.github.io/blog/kubernetes-security-basics-from-a-pentesters-point-of-view/</guid>
+      <description>Introduction For anyone in cybersecurity, two questions inevitably arise: What is Kubernetes, and what are the common security risks associated with it? These topics often seem complicated or are explained in overly technical terms.&#xA;This series provides a practical, hands-on journey through Kubernetes security. I will break down complex concepts into simple explanations, covering:&#xA;Kubernetes fundamentals Setting up K8s pentesting labs Common security issues and exploitation techniques Remediation and defense strategies I hope this series will transform your understanding of Kubernetes security.</description>
+    </item>
     <item>
       <title>HTB TwoMillion Walkthrough</title>
       <link>https://bhavik-kanejiya.github.io/blog/htb-twomillion-walkthrough/</link>
