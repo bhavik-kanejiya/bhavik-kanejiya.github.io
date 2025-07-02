@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Cloud on From Bits to Bytes | Cybersecurity Insights by Bhavik Kanejiya</title>
+    <link>https://bhavik-kanejiya.github.io/categories/cloud/</link>
+    <description>Recent content in Cloud on From Bits to Bytes | Cybersecurity Insights by Bhavik Kanejiya</description>
+    <image>
+      <title>From Bits to Bytes | Cybersecurity Insights by Bhavik Kanejiya</title>
+      <url>https://bhavik-kanejiya.github.io/images/social-image.png</url>
+      <link>https://bhavik-kanejiya.github.io/images/social-image.png</link>
+    </image>
+    <generator>Hugo -- 0.147.9</generator>
+    <language>en-us</language>
+    <copyright>2025 Bhavik Kanejiya</copyright>
+    <lastBuildDate>Thu, 29 May 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://bhavik-kanejiya.github.io/categories/cloud/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Kubernetes Security Basics: From a Pentester’s Point of View</title>
+      <link>https://bhavik-kanejiya.github.io/blog/kubernetes-security-basics-from-a-pentesters-point-of-view/</link>
+      <pubDate>Thu, 29 May 2025 00:00:00 +0000</pubDate>
+      <guid>https://bhavik-kanejiya.github.io/blog/kubernetes-security-basics-from-a-pentesters-point-of-view/</guid>
+      <description>Explore Kubernetes security from a pentester&amp;rsquo;s point of view. Follow a hands-on walkthrough from reconnaissance to root access, focusing on network packet analysis, exploitation techniques, and cluster misconfigurations</description>
+    </item>
+  </channel>
+</rss>

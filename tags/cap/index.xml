@@ -1,20 +1,25 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>CAP on From Bits to Bytes</title>
-    <link>https://bhavik-kanejiya.github.io/tags/cap/</link>
+    <link>http://localhost:1313/tags/cap/</link>
     <description>Recent content in CAP on From Bits to Bytes</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <image>
+      <title>From Bits to Bytes</title>
+      <url>http://localhost:1313/images/social-image.png</url>
+      <link>http://localhost:1313/images/social-image.png</link>
+    </image>
+    <generator>Hugo -- 0.147.9</generator>
     <language>en-us</language>
-    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <copyright>2025 Bhavik Kanejiya</copyright>
     <lastBuildDate>Tue, 05 Nov 2024 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://bhavik-kanejiya.github.io/tags/cap/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/cap/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>HTB Cap Walkthrough</title>
-      <link>https://bhavik-kanejiya.github.io/blog/htb-cap-walkthrough/</link>
+      <title>Let’s do a peek inside the admin dashboard - Abuse API endpoint</title>
+      <link>http://localhost:1313/blog/htb-cap-walkthrough/</link>
       <pubDate>Tue, 05 Nov 2024 00:00:00 +0000</pubDate>
-      <guid>https://bhavik-kanejiya.github.io/blog/htb-cap-walkthrough/</guid>
-      <description>Box Info Attribute Details Level Easy OS Linux Box URL https://app.hackthebox.com/machines/Cap Box Status Retired About Box Cap is an easy difficulty Linux machine running an HTTP server that performs administrative functions, including performing network captures. Improper controls result in Insecure Direct Object Reference (IDOR), giving access to another user&amp;rsquo;s capture. The capture contains plaintext credentials and can be used to gain foothold. A Linux capability is then leveraged to escalate to root.</description>
+      <guid>http://localhost:1313/blog/htb-cap-walkthrough/</guid>
+      <description>Discover a broken access control vulnerability in a popular productivity app with over 2 million users. This post details how an employee gained limited admin privileges by manipulating the API&amp;rsquo;s workspace ID, including steps to reproduce the exploit.</description>
     </item>
   </channel>
 </rss>

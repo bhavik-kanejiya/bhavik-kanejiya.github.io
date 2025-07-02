@@ -1,14 +1,33 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Tags on From Bits to Bytes</title>
+    <title>Tags on From Bits to Bytes | Cybersecurity Insights by Bhavik Kanejiya</title>
     <link>https://bhavik-kanejiya.github.io/tags/</link>
-    <description>Recent content in Tags on From Bits to Bytes</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in Tags on From Bits to Bytes | Cybersecurity Insights by Bhavik Kanejiya</description>
+    <image>
+      <title>From Bits to Bytes | Cybersecurity Insights by Bhavik Kanejiya</title>
+      <url>https://bhavik-kanejiya.github.io/images/social-image.png</url>
+      <link>https://bhavik-kanejiya.github.io/images/social-image.png</link>
+    </image>
+    <generator>Hugo -- 0.147.9</generator>
     <language>en-us</language>
-    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <copyright>2025 Bhavik Kanejiya</copyright>
     <lastBuildDate>Thu, 29 May 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://bhavik-kanejiya.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Cloud Security</title>
+      <link>https://bhavik-kanejiya.github.io/tags/cloud-security/</link>
+      <pubDate>Thu, 29 May 2025 00:00:00 +0000</pubDate>
+      <guid>https://bhavik-kanejiya.github.io/tags/cloud-security/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Kubernetes</title>
+      <link>https://bhavik-kanejiya.github.io/tags/kubernetes/</link>
+      <pubDate>Thu, 29 May 2025 00:00:00 +0000</pubDate>
+      <guid>https://bhavik-kanejiya.github.io/tags/kubernetes/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Kubernetes Security</title>
       <link>https://bhavik-kanejiya.github.io/tags/kubernetes-security/</link>
@@ -17,59 +36,52 @@
       <description></description>
     </item>
     <item>
-      <title>Kubernetes-Series</title>
-      <link>https://bhavik-kanejiya.github.io/tags/kubernetes-series/</link>
-      <pubDate>Thu, 29 May 2025 00:00:00 +0000</pubDate>
-      <guid>https://bhavik-kanejiya.github.io/tags/kubernetes-series/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>CVE Exploitation</title>
-      <link>https://bhavik-kanejiya.github.io/tags/cve-exploitation/</link>
-      <pubDate>Sat, 18 Jan 2025 00:00:00 +0000</pubDate>
-      <guid>https://bhavik-kanejiya.github.io/tags/cve-exploitation/</guid>
-      <description></description>
-    </item>
-    <item>
       <title>CVE-2023-0386</title>
       <link>https://bhavik-kanejiya.github.io/tags/cve-2023-0386/</link>
-      <pubDate>Sat, 18 Jan 2025 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 05 Nov 2024 00:00:00 +0000</pubDate>
       <guid>https://bhavik-kanejiya.github.io/tags/cve-2023-0386/</guid>
       <description></description>
     </item>
     <item>
       <title>HTB</title>
       <link>https://bhavik-kanejiya.github.io/tags/htb/</link>
-      <pubDate>Sat, 18 Jan 2025 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 05 Nov 2024 00:00:00 +0000</pubDate>
       <guid>https://bhavik-kanejiya.github.io/tags/htb/</guid>
       <description></description>
     </item>
     <item>
-      <title>Linux Exploitation</title>
-      <link>https://bhavik-kanejiya.github.io/tags/linux-exploitation/</link>
-      <pubDate>Sat, 18 Jan 2025 00:00:00 +0000</pubDate>
-      <guid>https://bhavik-kanejiya.github.io/tags/linux-exploitation/</guid>
+      <title>Linux</title>
+      <link>https://bhavik-kanejiya.github.io/tags/linux/</link>
+      <pubDate>Tue, 05 Nov 2024 00:00:00 +0000</pubDate>
+      <guid>https://bhavik-kanejiya.github.io/tags/linux/</guid>
       <description></description>
     </item>
     <item>
-      <title>OverlayFS Exploit</title>
-      <link>https://bhavik-kanejiya.github.io/tags/overlayfs-exploit/</link>
-      <pubDate>Sat, 18 Jan 2025 00:00:00 +0000</pubDate>
-      <guid>https://bhavik-kanejiya.github.io/tags/overlayfs-exploit/</guid>
+      <title>OverlayFS</title>
+      <link>https://bhavik-kanejiya.github.io/tags/overlayfs/</link>
+      <pubDate>Tue, 05 Nov 2024 00:00:00 +0000</pubDate>
+      <guid>https://bhavik-kanejiya.github.io/tags/overlayfs/</guid>
       <description></description>
     </item>
     <item>
       <title>Walkthrough</title>
       <link>https://bhavik-kanejiya.github.io/tags/walkthrough/</link>
-      <pubDate>Sat, 18 Jan 2025 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 05 Nov 2024 00:00:00 +0000</pubDate>
       <guid>https://bhavik-kanejiya.github.io/tags/walkthrough/</guid>
       <description></description>
     </item>
     <item>
-      <title>CAP</title>
-      <link>https://bhavik-kanejiya.github.io/tags/cap/</link>
-      <pubDate>Tue, 05 Nov 2024 00:00:00 +0000</pubDate>
-      <guid>https://bhavik-kanejiya.github.io/tags/cap/</guid>
+      <title>API-Security</title>
+      <link>https://bhavik-kanejiya.github.io/tags/api-security/</link>
+      <pubDate>Sat, 01 Jan 2022 00:00:00 +0000</pubDate>
+      <guid>https://bhavik-kanejiya.github.io/tags/api-security/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Writeup</title>
+      <link>https://bhavik-kanejiya.github.io/tags/writeup/</link>
+      <pubDate>Sat, 01 Jan 2022 00:00:00 +0000</pubDate>
+      <guid>https://bhavik-kanejiya.github.io/tags/writeup/</guid>
       <description></description>
     </item>
   </channel>

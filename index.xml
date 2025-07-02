@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>From Bits to Bytes</title>
+    <title>From Bits to Bytes | Cybersecurity Insights by Bhavik Kanejiya</title>
     <link>https://bhavik-kanejiya.github.io/</link>
-    <description>Recent content on From Bits to Bytes</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content on From Bits to Bytes | Cybersecurity Insights by Bhavik Kanejiya</description>
+    <image>
+      <title>From Bits to Bytes | Cybersecurity Insights by Bhavik Kanejiya</title>
+      <url>https://bhavik-kanejiya.github.io/images/social-image.png</url>
+      <link>https://bhavik-kanejiya.github.io/images/social-image.png</link>
+    </image>
+    <generator>Hugo -- 0.147.9</generator>
     <language>en-us</language>
-    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <copyright>2025 Bhavik Kanejiya</copyright>
     <lastBuildDate>Thu, 29 May 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://bhavik-kanejiya.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
@@ -14,42 +19,35 @@
       <link>https://bhavik-kanejiya.github.io/blog/kubernetes-security-basics-from-a-pentesters-point-of-view/</link>
       <pubDate>Thu, 29 May 2025 00:00:00 +0000</pubDate>
       <guid>https://bhavik-kanejiya.github.io/blog/kubernetes-security-basics-from-a-pentesters-point-of-view/</guid>
-      <description>Introduction For anyone in cybersecurity, two questions inevitably arise: What is Kubernetes, and what are the common security risks associated with it? These topics often seem complicated or are explained in overly technical terms.&#xA;This series provides a practical, hands-on journey through Kubernetes security. I will break down complex concepts into simple explanations, covering:&#xA;Kubernetes fundamentals Setting up K8s pentesting labs Common security issues and exploitation techniques Remediation and defense strategies I hope this series will transform your understanding of Kubernetes security.</description>
-    </item>
-    <item>
-      <title>HTB TwoMillion Walkthrough</title>
-      <link>https://bhavik-kanejiya.github.io/blog/htb-twomillion-walkthrough/</link>
-      <pubDate>Sat, 18 Jan 2025 00:00:00 +0000</pubDate>
-      <guid>https://bhavik-kanejiya.github.io/blog/htb-twomillion-walkthrough/</guid>
-      <description>Box Info Attribute Details Level Easy OS Linux Box URL HTB-TwoMillion Box Status Retired About Box TwoMillion is an Easy difficulty Linux box that was released to celebrate reaching 2 million users on HackTheBox. The box features an old version of the HackTheBox platform that includes the old hackable invite code. After hacking the invite code an account can be created on the platform. The account can be used to enumerate various API endpoints, one of which can be used to elevate the user to an Administrator.</description>
+      <description>Explore Kubernetes security from a pentester&amp;rsquo;s point of view. Follow a hands-on walkthrough from reconnaissance to root access, focusing on network packet analysis, exploitation techniques, and cluster misconfigurations</description>
     </item>
     <item>
       <title>HTB Cap Walkthrough</title>
       <link>https://bhavik-kanejiya.github.io/blog/htb-cap-walkthrough/</link>
       <pubDate>Tue, 05 Nov 2024 00:00:00 +0000</pubDate>
       <guid>https://bhavik-kanejiya.github.io/blog/htb-cap-walkthrough/</guid>
-      <description>Box Info Attribute Details Level Easy OS Linux Box URL https://app.hackthebox.com/machines/Cap Box Status Retired About Box Cap is an easy difficulty Linux machine running an HTTP server that performs administrative functions, including performing network captures. Improper controls result in Insecure Direct Object Reference (IDOR), giving access to another user&amp;rsquo;s capture. The capture contains plaintext credentials and can be used to gain foothold. A Linux capability is then leveraged to escalate to root.</description>
+      <description>Explore an in-depth walkthrough of the HTB Cap machine, focusing on network packet analysis and leveraging captured data for exploitation. Follow each step from initial reconnaissance to achieving root access, emphasizing practical network security techniques</description>
     </item>
     <item>
-      <title>Bhavik Kanejiya</title>
-      <link>https://bhavik-kanejiya.github.io/resume/</link>
-      <pubDate>Sat, 19 Oct 2024 00:00:00 +0000</pubDate>
-      <guid>https://bhavik-kanejiya.github.io/resume/</guid>
-      <description>✉️ Email: bhavikkanejiya@gmail.com | 🔗 LinkedIn&#xA;🔐 PENETRATION TESTER 🛠️ Penetration Testing | 🔍 Vulnerability Assessment | 🛡️ Network Security&#xA;Highly motivated and skilled penetration tester with 2 years of experience in identifying and exploiting vulnerabilities across Web applications, APIs, Android, iOS, Kubernetes, and Cloud environments. Proven ability to work independently and collaboratively to deliver comprehensive security assessments, contributing to improved security posture and reduced risk of cyberattacks.&#xA;💼 WORK EXPERIENCE 🏢 KPMG Assurance and Consulting Services LLP - Bangalore, Karnataka 🔒 Associate Security Consultant</description>
-    </item>
-    <item>
-      <title>whoami 🧑🏻‍💻</title>
-      <link>https://bhavik-kanejiya.github.io/about/</link>
-      <pubDate>Sat, 19 Oct 2024 00:00:00 +0000</pubDate>
-      <guid>https://bhavik-kanejiya.github.io/about/</guid>
-      <description>👋 Hey there, I&amp;rsquo;m Bhavik Kanejiya! Welcome to my corner of the internet! I&amp;rsquo;m a Security Consultant with a passion for pentesting and the dynamic world of cybersecurity. 🛡️ With over 2 years of experience, I&amp;rsquo;ve honed my skills across multiple domains like Android, iOS, Web, API, Docker, Kubernetes, and more.&#xA;💼 Professional Journey Currently, I’m working at a Big 4 firm, where I focus on conducting various security assessments and penetration tests.</description>
+      <title>HTB TwoMillion Walkthrough</title>
+      <link>https://bhavik-kanejiya.github.io/blog/htb-twomillion-walkthrough/</link>
+      <pubDate>Tue, 05 Nov 2024 00:00:00 +0000</pubDate>
+      <guid>https://bhavik-kanejiya.github.io/blog/htb-twomillion-walkthrough/</guid>
+      <description>Explore an in-depth walkthrough of the HTB Cap machine, focusing on network packet analysis and leveraging captured data for exploitation. Follow each step from initial reconnaissance to achieving root access, emphasizing practical network security techniques</description>
     </item>
     <item>
       <title>Let’s do a peek inside the admin dashboard - Abuse API endpoint</title>
       <link>https://bhavik-kanejiya.github.io/blog/lets-peek-inside-the-admin-dashboard/</link>
       <pubDate>Sat, 01 Jan 2022 00:00:00 +0000</pubDate>
       <guid>https://bhavik-kanejiya.github.io/blog/lets-peek-inside-the-admin-dashboard/</guid>
-      <description>There is broken access control in the API which helps an employee to become the admin of a workspace but with limited permissions.&#xA;Application introduction It’s a productivity app that has over 2 million+ users and is used by business to track employee project time and expenses.&#xA;Key Features There are many features, but these are some of the most important ones:&#xA;User can join multiple workspaces User can create their own workspace The admin of a workspace can invite other user by email How does the application work?</description>
+      <description>Discover a broken access control vulnerability in a popular productivity app with over 2 million users. This post details how an employee gained limited admin privileges by manipulating the API&amp;rsquo;s workspace ID, including steps to reproduce the exploit.</description>
+    </item>
+    <item>
+      <title>About Me</title>
+      <link>https://bhavik-kanejiya.github.io/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://bhavik-kanejiya.github.io/about/</guid>
+      <description>About Me</description>
     </item>
   </channel>
 </rss>

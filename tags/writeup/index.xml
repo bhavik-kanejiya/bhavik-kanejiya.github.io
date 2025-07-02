@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Writeup on From Bits to Bytes | Cybersecurity Insights by Bhavik Kanejiya</title>
+    <link>https://bhavik-kanejiya.github.io/tags/writeup/</link>
+    <description>Recent content in Writeup on From Bits to Bytes | Cybersecurity Insights by Bhavik Kanejiya</description>
+    <image>
+      <title>From Bits to Bytes | Cybersecurity Insights by Bhavik Kanejiya</title>
+      <url>https://bhavik-kanejiya.github.io/images/social-image.png</url>
+      <link>https://bhavik-kanejiya.github.io/images/social-image.png</link>
+    </image>
+    <generator>Hugo -- 0.147.9</generator>
+    <language>en-us</language>
+    <copyright>2025 Bhavik Kanejiya</copyright>
+    <lastBuildDate>Sat, 01 Jan 2022 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://bhavik-kanejiya.github.io/tags/writeup/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Let’s do a peek inside the admin dashboard - Abuse API endpoint</title>
+      <link>https://bhavik-kanejiya.github.io/blog/lets-peek-inside-the-admin-dashboard/</link>
+      <pubDate>Sat, 01 Jan 2022 00:00:00 +0000</pubDate>
+      <guid>https://bhavik-kanejiya.github.io/blog/lets-peek-inside-the-admin-dashboard/</guid>
+      <description>Discover a broken access control vulnerability in a popular productivity app with over 2 million users. This post details how an employee gained limited admin privileges by manipulating the API&amp;rsquo;s workspace ID, including steps to reproduce the exploit.</description>
+    </item>
+  </channel>
+</rss>

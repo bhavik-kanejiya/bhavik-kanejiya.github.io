@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>OverlayFS on From Bits to Bytes | Cybersecurity Insights by Bhavik Kanejiya</title>
+    <link>https://bhavik-kanejiya.github.io/tags/overlayfs/</link>
+    <description>Recent content in OverlayFS on From Bits to Bytes | Cybersecurity Insights by Bhavik Kanejiya</description>
+    <image>
+      <title>From Bits to Bytes | Cybersecurity Insights by Bhavik Kanejiya</title>
+      <url>https://bhavik-kanejiya.github.io/images/social-image.png</url>
+      <link>https://bhavik-kanejiya.github.io/images/social-image.png</link>
+    </image>
+    <generator>Hugo -- 0.147.9</generator>
+    <language>en-us</language>
+    <copyright>2025 Bhavik Kanejiya</copyright>
+    <lastBuildDate>Tue, 05 Nov 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://bhavik-kanejiya.github.io/tags/overlayfs/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>HTB TwoMillion Walkthrough</title>
+      <link>https://bhavik-kanejiya.github.io/blog/htb-twomillion-walkthrough/</link>
+      <pubDate>Tue, 05 Nov 2024 00:00:00 +0000</pubDate>
+      <guid>https://bhavik-kanejiya.github.io/blog/htb-twomillion-walkthrough/</guid>
+      <description>Explore an in-depth walkthrough of the HTB Cap machine, focusing on network packet analysis and leveraging captured data for exploitation. Follow each step from initial reconnaissance to achieving root access, emphasizing practical network security techniques</description>
+    </item>
+  </channel>
+</rss>
