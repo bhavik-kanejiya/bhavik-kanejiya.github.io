@@ -12,8 +12,43 @@
     <generator>Hugo -- 0.147.9</generator>
     <language>en-us</language>
     <copyright>2025 Bhavik Kanejiya</copyright>
-    <lastBuildDate>Thu, 29 May 2025 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 07 Jul 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://bhavik-kanejiya.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>CVE-2022-37706</title>
+      <link>https://bhavik-kanejiya.github.io/tags/cve-2022-37706/</link>
+      <pubDate>Mon, 07 Jul 2025 00:00:00 +0000</pubDate>
+      <guid>https://bhavik-kanejiya.github.io/tags/cve-2022-37706/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>CVE-2023-30253</title>
+      <link>https://bhavik-kanejiya.github.io/tags/cve-2023-30253/</link>
+      <pubDate>Mon, 07 Jul 2025 00:00:00 +0000</pubDate>
+      <guid>https://bhavik-kanejiya.github.io/tags/cve-2023-30253/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>HTB</title>
+      <link>https://bhavik-kanejiya.github.io/tags/htb/</link>
+      <pubDate>Mon, 07 Jul 2025 00:00:00 +0000</pubDate>
+      <guid>https://bhavik-kanejiya.github.io/tags/htb/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Linux</title>
+      <link>https://bhavik-kanejiya.github.io/tags/linux/</link>
+      <pubDate>Mon, 07 Jul 2025 00:00:00 +0000</pubDate>
+      <guid>https://bhavik-kanejiya.github.io/tags/linux/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Walkthrough</title>
+      <link>https://bhavik-kanejiya.github.io/tags/walkthrough/</link>
+      <pubDate>Mon, 07 Jul 2025 00:00:00 +0000</pubDate>
+      <guid>https://bhavik-kanejiya.github.io/tags/walkthrough/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Cloud Security</title>
       <link>https://bhavik-kanejiya.github.io/tags/cloud-security/</link>
@@ -43,31 +78,10 @@
       <description></description>
     </item>
     <item>
-      <title>HTB</title>
-      <link>https://bhavik-kanejiya.github.io/tags/htb/</link>
-      <pubDate>Tue, 05 Nov 2024 00:00:00 +0000</pubDate>
-      <guid>https://bhavik-kanejiya.github.io/tags/htb/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Linux</title>
-      <link>https://bhavik-kanejiya.github.io/tags/linux/</link>
-      <pubDate>Tue, 05 Nov 2024 00:00:00 +0000</pubDate>
-      <guid>https://bhavik-kanejiya.github.io/tags/linux/</guid>
-      <description></description>
-    </item>
-    <item>
       <title>OverlayFS</title>
       <link>https://bhavik-kanejiya.github.io/tags/overlayfs/</link>
       <pubDate>Tue, 05 Nov 2024 00:00:00 +0000</pubDate>
       <guid>https://bhavik-kanejiya.github.io/tags/overlayfs/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Walkthrough</title>
-      <link>https://bhavik-kanejiya.github.io/tags/walkthrough/</link>
-      <pubDate>Tue, 05 Nov 2024 00:00:00 +0000</pubDate>
-      <guid>https://bhavik-kanejiya.github.io/tags/walkthrough/</guid>
       <description></description>
     </item>
     <item>

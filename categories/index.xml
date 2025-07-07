@@ -12,8 +12,22 @@
     <generator>Hugo -- 0.147.9</generator>
     <language>en-us</language>
     <copyright>2025 Bhavik Kanejiya</copyright>
-    <lastBuildDate>Thu, 29 May 2025 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 07 Jul 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://bhavik-kanejiya.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>HTB</title>
+      <link>https://bhavik-kanejiya.github.io/categories/htb/</link>
+      <pubDate>Mon, 07 Jul 2025 00:00:00 +0000</pubDate>
+      <guid>https://bhavik-kanejiya.github.io/categories/htb/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Walkthrough</title>
+      <link>https://bhavik-kanejiya.github.io/categories/walkthrough/</link>
+      <pubDate>Mon, 07 Jul 2025 00:00:00 +0000</pubDate>
+      <guid>https://bhavik-kanejiya.github.io/categories/walkthrough/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Cloud</title>
       <link>https://bhavik-kanejiya.github.io/categories/cloud/</link>
@@ -26,20 +40,6 @@
       <link>https://bhavik-kanejiya.github.io/categories/kubernetes/</link>
       <pubDate>Thu, 29 May 2025 00:00:00 +0000</pubDate>
       <guid>https://bhavik-kanejiya.github.io/categories/kubernetes/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>HTB</title>
-      <link>https://bhavik-kanejiya.github.io/categories/htb/</link>
-      <pubDate>Tue, 05 Nov 2024 00:00:00 +0000</pubDate>
-      <guid>https://bhavik-kanejiya.github.io/categories/htb/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Walkthrough</title>
-      <link>https://bhavik-kanejiya.github.io/categories/walkthrough/</link>
-      <pubDate>Tue, 05 Nov 2024 00:00:00 +0000</pubDate>
-      <guid>https://bhavik-kanejiya.github.io/categories/walkthrough/</guid>
       <description></description>
     </item>
     <item>
