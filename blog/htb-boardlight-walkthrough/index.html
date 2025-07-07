@@ -237,6 +237,7 @@
                     <a href="#virtual-host-subdomain-enumeration" aria-label="Virtual Host Subdomain Enumeration">Virtual Host Subdomain Enumeration</a></li>
                 <li>
                     <a href="#subdomain---crmboardhtb" aria-label="Subdomain - crm.board.htb">Subdomain - crm.board.htb</a></li></ul>
+                </li></ul>
                 </li>
                 <li>
                     <a href="#what-is-cve-2023-30253" aria-label="What is CVE-2023-30253?">What is CVE-2023-30253?</a><ul>
@@ -245,7 +246,6 @@
                     <a href="#exploiting-rce-in-dolibarr-cve-2023-30253" aria-label="Exploiting RCE in Dolibarr (CVE-2023-30253)">Exploiting RCE in Dolibarr (CVE-2023-30253)</a></li>
                 <li>
                     <a href="#alternative-and-easy-way---metasploit" aria-label="Alternative and easy way - metasploit">Alternative and easy way - metasploit</a></li></ul>
-                </li></ul>
                 </li>
                 <li>
                     <a href="#getting-user-shell" aria-label="Getting User shell">Getting User shell</a><ul>
@@ -436,7 +436,7 @@
 <p>From the Github repo of Dolibarr, it was observed that Dolibarr uses PHP, which is an interesting thing.</p>
 <p><img alt="Github Repo of Dolibarr" loading="lazy" src="/images/HTB/Boardlight/Pasted%20image%2020250702225312.png"></p>
 <p>Now that we have access to the Dolibarr admin panel, we can proceed with exploitation.</p>
-<h3 id="what-is-cve-2023-30253">What is CVE-2023-30253?<a hidden class="anchor" aria-hidden="true" href="#what-is-cve-2023-30253">#</a></h3>
+<h2 id="what-is-cve-2023-30253">What is CVE-2023-30253?<a hidden class="anchor" aria-hidden="true" href="#what-is-cve-2023-30253">#</a></h2>
 <p>Dolibarr before 17.0.1 allows remote code execution by an authenticated user via an uppercase manipulation: <code>&lt;?PHP</code> instead of <code>&lt;?php</code> in injected data.</p>
 <p><strong>Severity</strong>: High (8.8/10)</p>
 <table>
@@ -481,7 +481,7 @@
       </tr>
   </tbody>
 </table>
-<h4 id="exploiting-rce-in-dolibarr-cve-2023-30253">Exploiting RCE in Dolibarr (CVE-2023-30253)<a hidden class="anchor" aria-hidden="true" href="#exploiting-rce-in-dolibarr-cve-2023-30253">#</a></h4>
+<h3 id="exploiting-rce-in-dolibarr-cve-2023-30253">Exploiting RCE in Dolibarr (CVE-2023-30253)<a hidden class="anchor" aria-hidden="true" href="#exploiting-rce-in-dolibarr-cve-2023-30253">#</a></h3>
 <ol>
 <li>Create the Website and enter the website name and description.
 <img alt="Create the website - Dolibarr" loading="lazy" src="/images/HTB/Boardlight/Pasted%20image%2020250702224806.png"></li>
@@ -509,7 +509,7 @@
 export TERM=xterm
 </code></pre><pre tabindex="0"><code>Ctrl + Z
 </code></pre><pre tabindex="0"><code>stty raw -echo; fg
-</code></pre><h4 id="alternative-and-easy-way---metasploit">Alternative and easy way - metasploit<a hidden class="anchor" aria-hidden="true" href="#alternative-and-easy-way---metasploit">#</a></h4>
+</code></pre><h3 id="alternative-and-easy-way---metasploit">Alternative and easy way - metasploit<a hidden class="anchor" aria-hidden="true" href="#alternative-and-easy-way---metasploit">#</a></h3>
 <p>We can also use the Metasploit to exploit the RCE and get the shell which requires username, password and hostname.</p>
 <p><strong>Read More Here:</strong></p>
 <blockquote>
