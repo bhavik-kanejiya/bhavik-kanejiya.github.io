@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Tags/Pod-Breakout on From Bits to Bytes</title>
+    <title>Pod-Breakout on From Bits to Bytes | Cybersecurity Insights by Bhavik Kanejiya</title>
     <link>https://bhavik-kanejiya.github.io/tags/pod-breakout/</link>
-    <description>Recent content in Tags/Pod-Breakout on From Bits to Bytes</description>
-    <generator>Hugo</generator>
+    <description>Recent content in Pod-Breakout on From Bits to Bytes | Cybersecurity Insights by Bhavik Kanejiya</description>
+    <image>
+      <title>From Bits to Bytes | Cybersecurity Insights by Bhavik Kanejiya</title>
+      <url>https://bhavik-kanejiya.github.io/images/social-image.png</url>
+      <link>https://bhavik-kanejiya.github.io/images/social-image.png</link>
+    </image>
+    <generator>Hugo -- 0.147.9</generator>
     <language>en-us</language>
-    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <copyright>2025 Bhavik Kanejiya</copyright>
     <lastBuildDate>Tue, 07 Oct 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://bhavik-kanejiya.github.io/tags/pod-breakout/index.xml" rel="self" type="application/rss+xml" />
     <item>

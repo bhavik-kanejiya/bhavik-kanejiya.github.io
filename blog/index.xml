@@ -12,8 +12,15 @@
     <generator>Hugo -- 0.147.9</generator>
     <language>en-us</language>
     <copyright>2025 Bhavik Kanejiya</copyright>
-    <lastBuildDate>Mon, 07 Jul 2025 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 07 Oct 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://bhavik-kanejiya.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>HTB SteamCloud Walkthrough</title>
+      <link>https://bhavik-kanejiya.github.io/blog/htb-steamcloud-walkthrough/</link>
+      <pubDate>Tue, 07 Oct 2025 00:00:00 +0000</pubDate>
+      <guid>https://bhavik-kanejiya.github.io/blog/htb-steamcloud-walkthrough/</guid>
+      <description>Detailed Streamcloud HTB lab walkthrough focusing on Kubernetes pentesting. Covers environment setup, discovery (kubectl, API), misconfigured RBAC and serviceAccount abuse, privilege escalation techniques, persistence, and developer-focused remediation</description>
+    </item>
     <item>
       <title>HTB Boardlight Walkthrough</title>
       <link>https://bhavik-kanejiya.github.io/blog/htb-boardlight-walkthrough/</link>
