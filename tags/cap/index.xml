@@ -1,25 +1,20 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>CAP on From Bits to Bytes</title>
-    <link>http://localhost:1313/tags/cap/</link>
-    <description>Recent content in CAP on From Bits to Bytes</description>
-    <image>
-      <title>From Bits to Bytes</title>
-      <url>http://localhost:1313/images/social-image.png</url>
-      <link>http://localhost:1313/images/social-image.png</link>
-    </image>
-    <generator>Hugo -- 0.147.9</generator>
+    <title>Tags/CAP on From Bits to Bytes</title>
+    <link>https://bhavik-kanejiya.github.io/tags/cap/</link>
+    <description>Recent content in Tags/CAP on From Bits to Bytes</description>
+    <generator>Hugo</generator>
     <language>en-us</language>
-    <copyright>2025 Bhavik Kanejiya</copyright>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
     <lastBuildDate>Tue, 05 Nov 2024 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/cap/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://bhavik-kanejiya.github.io/tags/cap/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Let’s do a peek inside the admin dashboard - Abuse API endpoint</title>
-      <link>http://localhost:1313/blog/htb-cap-walkthrough/</link>
+      <title>HTB Cap Walkthrough</title>
+      <link>https://bhavik-kanejiya.github.io/blog/htb-cap-walkthrough/</link>
       <pubDate>Tue, 05 Nov 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/blog/htb-cap-walkthrough/</guid>
-      <description>Discover a broken access control vulnerability in a popular productivity app with over 2 million users. This post details how an employee gained limited admin privileges by manipulating the API&amp;rsquo;s workspace ID, including steps to reproduce the exploit.</description>
+      <guid>https://bhavik-kanejiya.github.io/blog/htb-cap-walkthrough/</guid>
+      <description>&lt;h2 id=&#34;box-info&#34;&gt;Box Info&lt;/h2&gt;&#xA;&lt;p&gt;&lt;img src=&#34;https://bhavik-kanejiya.github.io/images/HTB/Cap/E24iZ_yX0AMulP5.jpeg&#34; alt=&#34;Box Information&#34;&gt;&lt;/p&gt;&#xA;&lt;table&gt;&#xA;  &lt;thead&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;th&gt;&lt;strong&gt;Attribute&lt;/strong&gt;&lt;/th&gt;&#xA;          &lt;th&gt;&lt;strong&gt;Details&lt;/strong&gt;&lt;/th&gt;&#xA;      &lt;/tr&gt;&#xA;  &lt;/thead&gt;&#xA;  &lt;tbody&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;&lt;strong&gt;Level&lt;/strong&gt;&lt;/td&gt;&#xA;          &lt;td&gt;Easy&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;&lt;strong&gt;OS&lt;/strong&gt;&lt;/td&gt;&#xA;          &lt;td&gt;Linux&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;&lt;strong&gt;Box URL&lt;/strong&gt;&lt;/td&gt;&#xA;          &lt;td&gt;&lt;a href=&#34;https://app.hackthebox.com/machines/Cap&#34;&gt;https://app.hackthebox.com/machines/Cap&lt;/a&gt;&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;&lt;strong&gt;Box Status&lt;/strong&gt;&lt;/td&gt;&#xA;          &lt;td&gt;Retired&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;&lt;strong&gt;About Box&lt;/strong&gt;&lt;/td&gt;&#xA;          &lt;td&gt;Cap is an easy difficulty Linux machine running an HTTP server that performs administrative functions, including performing network captures. Improper controls result in Insecure Direct Object Reference (IDOR), giving access to another user&amp;rsquo;s capture. The capture contains plaintext credentials and can be used to gain foothold. A Linux capability is then leveraged to escalate to root.&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;  &lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;h2 id=&#34;footprinting&#34;&gt;Footprinting&lt;/h2&gt;&#xA;&lt;h3 id=&#34;nmap&#34;&gt;Nmap&lt;/h3&gt;&#xA;&lt;p&gt;Let&amp;rsquo;s start with scanning the machine IP with nmap to check what are the services are running on different ports!&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

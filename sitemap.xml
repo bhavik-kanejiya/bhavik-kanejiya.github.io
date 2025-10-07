@@ -2,91 +2,78 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://bhavik-kanejiya.github.io/blog/htb-boardlight-walkthrough/</loc>
-    <lastmod>2025-07-07T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://bhavik-kanejiya.github.io/blog/kubernetes-security-basics-from-a-pentesters-point-of-view/</loc>
-    <lastmod>2025-05-29T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://bhavik-kanejiya.github.io/blog/htb-cap-walkthrough/</loc>
-    <lastmod>2024-11-05T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://bhavik-kanejiya.github.io/blog/htb-twomillion-walkthrough/</loc>
-    <lastmod>2024-11-05T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://bhavik-kanejiya.github.io/blog/lets-peek-inside-the-admin-dashboard/</loc>
-    <lastmod>2022-01-01T00:00:00+00:00</lastmod>
+    <loc>https://bhavik-kanejiya.github.io/blog/htb-steamcloud-walkthrough/</loc>
+    <lastmod>2025-10-07T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://bhavik-kanejiya.github.io/blog/</loc>
-    <lastmod>2025-07-07T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://bhavik-kanejiya.github.io/categories/</loc>
-    <lastmod>2025-07-07T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://bhavik-kanejiya.github.io/tags/cve-2022-37706/</loc>
-    <lastmod>2025-07-07T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://bhavik-kanejiya.github.io/tags/cve-2023-30253/</loc>
-    <lastmod>2025-07-07T00:00:00+00:00</lastmod>
+    <lastmod>2025-10-07T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://bhavik-kanejiya.github.io/</loc>
-    <lastmod>2025-07-07T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://bhavik-kanejiya.github.io/categories/htb/</loc>
-    <lastmod>2025-07-07T00:00:00+00:00</lastmod>
+    <lastmod>2025-10-07T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://bhavik-kanejiya.github.io/tags/htb/</loc>
-    <lastmod>2025-07-07T00:00:00+00:00</lastmod>
+    <lastmod>2025-10-07T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://bhavik-kanejiya.github.io/tags/linux/</loc>
-    <lastmod>2025-07-07T00:00:00+00:00</lastmod>
+    <loc>https://bhavik-kanejiya.github.io/series/</loc>
+    <lastmod>2025-10-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://bhavik-kanejiya.github.io/series/htb-walkthrough/</loc>
+    <lastmod>2025-10-07T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://bhavik-kanejiya.github.io/tags/</loc>
-    <lastmod>2025-07-07T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://bhavik-kanejiya.github.io/categories/walkthrough/</loc>
-    <lastmod>2025-07-07T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://bhavik-kanejiya.github.io/tags/walkthrough/</loc>
-    <lastmod>2025-07-07T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://bhavik-kanejiya.github.io/categories/cloud/</loc>
-    <lastmod>2025-05-29T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://bhavik-kanejiya.github.io/tags/cloud-security/</loc>
-    <lastmod>2025-05-29T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://bhavik-kanejiya.github.io/categories/kubernetes/</loc>
-    <lastmod>2025-05-29T00:00:00+00:00</lastmod>
+    <lastmod>2025-10-07T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://bhavik-kanejiya.github.io/tags/kubernetes/</loc>
+    <lastmod>2025-10-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://bhavik-kanejiya.github.io/tags/linux/</loc>
+    <lastmod>2025-10-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://bhavik-kanejiya.github.io/tags/pod-breakout/</loc>
+    <lastmod>2025-10-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://bhavik-kanejiya.github.io/tags/walkthrough/</loc>
+    <lastmod>2025-10-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://bhavik-kanejiya.github.io/blog/kubernetes-security-basics-from-a-pentesters-point-of-view/</loc>
     <lastmod>2025-05-29T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://bhavik-kanejiya.github.io/tags/kubernetes-security/</loc>
     <lastmod>2025-05-29T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>https://bhavik-kanejiya.github.io/tags/kubernetes-series/</loc>
+    <lastmod>2025-05-29T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://bhavik-kanejiya.github.io/blog/htb-twomillion-walkthrough/</loc>
+    <lastmod>2025-01-18T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://bhavik-kanejiya.github.io/tags/linux-exploitation/</loc>
+    <lastmod>2025-01-18T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://bhavik-kanejiya.github.io/tags/cve-exploitation/</loc>
+    <lastmod>2025-01-18T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://bhavik-kanejiya.github.io/tags/cve-2023-0386/</loc>
+    <lastmod>2025-01-18T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://bhavik-kanejiya.github.io/tags/overlayfs-exploit/</loc>
+    <lastmod>2025-01-18T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://bhavik-kanejiya.github.io/blog/htb-cap-walkthrough/</loc>
     <lastmod>2024-11-05T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://bhavik-kanejiya.github.io/tags/overlayfs/</loc>
+    <loc>https://bhavik-kanejiya.github.io/tags/cap/</loc>
     <lastmod>2024-11-05T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://bhavik-kanejiya.github.io/tags/api-security/</loc>
-    <lastmod>2022-01-01T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://bhavik-kanejiya.github.io/categories/bug-bounty/</loc>
-    <lastmod>2022-01-01T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://bhavik-kanejiya.github.io/categories/writeup/</loc>
-    <lastmod>2022-01-01T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://bhavik-kanejiya.github.io/tags/writeup/</loc>
-    <lastmod>2022-01-01T00:00:00+00:00</lastmod>
+    <loc>https://bhavik-kanejiya.github.io/resume/</loc>
+    <lastmod>2024-10-19T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://bhavik-kanejiya.github.io/about/</loc>
+    <lastmod>2024-10-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://bhavik-kanejiya.github.io/archives/</loc>
+    <loc>https://bhavik-kanejiya.github.io/blog/lets-peek-inside-the-admin-dashboard/</loc>
+    <lastmod>2022-01-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://bhavik-kanejiya.github.io/search/</loc>
+    <loc>https://bhavik-kanejiya.github.io/topics/</loc>
   </url>
 </urlset>

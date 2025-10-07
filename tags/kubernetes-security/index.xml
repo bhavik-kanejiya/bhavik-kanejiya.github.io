@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Kubernetes Security on From Bits to Bytes | Cybersecurity Insights by Bhavik Kanejiya</title>
+    <title>Tags/Kubernetes Security on From Bits to Bytes</title>
     <link>https://bhavik-kanejiya.github.io/tags/kubernetes-security/</link>
-    <description>Recent content in Kubernetes Security on From Bits to Bytes | Cybersecurity Insights by Bhavik Kanejiya</description>
-    <image>
-      <title>From Bits to Bytes | Cybersecurity Insights by Bhavik Kanejiya</title>
-      <url>https://bhavik-kanejiya.github.io/images/social-image.png</url>
-      <link>https://bhavik-kanejiya.github.io/images/social-image.png</link>
-    </image>
-    <generator>Hugo -- 0.147.9</generator>
+    <description>Recent content in Tags/Kubernetes Security on From Bits to Bytes</description>
+    <generator>Hugo</generator>
     <language>en-us</language>
-    <copyright>2025 Bhavik Kanejiya</copyright>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
     <lastBuildDate>Thu, 29 May 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://bhavik-kanejiya.github.io/tags/kubernetes-security/index.xml" rel="self" type="application/rss+xml" />
     <item>
@@ -19,7 +14,7 @@
       <link>https://bhavik-kanejiya.github.io/blog/kubernetes-security-basics-from-a-pentesters-point-of-view/</link>
       <pubDate>Thu, 29 May 2025 00:00:00 +0000</pubDate>
       <guid>https://bhavik-kanejiya.github.io/blog/kubernetes-security-basics-from-a-pentesters-point-of-view/</guid>
-      <description>Explore Kubernetes security from a pentester&amp;rsquo;s point of view. Follow a hands-on walkthrough from reconnaissance to root access, focusing on network packet analysis, exploitation techniques, and cluster misconfigurations</description>
+      <description>&lt;p&gt;&lt;img src=&#34;https://bhavik-kanejiya.github.io/images/K8-P1/1._K8_-_P1_-_Banner.png&#34; alt=&#34;K8 - Banner&#34;&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;&#xA;&lt;p&gt;For anyone in cybersecurity, two questions inevitably arise: &lt;strong&gt;What is Kubernetes,&lt;/strong&gt; and &lt;strong&gt;what are the common security risks associated with it?&lt;/strong&gt; These topics often seem complicated or are explained in overly technical terms.&lt;/p&gt;&#xA;&lt;p&gt;This series provides a practical, hands-on journey through Kubernetes security. I will break down complex concepts into simple explanations, covering:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Kubernetes fundamentals&lt;/li&gt;&#xA;&lt;li&gt;Setting up K8s pentesting labs&lt;/li&gt;&#xA;&lt;li&gt;Common security issues and exploitation techniques&lt;/li&gt;&#xA;&lt;li&gt;Remediation and defense strategies&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;I hope this series will transform your understanding of Kubernetes security. Let&amp;rsquo;s dive in.&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

@@ -1,39 +1,34 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Walkthrough on From Bits to Bytes | Cybersecurity Insights by Bhavik Kanejiya</title>
+    <title>Walkthrough on From Bits to Bytes</title>
     <link>https://bhavik-kanejiya.github.io/tags/walkthrough/</link>
-    <description>Recent content in Walkthrough on From Bits to Bytes | Cybersecurity Insights by Bhavik Kanejiya</description>
-    <image>
-      <title>From Bits to Bytes | Cybersecurity Insights by Bhavik Kanejiya</title>
-      <url>https://bhavik-kanejiya.github.io/images/social-image.png</url>
-      <link>https://bhavik-kanejiya.github.io/images/social-image.png</link>
-    </image>
-    <generator>Hugo -- 0.147.9</generator>
+    <description>Recent content in Walkthrough on From Bits to Bytes</description>
+    <generator>Hugo</generator>
     <language>en-us</language>
-    <copyright>2025 Bhavik Kanejiya</copyright>
-    <lastBuildDate>Mon, 07 Jul 2025 00:00:00 +0000</lastBuildDate>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Tue, 07 Oct 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://bhavik-kanejiya.github.io/tags/walkthrough/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>HTB Boardlight Walkthrough</title>
-      <link>https://bhavik-kanejiya.github.io/blog/htb-boardlight-walkthrough/</link>
-      <pubDate>Mon, 07 Jul 2025 00:00:00 +0000</pubDate>
-      <guid>https://bhavik-kanejiya.github.io/blog/htb-boardlight-walkthrough/</guid>
-      <description>Step-by-step HTB Boardlight walkthrough featuring enumeration, Dolibarr RCE (CVE-2023-30253), and root via Enlightenment CVE-2022-37706.</description>
+      <title>HTB SteamCloud Walkthrough</title>
+      <link>https://bhavik-kanejiya.github.io/blog/htb-steamcloud-walkthrough/</link>
+      <pubDate>Tue, 07 Oct 2025 00:00:00 +0000</pubDate>
+      <guid>https://bhavik-kanejiya.github.io/blog/htb-steamcloud-walkthrough/</guid>
+      <description>Detailed Streamcloud HTB lab walkthrough focusing on Kubernetes pentesting. Covers environment setup, discovery (kubectl, API), misconfigured RBAC and serviceAccount abuse, privilege escalation techniques, persistence, and developer-focused remediation</description>
+    </item>
+    <item>
+      <title>HTB TwoMillion Walkthrough</title>
+      <link>https://bhavik-kanejiya.github.io/blog/htb-twomillion-walkthrough/</link>
+      <pubDate>Sat, 18 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>https://bhavik-kanejiya.github.io/blog/htb-twomillion-walkthrough/</guid>
+      <description>&lt;h2 id=&#34;box-info&#34;&gt;Box Info&lt;/h2&gt;&#xA;&lt;p&gt;&lt;img src=&#34;https://bhavik-kanejiya.github.io/images/HTB/TwoMillion/Pasted%20image%2020250118171354.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;&#xA;&lt;table&gt;&#xA;  &lt;thead&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;th&gt;&lt;strong&gt;Attribute&lt;/strong&gt;&lt;/th&gt;&#xA;          &lt;th&gt;&lt;strong&gt;Details&lt;/strong&gt;&lt;/th&gt;&#xA;      &lt;/tr&gt;&#xA;  &lt;/thead&gt;&#xA;  &lt;tbody&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;&lt;strong&gt;Level&lt;/strong&gt;&lt;/td&gt;&#xA;          &lt;td&gt;Easy&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;&lt;strong&gt;OS&lt;/strong&gt;&lt;/td&gt;&#xA;          &lt;td&gt;Linux&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;&lt;strong&gt;Box URL&lt;/strong&gt;&lt;/td&gt;&#xA;          &lt;td&gt;&lt;a href=&#34;https://www.hackthebox.com/machines/twomillion&#34;&gt;HTB-TwoMillion&lt;/a&gt;&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;&lt;strong&gt;Box Status&lt;/strong&gt;&lt;/td&gt;&#xA;          &lt;td&gt;Retired&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;&lt;strong&gt;About Box&lt;/strong&gt;&lt;/td&gt;&#xA;          &lt;td&gt;TwoMillion is an Easy difficulty Linux box that was released to celebrate reaching 2 million users on HackTheBox. The box features an old version of the HackTheBox platform that includes the old hackable invite code. After hacking the invite code an account can be created on the platform. The account can be used to enumerate various API endpoints, one of which can be used to elevate the user to an Administrator. With administrative access the user can perform a command injection in the admin VPN generation endpoint thus gaining a system shell. An .env file is found to contain database credentials and owed to password re-use the attackers can login as user admin on the box. The system kernel is found to be outdated and CVE-2023-0386 can be used to gain a root shell.&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;  &lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;h2 id=&#34;footprinting&#34;&gt;Footprinting&lt;/h2&gt;&#xA;&lt;h3 id=&#34;nmap&#34;&gt;Nmap&lt;/h3&gt;&#xA;&lt;p&gt;&lt;code&gt;nmap&lt;/code&gt; finds two open TCP ports, SSH (22) and HTTP (80):&lt;/p&gt;</description>
     </item>
     <item>
       <title>HTB Cap Walkthrough</title>
       <link>https://bhavik-kanejiya.github.io/blog/htb-cap-walkthrough/</link>
       <pubDate>Tue, 05 Nov 2024 00:00:00 +0000</pubDate>
       <guid>https://bhavik-kanejiya.github.io/blog/htb-cap-walkthrough/</guid>
-      <description>Explore an in-depth walkthrough of the HTB Cap machine, focusing on network packet analysis and leveraging captured data for exploitation. Follow each step from initial reconnaissance to achieving root access, emphasizing practical network security techniques</description>
-    </item>
-    <item>
-      <title>HTB TwoMillion Walkthrough</title>
-      <link>https://bhavik-kanejiya.github.io/blog/htb-twomillion-walkthrough/</link>
-      <pubDate>Tue, 05 Nov 2024 00:00:00 +0000</pubDate>
-      <guid>https://bhavik-kanejiya.github.io/blog/htb-twomillion-walkthrough/</guid>
-      <description>Explore an in-depth walkthrough of the HTB Cap machine, focusing on network packet analysis and leveraging captured data for exploitation. Follow each step from initial reconnaissance to achieving root access, emphasizing practical network security techniques</description>
+      <description>&lt;h2 id=&#34;box-info&#34;&gt;Box Info&lt;/h2&gt;&#xA;&lt;p&gt;&lt;img src=&#34;https://bhavik-kanejiya.github.io/images/HTB/Cap/E24iZ_yX0AMulP5.jpeg&#34; alt=&#34;Box Information&#34;&gt;&lt;/p&gt;&#xA;&lt;table&gt;&#xA;  &lt;thead&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;th&gt;&lt;strong&gt;Attribute&lt;/strong&gt;&lt;/th&gt;&#xA;          &lt;th&gt;&lt;strong&gt;Details&lt;/strong&gt;&lt;/th&gt;&#xA;      &lt;/tr&gt;&#xA;  &lt;/thead&gt;&#xA;  &lt;tbody&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;&lt;strong&gt;Level&lt;/strong&gt;&lt;/td&gt;&#xA;          &lt;td&gt;Easy&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;&lt;strong&gt;OS&lt;/strong&gt;&lt;/td&gt;&#xA;          &lt;td&gt;Linux&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;&lt;strong&gt;Box URL&lt;/strong&gt;&lt;/td&gt;&#xA;          &lt;td&gt;&lt;a href=&#34;https://app.hackthebox.com/machines/Cap&#34;&gt;https://app.hackthebox.com/machines/Cap&lt;/a&gt;&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;&lt;strong&gt;Box Status&lt;/strong&gt;&lt;/td&gt;&#xA;          &lt;td&gt;Retired&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;&lt;strong&gt;About Box&lt;/strong&gt;&lt;/td&gt;&#xA;          &lt;td&gt;Cap is an easy difficulty Linux machine running an HTTP server that performs administrative functions, including performing network captures. Improper controls result in Insecure Direct Object Reference (IDOR), giving access to another user&amp;rsquo;s capture. The capture contains plaintext credentials and can be used to gain foothold. A Linux capability is then leveraged to escalate to root.&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;  &lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;h2 id=&#34;footprinting&#34;&gt;Footprinting&lt;/h2&gt;&#xA;&lt;h3 id=&#34;nmap&#34;&gt;Nmap&lt;/h3&gt;&#xA;&lt;p&gt;Let&amp;rsquo;s start with scanning the machine IP with nmap to check what are the services are running on different ports!&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

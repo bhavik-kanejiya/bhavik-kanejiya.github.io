@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags/Kubernetes-Series on From Bits to Bytes</title>
+    <link>https://bhavik-kanejiya.github.io/tags/kubernetes-series/</link>
+    <description>Recent content in Tags/Kubernetes-Series on From Bits to Bytes</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Thu, 29 May 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://bhavik-kanejiya.github.io/tags/kubernetes-series/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Kubernetes Security Basics: From a Pentester’s Point of View</title>
+      <link>https://bhavik-kanejiya.github.io/blog/kubernetes-security-basics-from-a-pentesters-point-of-view/</link>
+      <pubDate>Thu, 29 May 2025 00:00:00 +0000</pubDate>
+      <guid>https://bhavik-kanejiya.github.io/blog/kubernetes-security-basics-from-a-pentesters-point-of-view/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://bhavik-kanejiya.github.io/images/K8-P1/1._K8_-_P1_-_Banner.png&#34; alt=&#34;K8 - Banner&#34;&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;&#xA;&lt;p&gt;For anyone in cybersecurity, two questions inevitably arise: &lt;strong&gt;What is Kubernetes,&lt;/strong&gt; and &lt;strong&gt;what are the common security risks associated with it?&lt;/strong&gt; These topics often seem complicated or are explained in overly technical terms.&lt;/p&gt;&#xA;&lt;p&gt;This series provides a practical, hands-on journey through Kubernetes security. I will break down complex concepts into simple explanations, covering:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Kubernetes fundamentals&lt;/li&gt;&#xA;&lt;li&gt;Setting up K8s pentesting labs&lt;/li&gt;&#xA;&lt;li&gt;Common security issues and exploitation techniques&lt;/li&gt;&#xA;&lt;li&gt;Remediation and defense strategies&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;I hope this series will transform your understanding of Kubernetes security. Let&amp;rsquo;s dive in.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

